@@ -1,0 +1,5 @@
+[step] run mutation report (report-only)
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 test:mutation:report /home/devuser/work/CodeX/ae-framework_exp07
+> bash scripts/automation/run-mutation-check.sh
+

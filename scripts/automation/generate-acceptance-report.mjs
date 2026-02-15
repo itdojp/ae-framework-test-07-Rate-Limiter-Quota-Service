@@ -11,6 +11,8 @@ const property = readJson('artifacts/summary/property-summary.json');
 const mbt = readJson('artifacts/summary/mbt-summary.json');
 const persistence = readJson('artifacts/summary/persistence-summary.json');
 const e2eRestart = readJson('artifacts/summary/e2e-restart-summary.json');
+const load = readJson('artifacts/summary/load-summary.json');
+const mutation = readJson('artifacts/summary/mutation-summary.json');
 const formal = readJson('artifacts/summary/formal-summary.json');
 const traceability = readJson('artifacts/summary/traceability-summary.json');
 
@@ -26,6 +28,8 @@ const lines = [
   `- mbt: ${mbt.success ? 'PASS' : 'FAIL'} (${mbt.numPassedTests}/${mbt.numTotalTests})`,
   `- persistence: ${persistence.success ? 'PASS' : 'FAIL'} (${persistence.numPassedTests}/${persistence.numTotalTests})`,
   `- e2e-restart: ${e2eRestart.success ? 'PASS' : 'FAIL'} (${e2eRestart.numPassedTests}/${e2eRestart.numTotalTests})`,
+  `- load: ${String(load.status || 'unknown').toUpperCase()} (${Array.isArray(load.scenarios) ? load.scenarios.length : 0} scenarios)`,
+  `- mutation: ${String(mutation.status || 'unknown').toUpperCase()}`,
   `- formal: ${String(formal.status || 'unknown').toUpperCase()} (tool=${formal.tool || 'n/a'})`,
   '',
   '## Rule Status',
@@ -37,6 +41,8 @@ const lines = [
   '- artifacts/summary/mbt-summary.json',
   '- artifacts/summary/persistence-summary.json',
   '- artifacts/summary/e2e-restart-summary.json',
+  '- artifacts/summary/load-summary.json',
+  '- artifacts/summary/mutation-summary.json',
   '- artifacts/summary/formal-summary.json',
   '- artifacts/summary/traceability-summary.json',
   '- artifacts/hermetic-reports/formal/tlc.log',

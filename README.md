@@ -44,17 +44,27 @@ pnpm run test:persistence
 pnpm run test:e2e:restart
 ```
 
-7. Formal チェック実行（TLC未導入時は report-only）
+7. 負荷検証実行
+```bash
+pnpm run test:load
+```
+
+8. Mutation レポート生成（script 未定義時は report-only）
+```bash
+pnpm run test:mutation:report
+```
+
+9. Formal チェック実行（TLC未導入時は report-only）
 ```bash
 pnpm run formal:check
 ```
 
-8. 受入レポート生成
+10. 受入レポート生成
 ```bash
 pnpm run report:acceptance
 ```
 
-9. サービス起動
+11. サービス起動
 ```bash
 pnpm run dev
 ```

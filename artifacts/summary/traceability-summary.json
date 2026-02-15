@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-15T14:02:54.103Z",
+  "generatedAt": "2026-02-15T21:36:04.721Z",
   "items": [
     {
       "ruleId": "RL-INV-001",
@@ -24,7 +24,7 @@
     {
       "ruleId": "RL-ACC-01",
       "status": "pass",
-      "evidence": "tests/acceptance.spec.ts"
+      "evidence": "tests/acceptance.spec.ts, artifacts/summary/load-summary.json"
     },
     {
       "ruleId": "RL-ACC-02",

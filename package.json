@@ -19,6 +19,8 @@
     "test:mbt": "vitest run tests/mbt.spec.ts --reporter=json --outputFile artifacts/summary/mbt-summary.json",
     "test:persistence": "vitest run tests/persistence.spec.ts --reporter=json --outputFile artifacts/summary/persistence-summary.json",
     "test:e2e:restart": "vitest run tests/e2e-restart.spec.ts --reporter=json --outputFile artifacts/summary/e2e-restart-summary.json",
+    "test:load": "tsx scripts/automation/run-load-check.ts",
+    "test:mutation:report": "bash scripts/automation/run-mutation-check.sh",
     "formal:check": "bash scripts/automation/run-formal-check.sh",
     "report:acceptance": "node scripts/automation/generate-acceptance-report.mjs",
     "pipeline:local": "bash scripts/automation/run-local-pipeline.sh"

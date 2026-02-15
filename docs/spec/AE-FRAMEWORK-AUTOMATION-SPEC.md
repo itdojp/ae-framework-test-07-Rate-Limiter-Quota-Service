@@ -46,11 +46,19 @@
 - 用途: APIプロセス再起動を伴う E2E 検証。
 - 理由: 実プロセス境界で persistence/idempotency の継続性を確認できる。
 
-9. `pnpm run pipelines:mutation:quick`
+9. `pnpm run test:load`
+- 用途: 並行バースト/継続負荷の上限超過有無を検証。
+- 理由: RL-ACC-01 の負荷観点証跡を自動生成できる。
+
+10. `pnpm run test:mutation:report`
+- 用途: mutation 実行可否と結果の証跡を report-only で記録。
+- 理由: ツール未設定でも品質評価の欠落状態を可視化できる。
+
+11. `pnpm run pipelines:mutation:quick`
 - 用途: ミューテーションテストによるテスト有効性確認。
 - 理由: 不変条件テストの強度を定量評価できる。
 
-10. `pnpm run verify:formal`（必要に応じて個別 verify を併用）
+12. `pnpm run verify:formal`（必要に応じて個別 verify を併用）
 - 用途: TLA+/Alloy/SMT/CSP などの形式検証。
 - 理由: RL-INV-003/004（同時実行・冪等性）の安全性エビデンスを補強できる。
 
