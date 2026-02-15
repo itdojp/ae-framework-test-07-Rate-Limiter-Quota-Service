@@ -1,0 +1,6 @@
+[step] run property tests
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 test:property /home/devuser/work/CodeX/ae-framework_exp07
+> vitest run tests/property.spec.ts --reporter=json --outputFile artifacts/summary/property-summary.json
+
+JSON report written to /home/devuser/work/CodeX/ae-framework_exp07/artifacts/summary/property-summary.json

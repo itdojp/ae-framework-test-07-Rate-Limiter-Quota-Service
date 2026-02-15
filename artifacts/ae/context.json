@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-02-15T12:44:50.743Z",
+  "generatedAt": "2026-02-15T12:58:45.265Z",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
   "specIr": ".ae/ae-ir.json",
-  "testFiles": 3,
-  "numPassedTests": 10,
+  "testFiles": 5,
+  "numPassedTests": 15,
   "numFailedTests": 0,
   "success": true,
   "acceptance": {
@@ -11,5 +11,22 @@
     "passed": 3,
     "failed": 0,
     "success": true
+  },
+  "property": {
+    "suites": 2,
+    "passed": 3,
+    "failed": 0,
+    "success": true
+  },
+  "mbt": {
+    "suites": 2,
+    "passed": 2,
+    "failed": 0,
+    "success": true
+  },
+  "formal": {
+    "status": "pass",
+    "tool": "java-tlc",
+    "exitCode": 0
   }
 }

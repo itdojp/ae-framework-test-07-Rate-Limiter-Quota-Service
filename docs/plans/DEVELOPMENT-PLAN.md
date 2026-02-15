@@ -78,5 +78,10 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 - M3: 部分完了
   - 同時実行制御: `KeyedMutex` による tenant 単位の直列化を実装
   - 冪等性: request_id + payload hash の再送判定を実装
+- M4: 完了
+  - Property: `tests/property.spec.ts`
+  - MBT: `tests/mbt.spec.ts`
+  - Formal: `spec/formal/RateLimiterQuota.tla` + `scripts/automation/run-formal-check.sh`
+  - 自動化: `pipeline:local` で property/mbt/formal を一括実行
 - M5: 部分完了
   - RL-ACC-01/02/03 テストを `tests/acceptance.spec.ts` で実装し、pass を確認

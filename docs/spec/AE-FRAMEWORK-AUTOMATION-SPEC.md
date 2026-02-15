@@ -26,11 +26,23 @@
 - 用途: 日次の軽量品質ゲート（lint/type/unit 等）。
 - 理由: fail-fast で回帰を早期検知できる。
 
-4. `pnpm run pipelines:mutation:quick`
+4. `pnpm run test:property`
+- 用途: ランダム入力で不変条件（RL-INV-001/002/003/004）を継続検証。
+- 理由: 回帰時に境界条件の崩れを早期発見できる。
+
+5. `pnpm run test:mbt`
+- 用途: 状態遷移（consume/check/time_advance/retry）をモデル比較で検証。
+- 理由: 同時実行制御と時刻ルールの仕様整合性を検証できる。
+
+6. `pnpm run formal:check`
+- 用途: TLA+ 形式仕様の検査（TLC未導入時は `tool_not_available` を証跡化）。
+- 理由: Formal 実行可否を含めた再現可能な証跡を残せる。
+
+7. `pnpm run pipelines:mutation:quick`
 - 用途: ミューテーションテストによるテスト有効性確認。
 - 理由: 不変条件テストの強度を定量評価できる。
 
-5. `pnpm run verify:formal`（必要に応じて個別 verify を併用）
+8. `pnpm run verify:formal`（必要に応じて個別 verify を併用）
 - 用途: TLA+/Alloy/SMT/CSP などの形式検証。
 - 理由: RL-INV-003/004（同時実行・冪等性）の安全性エビデンスを補強できる。
 
@@ -47,6 +59,8 @@
 - `CODEX_RUN_FORMAL=1`
 - `CODEX_TOLERANT=0`
 - `CODEX_SKIP_QUALITY=0`
+- `FORMAL_TIMEOUT_SEC=60`
+- `TLA_TOOLS_JAR=<path/to/tla2tools.jar>`（任意）
 
 ## 5. 生成物保存仕様（GitHub保存必須）
 ### 5.1 保存対象ディレクトリ
@@ -56,6 +70,7 @@
 - `artifacts/summary/**`
 - `reports/**`
 - `.ae/**`（仕様中間生成物）
+- `spec/formal/**`（形式仕様）
 
 ### 5.2 保存ルール
 1. ae-framework 実行後、上記パスの差分は全てコミット対象とする。
@@ -69,6 +84,11 @@
 4. 生成内容を要約したコミットを作成。
 5. GitHub へ push し、Issue/PR に証跡パスを記載。
 
+推奨コマンド:
+```bash
+pnpm run pipeline:local
+```
+
 ## 6. トレーサビリティ方針
 - Issue #1 の規則ID（`RL-INV-*`, `RL-ACC-*`）を、テスト名・レポート名・PR説明に明記する。
 - 最低限、以下を紐づける。
@@ -76,6 +96,8 @@
   - RL-INV-003: Concurrency test + Formal
   - RL-INV-004: Idempotency test + Formal
   - RL-ACC-01/02/03: 受入試験レポート
+- 対応表は `docs/spec/TRACEABILITY-MATRIX.md` を正本とする。
+- 実行時サマリは `artifacts/summary/traceability-summary.json` に出力する。
 
 ## 7. 未確定事項
 - 実行モデル（ライブラリ優先かサービス優先か）の最終順序。

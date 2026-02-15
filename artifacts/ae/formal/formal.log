@@ -1,0 +1,5 @@
+[step] run formal check
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 formal:check /home/devuser/work/CodeX/ae-framework_exp07
+> bash scripts/automation/run-formal-check.sh
+

@@ -15,6 +15,9 @@
     "test": "vitest run",
     "test:artifacts": "vitest run --reporter=json --outputFile artifacts/summary/vitest-summary.json",
     "test:acceptance": "vitest run tests/acceptance.spec.ts --reporter=json --outputFile artifacts/summary/acceptance-summary.json",
+    "test:property": "vitest run tests/property.spec.ts --reporter=json --outputFile artifacts/summary/property-summary.json",
+    "test:mbt": "vitest run tests/mbt.spec.ts --reporter=json --outputFile artifacts/summary/mbt-summary.json",
+    "formal:check": "bash scripts/automation/run-formal-check.sh",
     "pipeline:local": "bash scripts/automation/run-local-pipeline.sh"
   },
   "dependencies": {
@@ -22,6 +25,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.18.0",
+    "fast-check": "^3.23.2",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "vitest": "^2.1.9"

@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-02-15T12:58:45.266Z",
+  "items": [
+    {
+      "ruleId": "RL-INV-001",
+      "status": "pass",
+      "evidence": "tests/property.spec.ts"
+    },
+    {
+      "ruleId": "RL-INV-002",
+      "status": "pass",
+      "evidence": "tests/property.spec.ts"
+    },
+    {
+      "ruleId": "RL-INV-003",
+      "status": "pass",
+      "evidence": "tests/mbt.spec.ts"
+    },
+    {
+      "ruleId": "RL-INV-004",
+      "status": "pass",
+      "evidence": "tests/mbt.spec.ts"
+    },
+    {
+      "ruleId": "RL-ACC-01",
+      "status": "pass",
+      "evidence": "tests/acceptance.spec.ts"
+    },
+    {
+      "ruleId": "RL-ACC-02",
+      "status": "pass",
+      "evidence": "tests/acceptance.spec.ts"
+    },
+    {
+      "ruleId": "RL-ACC-03",
+      "status": "pass",
+      "evidence": "tests/acceptance.spec.ts"
+    }
+  ]
+}

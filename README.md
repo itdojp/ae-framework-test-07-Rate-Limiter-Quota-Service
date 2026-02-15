@@ -10,6 +10,7 @@
 ## 計画・仕様
 - 開発計画: `docs/plans/DEVELOPMENT-PLAN.md`
 - ae-framework 活用仕様（自動化/生成物保存）: `docs/spec/AE-FRAMEWORK-AUTOMATION-SPEC.md`
+- トレーサビリティ表: `docs/spec/TRACEABILITY-MATRIX.md`
 
 ## 実行方法
 1. 依存導入
@@ -27,7 +28,18 @@ pnpm run pipeline:local
 pnpm run test:acceptance
 ```
 
-4. サービス起動
+4. Property/MBT テスト実行
+```bash
+pnpm run test:property
+pnpm run test:mbt
+```
+
+5. Formal チェック実行（TLC未導入時は report-only）
+```bash
+pnpm run formal:check
+```
+
+6. サービス起動
 ```bash
 pnpm run dev
 ```
