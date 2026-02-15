@@ -52,6 +52,10 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 - `codex:spec:stdio` の実行結果を自動収集し、失敗時は fallback として `spec-compiler` CLI を実行。
 - Exit条件: `artifacts/summary/ae-spec-stdio-summary.json` が毎回更新され、`pipeline:local` に統合される。
 
+7. M7: ae-framework ツール群の互換性マトリクス運用
+- bridge/cli/playbook を同一ジョブで評価し、既知不整合と回避結果を継続観測する。
+- Exit条件: `artifacts/summary/ae-framework-toolcheck-summary.json` が毎回更新され、受入レポートに統合される。
+
 ## 6. 実行方式（自動化優先）
 - 原則: 手作業よりも ae-framework の CLI / スクリプト / CI を優先。
 - フェーズ実行の起点: `ae-playbook` 相当フローを採用。
@@ -95,3 +99,7 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
   - `test:ae:spec:stdio` を追加し、ae-framework の stdio bridge を評価
   - bridge失敗時に `spec-compiler/dist/cli.js` へ自動fallback
   - `pipeline:local` に統合し、`artifacts/summary/ae-spec-stdio-summary.json` を証跡化
+- M7: 完了
+  - `test:ae:toolcheck` を追加し、bridge/cli/playbook の健全性を定点観測
+  - `ae-playbook --resume` と `--no-resume` の互換性差分を証跡化
+  - 受入レポートと context に toolcheck 結果を統合

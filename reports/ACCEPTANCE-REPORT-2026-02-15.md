@@ -9,6 +9,7 @@
 - load: PASS (3 scenarios)
 - mutation: PASS
 - ae-spec-stdio: PASS (parity=true)
+- ae-toolcheck: WARN (3/5)
 - formal: PASS (tool=java-tlc)
 
 ## Rule Status
@@ -29,6 +30,7 @@
 - artifacts/summary/load-summary.json
 - artifacts/summary/mutation-summary.json
 - artifacts/summary/ae-spec-stdio-summary.json
+- artifacts/summary/ae-framework-toolcheck-summary.json
 - artifacts/summary/formal-summary.json
 - artifacts/summary/traceability-summary.json
 - artifacts/hermetic-reports/formal/tlc.log

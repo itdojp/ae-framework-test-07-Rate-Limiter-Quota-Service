@@ -1,0 +1,3 @@
+TypeError: Cannot set properties of undefined (setting 'setup')
+    at savePhase (file:///tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs:74:24)
+    at main (file:///tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs:215:11)

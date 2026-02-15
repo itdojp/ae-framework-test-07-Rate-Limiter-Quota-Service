@@ -30,3 +30,4 @@
 - `artifacts/ae/context.json`
 - `reports/ACCEPTANCE-REPORT-LATEST.md`
 - `artifacts/summary/ae-spec-stdio-summary.json`
+- `artifacts/summary/ae-framework-toolcheck-summary.json`

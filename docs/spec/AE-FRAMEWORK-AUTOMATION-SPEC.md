@@ -67,6 +67,10 @@
 - 用途: `codex:spec:stdio` の実行可否を評価し、fallback を含む要約を生成。
 - 理由: ae-framework ツールの実効性を定量化し、再現可能な比較証跡を残せる。
 
+14. `pnpm run test:ae:toolcheck`
+- 用途: ae-framework ツール群（bridge/cli/playbook）の健全性をマトリクス評価する。
+- 理由: 既知不整合と回避策を同一フォーマットで継続観測できる。
+
 ## 4. 自動化設定
 ### 4.1 基本方針
 - `--resume` を既定使用し、途中失敗後も継続可能な実行形態とする。
@@ -130,3 +134,5 @@ pnpm run pipeline:local
 ## 8. ツール健全性メモ（2026-02-15）
 - `codex:spec:stdio`（ae-framework本体）は `packages/spec-compiler/src/index.js` 参照で失敗する場合がある。
 - 本リポジトリでは `scripts/automation/run-ae-spec-stdio-check.mjs` が自動で fallback（`spec-compiler/dist/cli.js`）を実行し、`artifacts/summary/ae-spec-stdio-summary.json` に結果を保存する。
+- `scripts/codex/ae-playbook.mjs --resume` は context 形式差異により失敗する場合がある。
+- 本リポジトリでは `scripts/automation/run-ae-framework-toolcheck.mjs` が `resume` / `no_resume` の両モードを監視し、`artifacts/summary/ae-framework-toolcheck-summary.json` に結果を保存する。

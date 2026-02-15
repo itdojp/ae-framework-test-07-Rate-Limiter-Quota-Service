@@ -1,0 +1,5 @@
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 codex:spec:stdio /home/devuser/work/CodeX/ae-framework_exp07
+> node scripts/automation/ae-spec-stdio-proxy.mjs
+
+{"ok":true,"data":{"passed":true,"summary":{"errors":0,"warnings":0,"info":0},"fallback":"spec-compiler/dist/cli.js"}}

@@ -1,0 +1,6 @@
+[step] run ae-framework toolcheck matrix
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 test:ae:toolcheck /home/devuser/work/CodeX/ae-framework_exp07
+> node scripts/automation/run-ae-framework-toolcheck.mjs
+
+ae-framework-toolcheck: warn

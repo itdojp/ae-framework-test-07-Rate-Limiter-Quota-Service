@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-02-15T23:38:48.376Z",
+  "status": "warn",
+  "frameworkRoot": "/tmp/ae-framework-20260215",
+  "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
+  "counts": {
+    "total": 5,
+    "success": 3,
+    "failed": 2,
+    "unexpectedFailures": 0,
+    "unresolvedKnownIssues": 2,
+    "resolvedKnownIssues": 0,
+    "unexpectedOutcomes": 0
+  },
+  "knownIssueCatalog": [
+    {
+      "probeId": "framework_spec_stdio_direct_validate",
+      "expected": "failure",
+      "reason": "spec-stdio が packages/spec-compiler/src/index.js を参照し、現行配布構成と不整合"
+    },
+    {
+      "probeId": "framework_ae_playbook_resume",
+      "expected": "failure",
+      "reason": "既存 context.json 形式に phases が無い場合、resume で TypeError が発生"
+    }
+  ],
+  "probes": [
+    {
+      "id": "framework_spec_stdio_direct_validate",
+      "description": "ae-framework標準 spec-stdio bridge を直接実行",
+      "expected": "failure",
+      "success": false,
+      "expectationMatched": true,
+      "exitCode": 0,
+      "signal": null,
+      "responseOk": false,
+      "elapsedMs": 46,
+      "command": "node /tmp/ae-framework-20260215/scripts/codex/spec-stdio.mjs",
+      "artifacts": {
+        "stdout": "artifacts/codex/toolcheck/framework_spec_stdio_direct_validate.stdout.log",
+        "stderr": "artifacts/codex/toolcheck/framework_spec_stdio_direct_validate.stderr.log"
+      }
+    },
+    {
+      "id": "local_codex_spec_stdio_proxy_validate",
+      "description": "本リポジトリの codex:spec:stdio proxy 経由で validate",
+      "expected": "success",
+      "success": true,
+      "expectationMatched": true,
+      "exitCode": 0,
+      "signal": null,
+      "responseOk": true,
+      "elapsedMs": 521,
+      "command": "pnpm run codex:spec:stdio",
+      "artifacts": {
+        "stdout": "artifacts/codex/toolcheck/local_codex_spec_stdio_proxy_validate.stdout.log",
+        "stderr": "artifacts/codex/toolcheck/local_codex_spec_stdio_proxy_validate.stderr.log"
+      }
+    },
+    {
+      "id": "framework_spec_compiler_cli_validate",
+      "description": "ae-framework spec-compiler CLI validate",
+      "expected": "success",
+      "success": true,
+      "expectationMatched": true,
+      "exitCode": 0,
+      "signal": null,
+      "responseOk": null,
+      "elapsedMs": 84,
+      "command": "node /tmp/ae-framework-20260215/packages/spec-compiler/dist/cli.js validate -i spec/rate-limiter-quota-service.ae-spec.md --max-errors 0 --max-warnings 200 --relaxed",
+      "artifacts": {
+        "stdout": "artifacts/codex/toolcheck/framework_spec_compiler_cli_validate.stdout.log",
+        "stderr": "artifacts/codex/toolcheck/framework_spec_compiler_cli_validate.stderr.log"
+      }
+    },
+    {
+      "id": "framework_ae_playbook_resume",
+      "description": "ae-playbook resume モード（context互換性確認）",
+      "expected": "failure",
+      "success": false,
+      "expectationMatched": true,
+      "exitCode": 1,
+      "signal": null,
+      "responseOk": null,
+      "elapsedMs": 35,
+      "command": "node /tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs --resume --skip=setup,qa,spec,sim,formal",
+      "artifacts": {
+        "stdout": "artifacts/codex/toolcheck/framework_ae_playbook_resume.stdout.log",
+        "stderr": "artifacts/codex/toolcheck/framework_ae_playbook_resume.stderr.log"
+      }
+    },
+    {
+      "id": "framework_ae_playbook_no_resume",
+      "description": "ae-playbook 非resumeモード（最小スモーク）",
+      "expected": "success",
+      "success": true,
+      "expectationMatched": true,
+      "exitCode": 0,
+      "signal": null,
+      "responseOk": null,
+      "elapsedMs": 45,
+      "command": "node /tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs --skip=setup,qa,spec,sim,formal",
+      "artifacts": {
+        "stdout": "artifacts/codex/toolcheck/framework_ae_playbook_no_resume.stdout.log",
+        "stderr": "artifacts/codex/toolcheck/framework_ae_playbook_no_resume.stderr.log"
+      }
+    }
+  ]
+}
