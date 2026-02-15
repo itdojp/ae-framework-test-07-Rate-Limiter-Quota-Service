@@ -1,0 +1,6 @@
+[step] run tests with json artifacts
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 test:artifacts /home/devuser/work/CodeX/ae-framework_exp07
+> vitest run --reporter=json --outputFile artifacts/summary/vitest-summary.json
+
+JSON report written to /home/devuser/work/CodeX/ae-framework_exp07/artifacts/summary/vitest-summary.json

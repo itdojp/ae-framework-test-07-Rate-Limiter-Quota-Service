@@ -11,5 +11,21 @@
 - 開発計画: `docs/plans/DEVELOPMENT-PLAN.md`
 - ae-framework 活用仕様（自動化/生成物保存）: `docs/spec/AE-FRAMEWORK-AUTOMATION-SPEC.md`
 
+## 実行方法
+1. 依存導入
+```bash
+pnpm install
+```
+
+2. ローカルパイプライン（AE-Spec検証 + テスト + artifacts出力）
+```bash
+pnpm run pipeline:local
+```
+
+3. サービス起動
+```bash
+pnpm run dev
+```
+
 ## 生成物管理ポリシー
 評価用途のため、ae-framework 実行で生成された中間生成物は `artifacts/` および `reports/` 配下に保存し、GitHub にコミットする。

@@ -66,3 +66,13 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 
 3. 仕様解釈差異
 - 対策: Issue #1 の不変条件・受入基準に対する Traceability 表を維持。
+
+## 9. 現在ステータス（2026-02-15）
+- M1: 完了
+  - AE-Spec: `spec/rate-limiter-quota-service.ae-spec.md`
+  - AE-IR: `.ae/ae-ir.json`
+- M2: 初版完了
+  - ライブラリ: `src/domain/rate-limiter-engine.ts`
+  - API: `src/server/app.ts`
+  - テスト: `tests/engine.spec.ts`, `tests/api.spec.ts`
+- M3以降: 未着手

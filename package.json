@@ -1,0 +1,28 @@
+{
+  "name": "ae-framework-test-07-rate-limiter-quota-service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Rate limiter / quota service for ae-framework evaluation",
+  "engines": {
+    "node": ">=20.11 <23"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:artifacts": "vitest run --reporter=json --outputFile artifacts/summary/vitest-summary.json",
+    "pipeline:local": "bash scripts/automation/run-local-pipeline.sh"
+  },
+  "dependencies": {
+    "fastify": "^5.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^2.1.9"
+  }
+}

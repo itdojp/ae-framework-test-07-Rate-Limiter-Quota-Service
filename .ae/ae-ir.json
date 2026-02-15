@@ -1,0 +1,378 @@
+{
+  "version": "1.0.0",
+  "metadata": {
+    "name": "RateLimiterQuotaServiceSpec",
+    "created": "2026-02-15T12:43:02.072Z",
+    "updated": "2026-02-15T12:43:02.072Z",
+    "description": "Rate limiter and quota service specification for concurrent-safe API protection."
+  },
+  "glossary": [
+    {
+      "term": "Subject",
+      "definition": "制限対象（USER/API_KEY/IP/TENANT）"
+    },
+    {
+      "term": "Resource",
+      "definition": "制限対象操作（ENDPOINT/ACTION）"
+    },
+    {
+      "term": "Policy",
+      "definition": "制限ルールと適用範囲を保持する定義"
+    },
+    {
+      "term": "Limit",
+      "definition": "Token Bucket または Fixed Window の制限ルール定義"
+    },
+    {
+      "term": "Decision",
+      "definition": "consume/check の評価結果と補助情報"
+    },
+    {
+      "term": "Idempotency Key",
+      "definition": "再送時の重複消費防止キー"
+    }
+  ],
+  "domain": [
+    {
+      "name": "Policy",
+      "fields": [
+        {
+          "name": "policy_id",
+          "type": "string",
+          "required": true,
+          "description": "Unique policy identifier"
+        },
+        {
+          "name": "tenant_id",
+          "type": "string",
+          "required": true,
+          "description": "Tenant scope for policy"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Policy display name"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": true,
+          "description": "ACTIVE or INACTIVE"
+        },
+        {
+          "name": "priority",
+          "type": "number",
+          "required": true,
+          "description": "Larger value has higher precedence"
+        },
+        {
+          "name": "scope_subject_type",
+          "type": "string",
+          "required": true,
+          "description": "USER/API_KEY/IP/TENANT"
+        },
+        {
+          "name": "scope_resource_type",
+          "type": "string",
+          "required": true,
+          "description": "ENDPOINT/ACTION"
+        },
+        {
+          "name": "match_resource_pattern",
+          "type": "string",
+          "required": true,
+          "description": "Path pattern such as /api/v1/orders/*"
+        },
+        {
+          "name": "match_subject_filter",
+          "type": "json",
+          "required": false,
+          "description": "Optional subject filter attributes"
+        },
+        {
+          "name": "limits",
+          "type": "array",
+          "required": true,
+          "description": "One or multiple limit definitions"
+        }
+      ]
+    },
+    {
+      "name": "TokenBucketLimit",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "required": true,
+          "description": "TOKEN_BUCKET"
+        },
+        {
+          "name": "capacity",
+          "type": "number",
+          "required": true,
+          "description": "Maximum token capacity"
+        },
+        {
+          "name": "refill_tokens_per_sec",
+          "type": "number",
+          "required": true,
+          "description": "Refill rate per second"
+        },
+        {
+          "name": "initial_tokens",
+          "type": "number",
+          "required": false,
+          "description": "Initial token count"
+        },
+        {
+          "name": "max_cost",
+          "type": "number",
+          "required": false,
+          "description": "Max accepted cost per request"
+        },
+        {
+          "name": "behavior_on_denied",
+          "type": "string",
+          "required": true,
+          "description": "Behavior when request is denied"
+        }
+      ]
+    },
+    {
+      "name": "FixedWindowLimit",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "required": true,
+          "description": "Limit kind FIXED_WINDOW"
+        },
+        {
+          "name": "window_seconds",
+          "type": "number",
+          "required": true,
+          "description": "Fixed window length in seconds"
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": true,
+          "description": "Allowed usage in one window"
+        },
+        {
+          "name": "counter_key_granularity",
+          "type": "string",
+          "required": false,
+          "description": "Counter key granularity WINDOW_START"
+        },
+        {
+          "name": "behavior_on_denied",
+          "type": "string",
+          "required": true,
+          "description": "Deny request when usage exceeds limit"
+        }
+      ]
+    },
+    {
+      "name": "Decision",
+      "fields": [
+        {
+          "name": "allowed",
+          "type": "boolean",
+          "required": true,
+          "description": "Decision allow flag"
+        },
+        {
+          "name": "policy_id",
+          "type": "string",
+          "required": false,
+          "description": "Applied policy identifier"
+        },
+        {
+          "name": "retry_after_ms",
+          "type": "number",
+          "required": false,
+          "description": "Retry hint milliseconds on deny"
+        },
+        {
+          "name": "remaining",
+          "type": "number",
+          "required": false,
+          "description": "Remaining budget on allow"
+        },
+        {
+          "name": "reset_at",
+          "type": "date",
+          "required": false,
+          "description": "Window reset datetime for quota"
+        },
+        {
+          "name": "results",
+          "type": "array",
+          "required": true,
+          "description": "Per-limit results"
+        }
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "c615b966-ee49-443b-b0ad-4a7f36ef9d4a",
+      "description": "RL-INV-001: TokenBucket の tokens は 0 <= tokens <= capacity",
+      "expression": "RL-INV-001: TokenBucket の tokens は 0 <= tokens <= capacity",
+      "entities": [
+        "TokenBucketLimit"
+      ],
+      "severity": "error"
+    },
+    {
+      "id": "2b4b8ea4-8b48-4d29-84ed-b5a1d92d4a70",
+      "description": "RL-INV-002: FixedWindow の used は allow 時に limit を超えない",
+      "expression": "RL-INV-002: FixedWindow の used は allow 時に limit を超えない",
+      "entities": [
+        "FixedWindowLimit"
+      ],
+      "severity": "error"
+    },
+    {
+      "id": "6af14d07-f196-438b-926c-f9236f31554e",
+      "description": "RL-INV-003: 同一 key の同時 consume でも上限超過しない",
+      "expression": "RL-INV-003: 同一 key の同時 consume でも上限超過しない",
+      "entities": [],
+      "severity": "error"
+    },
+    {
+      "id": "a7762120-39f3-46c1-9ced-6d7a8fcd69b7",
+      "description": "RL-INV-004: 同一 request_id の再送で二重消費しない",
+      "expression": "RL-INV-004: 同一 request_id の再送で二重消費しない",
+      "entities": [],
+      "severity": "error"
+    },
+    {
+      "id": "4ee0c398-fb87-4152-8bc4-295806c17f12",
+      "description": "RL-RULE-TIME-001: now < last_refill_at の場合は last_refill_at に丸める",
+      "expression": "RL-RULE-TIME-001: now < last_refill_at の場合は last_refill_at に丸める",
+      "entities": [],
+      "severity": "error"
+    }
+  ],
+  "usecases": [
+    {
+      "name": "Create Policy",
+      "actor": "User",
+      "steps": [
+        {
+          "step": 1,
+          "description": "管理者がポリシーを作成する",
+          "type": "action"
+        },
+        {
+          "step": 2,
+          "description": "システムはバリデーションを行う",
+          "type": "action"
+        },
+        {
+          "step": 3,
+          "description": "システムはポリシーを保存する",
+          "type": "action"
+        }
+      ]
+    },
+    {
+      "name": "Consume Request",
+      "actor": "User",
+      "steps": [
+        {
+          "step": 1,
+          "description": "クライアントが consume を呼び出す",
+          "type": "action"
+        },
+        {
+          "step": 2,
+          "description": "システムは対象ポリシーを選択する",
+          "type": "action"
+        },
+        {
+          "step": 3,
+          "description": "システムは全 limit を原子的に評価する",
+          "type": "action"
+        },
+        {
+          "step": 4,
+          "description": "全て allow の場合のみ状態を更新する",
+          "type": "action"
+        }
+      ]
+    },
+    {
+      "name": "Check Request",
+      "actor": "User",
+      "steps": [
+        {
+          "step": 1,
+          "description": "クライアントが check を呼び出す",
+          "type": "action"
+        },
+        {
+          "step": 2,
+          "description": "システムは consume 相当の判定を行う",
+          "type": "action"
+        },
+        {
+          "step": 3,
+          "description": "システムは状態更新を行わない",
+          "type": "action"
+        }
+      ]
+    },
+    {
+      "name": "Idempotent Retry",
+      "actor": "User",
+      "steps": [
+        {
+          "step": 1,
+          "description": "クライアントが同一 request_id を再送する",
+          "type": "action"
+        },
+        {
+          "step": 2,
+          "description": "システムは同一 payload を検証する",
+          "type": "action"
+        },
+        {
+          "step": 3,
+          "description": "一致時は同一 decision を返し不一致時は conflict を返す",
+          "type": "action"
+        }
+      ]
+    }
+  ],
+  "api": [
+    {
+      "method": "POST",
+      "path": "/ratelimit/policies",
+      "summary": "Create policy"
+    },
+    {
+      "method": "GET",
+      "path": "/ratelimit/policies",
+      "summary": "List policies"
+    },
+    {
+      "method": "PATCH",
+      "path": "/ratelimit/policies/:policy_id",
+      "summary": "Update policy"
+    },
+    {
+      "method": "POST",
+      "path": "/ratelimit/consume",
+      "summary": "Check and consume atomically"
+    },
+    {
+      "method": "POST",
+      "path": "/ratelimit/check",
+      "summary": "Check only without consume"
+    }
+  ]
+}

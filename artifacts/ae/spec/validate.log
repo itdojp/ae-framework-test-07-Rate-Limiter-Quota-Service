@@ -1,0 +1,13 @@
+[step] validate spec
+🔍 Validating spec/rate-limiter-quota-service.ae-spec.md...
+✅ Compilation successful
+
+📊 Validation Results:
+   Errors: 0
+   Warnings: 2
+   Info: 0
+
+⚠️ Entity 'Policy' has no business rules defined
+⚠️ Entity 'Decision' has no business rules defined
+
+✅ Validation passed successfully

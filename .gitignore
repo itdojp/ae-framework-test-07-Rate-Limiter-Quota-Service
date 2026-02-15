@@ -2,6 +2,8 @@
 node_modules/
 .pnpm-store/
 dist/
+tests/*.js
+tests/*.d.ts
 
 # OS/editor
 .DS_Store
