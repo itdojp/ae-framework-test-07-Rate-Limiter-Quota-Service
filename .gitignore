@@ -1,0 +1,12 @@
+# Dependencies / build cache
+node_modules/
+.pnpm-store/
+dist/
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# NOTE:
+# artifacts/, reports/, .ae/ are intentionally tracked for ae-framework evaluation.

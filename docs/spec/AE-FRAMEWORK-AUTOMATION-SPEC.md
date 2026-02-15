@@ -1,0 +1,83 @@
+# ae-framework 活用仕様（自動化・生成物保存）
+
+## 1. 文書メタ
+- 文書ID: `RL-AE-SPEC-001`
+- 版: `v0.1`
+- 作成日: `2026-02-15`
+- 対象リポジトリ: `itdojp/ae-framework-test-07-Rate-Limiter-Quota-Service`
+- 参照 ae-framework: `546b9d21daeda171f47924f02195d9e4bd81a3c8`（2026-02-15時点）
+
+## 2. 前提バージョン
+- Codex CLI: `0.101.0`（Issue #2）
+- Node.js: `v22.19.0`
+- pnpm: `10.17.1`
+- ae-framework 要件: Node `>=20.11 <23`, pnpm `10`
+
+## 3. 利用ツール選定
+1. `scripts/codex/ae-playbook.mjs`（`pnpm run codex:run`）
+- 用途: Setup/QA/Spec/Simulation/Formal/Coverage/Adapters の統合実行。
+- 理由: フェーズ別の成果物を `artifacts/ae/context.json` に集約できるため。
+
+2. `pnpm run codex:spec:stdio`
+- 用途: AE-Spec の validate/compile/codegen を JSON I/O で実行。
+- 理由: エージェント連携時の機械可読性が高い。
+
+3. `pnpm run verify:lite`
+- 用途: 日次の軽量品質ゲート（lint/type/unit 等）。
+- 理由: fail-fast で回帰を早期検知できる。
+
+4. `pnpm run pipelines:mutation:quick`
+- 用途: ミューテーションテストによるテスト有効性確認。
+- 理由: 不変条件テストの強度を定量評価できる。
+
+5. `pnpm run verify:formal`（必要に応じて個別 verify を併用）
+- 用途: TLA+/Alloy/SMT/CSP などの形式検証。
+- 理由: RL-INV-003/004（同時実行・冪等性）の安全性エビデンスを補強できる。
+
+## 4. 自動化設定
+### 4.1 基本方針
+- `--resume` を既定使用し、途中失敗後も継続可能な実行形態とする。
+- `--enable-formal` を有効化し、形式検証は可能な限り自動実行する。
+- 失敗方針は以下を採用。
+  - fail-fast: setup / qa / verify-lite
+  - warn-and-continue: formal / adapters / coverage（未導入時を許容）
+
+### 4.2 推奨環境変数
+- `CODEX_ARTIFACTS_DIR=artifacts/codex`
+- `CODEX_RUN_FORMAL=1`
+- `CODEX_TOLERANT=0`
+- `CODEX_SKIP_QUALITY=0`
+
+## 5. 生成物保存仕様（GitHub保存必須）
+### 5.1 保存対象ディレクトリ
+- `artifacts/ae/**`
+- `artifacts/codex/**`
+- `artifacts/hermetic-reports/**`
+- `artifacts/summary/**`
+- `reports/**`
+- `.ae/**`（仕様中間生成物）
+
+### 5.2 保存ルール
+1. ae-framework 実行後、上記パスの差分は全てコミット対象とする。
+2. 生成物のみ更新のコミットを許容し、履歴の欠落を防止する。
+3. 中間生成物の削除は、再現性を損なう場合は実施しない。
+
+### 5.3 実行・保存の標準手順
+1. ae-framework の対象コマンドを実行。
+2. `git status` で生成物差分を確認。
+3. `git add artifacts reports .ae` を実行。
+4. 生成内容を要約したコミットを作成。
+5. GitHub へ push し、Issue/PR に証跡パスを記載。
+
+## 6. トレーサビリティ方針
+- Issue #1 の規則ID（`RL-INV-*`, `RL-ACC-*`）を、テスト名・レポート名・PR説明に明記する。
+- 最低限、以下を紐づける。
+  - RL-INV-001/002: Property / Unit
+  - RL-INV-003: Concurrency test + Formal
+  - RL-INV-004: Idempotency test + Formal
+  - RL-ACC-01/02/03: 受入試験レポート
+
+## 7. 未確定事項
+- 実行モデル（ライブラリ優先かサービス優先か）の最終順序。
+- 形式検証で採用する主ツール（TLC中心かApalache併用か）。
+上記は実装初期のベンチ結果を確認後に確定する。
