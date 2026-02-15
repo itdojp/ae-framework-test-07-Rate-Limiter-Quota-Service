@@ -53,6 +53,7 @@
 10. `pnpm run test:mutation:report`
 - 用途: mutation 実行可否と結果の証跡を report-only で記録。
 - 理由: ツール未設定でも品質評価の欠落状態を可視化できる。
+- 補足: 現行実装は `scripts/automation/run-mutation-synthetic.mjs` による synthetic-smoke を既定採用。
 
 11. `pnpm run pipelines:mutation:quick`
 - 用途: ミューテーションテストによるテスト有効性確認。

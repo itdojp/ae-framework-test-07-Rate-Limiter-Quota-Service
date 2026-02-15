@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-02-15T21:36:02Z",
-  "status": "no_script",
-  "score": null,
-  "message": "mutation script is not configured in this repository",
+  "generatedAt": "2026-02-15T21:37:52Z",
+  "status": "pass",
+  "score": 1,
+  "message": "mutation run completed (synthetic-smoke)",
   "detailLog": "artifacts/summary/mutation-detail.log"
 }

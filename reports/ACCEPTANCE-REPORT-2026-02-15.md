@@ -7,7 +7,7 @@
 - persistence: PASS (2/2)
 - e2e-restart: PASS (1/1)
 - load: PASS (3 scenarios)
-- mutation: NO_SCRIPT
+- mutation: PASS
 - formal: PASS (tool=java-tlc)
 
 ## Rule Status

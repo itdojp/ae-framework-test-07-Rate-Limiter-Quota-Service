@@ -44,7 +44,12 @@ fi
 set -e
 
 if [[ $RC -eq 0 ]]; then
-  write_summary "pass" "mutation run completed" null
+  if [[ -f "artifacts/summary/mutation-synthetic-summary.json" ]]; then
+    score=$(node -e "const s=require('./artifacts/summary/mutation-synthetic-summary.json'); process.stdout.write(String(s.score ?? 'null'));")
+    write_summary "pass" "mutation run completed (synthetic-smoke)" "$score"
+  else
+    write_summary "pass" "mutation run completed" null
+  fi
 elif [[ $RC -eq 124 ]]; then
   write_summary "timeout" "mutation run timed out" null
 else

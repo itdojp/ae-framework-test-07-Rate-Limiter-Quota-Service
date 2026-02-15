@@ -1,0 +1,34 @@
+{
+  "generatedAt": "2026-02-15T21:37:52.141Z",
+  "status": "pass",
+  "method": "synthetic-smoke",
+  "totalMutants": 4,
+  "killedMutants": 4,
+  "score": 1,
+  "mutants": [
+    {
+      "id": "MUT-001",
+      "description": "TOKEN_BUCKET comparator inverted (tokens >= cost -> tokens <= cost)",
+      "killed": true,
+      "evidence": "with tokens=0 and cost=1, mutant allows request unexpectedly"
+    },
+    {
+      "id": "MUT-002",
+      "description": "TOKEN_BUCKET refill clamp removed (min(capacity, ...))",
+      "killed": true,
+      "evidence": "refilled tokens=14 exceeds capacity=10"
+    },
+    {
+      "id": "MUT-003",
+      "description": "FIXED_WINDOW boundary uses ceil instead of floor",
+      "killed": true,
+      "evidence": "expected windowStart=60, mutant=120"
+    },
+    {
+      "id": "MUT-004",
+      "description": "Idempotency cache disabled",
+      "killed": true,
+      "evidence": "firstAllowed=true, replayAllowed(mutant)=false, expectedReplayAllowed=true"
+    }
+  ]
+}

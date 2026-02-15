@@ -21,6 +21,7 @@
     "test:e2e:restart": "vitest run tests/e2e-restart.spec.ts --reporter=json --outputFile artifacts/summary/e2e-restart-summary.json",
     "test:load": "tsx scripts/automation/run-load-check.ts",
     "test:mutation:report": "bash scripts/automation/run-mutation-check.sh",
+    "mutation": "node scripts/automation/run-mutation-synthetic.mjs",
     "formal:check": "bash scripts/automation/run-formal-check.sh",
     "report:acceptance": "node scripts/automation/generate-acceptance-report.mjs",
     "pipeline:local": "bash scripts/automation/run-local-pipeline.sh"

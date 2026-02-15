@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-15T21:36:04.721Z",
+  "generatedAt": "2026-02-15T21:37:54.017Z",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
   "specIr": ".ae/ae-ir.json",
   "testFiles": 7,
@@ -41,8 +41,8 @@
     "scenarios": 3
   },
   "mutation": {
-    "status": "no_script",
-    "score": null
+    "status": "pass",
+    "score": 1
   },
   "formal": {
     "status": "pass",

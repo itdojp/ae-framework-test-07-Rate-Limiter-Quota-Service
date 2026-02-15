@@ -1,1 +1,5 @@
-mutation script is not defined in package.json
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 mutation /home/devuser/work/CodeX/ae-framework_exp07
+> node scripts/automation/run-mutation-synthetic.mjs
+
+synthetic mutation passed: score=1
