@@ -10,6 +10,7 @@
 ## 計画・仕様
 - 開発計画: `docs/plans/DEVELOPMENT-PLAN.md`
 - ae-framework 活用仕様（自動化/生成物保存）: `docs/spec/AE-FRAMEWORK-AUTOMATION-SPEC.md`
+- ae-framework 既知課題: `docs/spec/AE-FRAMEWORK-KNOWN-ISSUES.md`
 - トレーサビリティ表: `docs/spec/TRACEABILITY-MATRIX.md`
 
 ## 実行方法

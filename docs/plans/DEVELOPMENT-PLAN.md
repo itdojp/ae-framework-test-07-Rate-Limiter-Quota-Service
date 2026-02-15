@@ -103,3 +103,4 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
   - `test:ae:toolcheck` を追加し、bridge/cli/playbook の健全性を定点観測
   - `ae-playbook --resume` と `--no-resume` の互換性差分を証跡化
   - 受入レポートと context に toolcheck 結果を統合
+  - 既知課題ドキュメント `docs/spec/AE-FRAMEWORK-KNOWN-ISSUES.md` を追加

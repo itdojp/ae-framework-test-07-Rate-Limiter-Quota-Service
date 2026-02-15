@@ -136,3 +136,7 @@ pnpm run pipeline:local
 - 本リポジトリでは `scripts/automation/run-ae-spec-stdio-check.mjs` が自動で fallback（`spec-compiler/dist/cli.js`）を実行し、`artifacts/summary/ae-spec-stdio-summary.json` に結果を保存する。
 - `scripts/codex/ae-playbook.mjs --resume` は context 形式差異により失敗する場合がある。
 - 本リポジトリでは `scripts/automation/run-ae-framework-toolcheck.mjs` が `resume` / `no_resume` の両モードを監視し、`artifacts/summary/ae-framework-toolcheck-summary.json` に結果を保存する。
+
+## 9. 既知課題トラッキング
+- 既知課題の正本は `docs/spec/AE-FRAMEWORK-KNOWN-ISSUES.md` とする。
+- 既知課題は `AE-KNOWN-*` ID で管理し、Issue/コミット/証跡パスを相互参照する。
