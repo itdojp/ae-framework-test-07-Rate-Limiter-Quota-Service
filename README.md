@@ -34,53 +34,58 @@ pnpm run test:ae:spec:stdio
 pnpm run test:ae:toolcheck
 ```
 
-5. Stdioブリッジを直接利用（JSONをstdinで投入）
+5. ae-playbook resume-safe 実行（context正規化付き）
+```bash
+pnpm run test:ae:playbook:resume-safe
+```
+
+6. Stdioブリッジを直接利用（JSONをstdinで投入）
 ```bash
 echo '{"action":"validate","args":{"inputPath":"spec/rate-limiter-quota-service.ae-spec.md","relaxed":true,"maxWarnings":200}}' | pnpm run codex:spec:stdio
 ```
 
-6. 受入基準テストのみ実行
+7. 受入基準テストのみ実行
 ```bash
 pnpm run test:acceptance
 ```
 
-7. Property/MBT テスト実行
+8. Property/MBT テスト実行
 ```bash
 pnpm run test:property
 pnpm run test:mbt
 ```
 
-8. 永続化テスト実行（json-file backend）
+9. 永続化テスト実行（json-file backend）
 ```bash
 pnpm run test:persistence
 ```
 
-9. E2E 再起動テスト実行
+10. E2E 再起動テスト実行
 ```bash
 pnpm run test:e2e:restart
 ```
 
-10. 負荷検証実行
+11. 負荷検証実行
 ```bash
 pnpm run test:load
 ```
 
-11. Mutation レポート生成（script 未定義時は report-only）
+12. Mutation レポート生成（script 未定義時は report-only）
 ```bash
 pnpm run test:mutation:report
 ```
 
-12. Formal チェック実行（TLC未導入時は report-only）
+13. Formal チェック実行（TLC未導入時は report-only）
 ```bash
 pnpm run formal:check
 ```
 
-13. 受入レポート生成
+14. 受入レポート生成
 ```bash
 pnpm run report:acceptance
 ```
 
-14. サービス起動
+15. サービス起動
 ```bash
 pnpm run dev
 ```

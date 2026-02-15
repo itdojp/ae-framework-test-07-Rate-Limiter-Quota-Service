@@ -26,6 +26,7 @@
     "test:e2e:restart": "vitest run tests/e2e-restart.spec.ts --reporter=json --outputFile artifacts/summary/e2e-restart-summary.json",
     "test:ae:spec:stdio": "node scripts/automation/run-ae-spec-stdio-check.mjs",
     "test:ae:toolcheck": "node scripts/automation/run-ae-framework-toolcheck.mjs",
+    "test:ae:playbook:resume-safe": "node scripts/automation/run-ae-playbook-resume-safe.mjs",
     "test:load": "tsx scripts/automation/run-load-check.ts",
     "test:mutation:report": "bash scripts/automation/run-mutation-check.sh",
     "mutation": "node scripts/automation/run-mutation-synthetic.mjs",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-15T23:39:00.330Z",
+  "generatedAt": "2026-02-15T23:43:50.860Z",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
   "specIr": ".ae/ae-ir.json",
   "testFiles": 7,
@@ -52,10 +52,15 @@
   },
   "aeFrameworkToolcheck": {
     "status": "warn",
-    "total": 5,
-    "success": 3,
+    "total": 6,
+    "success": 4,
     "failed": 2,
     "unexpectedFailures": 0
+  },
+  "aePlaybookResumeSafe": {
+    "status": "pass",
+    "normalized": false,
+    "reason": "already_compatible"
   },
   "formal": {
     "status": "pass",

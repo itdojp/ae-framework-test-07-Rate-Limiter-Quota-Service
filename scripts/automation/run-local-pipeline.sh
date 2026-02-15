@@ -8,7 +8,7 @@ AE_FRAMEWORK_ROOT=${AE_FRAMEWORK_ROOT:-/tmp/ae-framework-20260215}
 SPEC_INPUT=${SPEC_INPUT:-spec/rate-limiter-quota-service.ae-spec.md}
 SPEC_IR=${SPEC_IR:-.ae/ae-ir.json}
 
-mkdir -p artifacts/ae/spec artifacts/ae/test artifacts/ae/formal artifacts/summary artifacts/codex/spec-stdio artifacts/codex/toolcheck .ae artifacts/hermetic-reports/formal
+mkdir -p artifacts/ae/spec artifacts/ae/test artifacts/ae/formal artifacts/summary artifacts/codex/spec-stdio artifacts/codex/toolcheck artifacts/codex/playbook-resume-safe .ae artifacts/hermetic-reports/formal
 
 if [[ ! -f "$AE_FRAMEWORK_ROOT/packages/spec-compiler/dist/cli.js" ]]; then
   pnpm --dir "$AE_FRAMEWORK_ROOT" install --filter @ae-framework/spec-compiler... --no-frozen-lockfile
@@ -43,6 +43,13 @@ cp artifacts/summary/ae-spec-stdio-summary.json artifacts/ae/spec/ae-spec-stdio-
 } | tee artifacts/ae/spec/ae-framework-toolcheck.log
 
 cp artifacts/summary/ae-framework-toolcheck-summary.json artifacts/ae/spec/ae-framework-toolcheck-summary.json
+
+{
+  echo "[step] run ae-playbook resume-safe wrapper"
+  pnpm run test:ae:playbook:resume-safe
+} | tee artifacts/ae/spec/ae-playbook-resume-safe.log
+
+cp artifacts/summary/ae-playbook-resume-safe-summary.json artifacts/ae/spec/ae-playbook-resume-safe-summary.json
 
 {
   echo "[step] run tests with json artifacts"
@@ -131,6 +138,8 @@ const aeSpecStdioPath = path.resolve("artifacts/summary/ae-spec-stdio-summary.js
 const aeSpecStdio = JSON.parse(fs.readFileSync(aeSpecStdioPath, "utf8"));
 const aeToolcheckPath = path.resolve("artifacts/summary/ae-framework-toolcheck-summary.json");
 const aeToolcheck = JSON.parse(fs.readFileSync(aeToolcheckPath, "utf8"));
+const aePlaybookResumeSafePath = path.resolve("artifacts/summary/ae-playbook-resume-safe-summary.json");
+const aePlaybookResumeSafe = JSON.parse(fs.readFileSync(aePlaybookResumeSafePath, "utf8"));
 const formalPath = path.resolve("artifacts/summary/formal-summary.json");
 const formal = JSON.parse(fs.readFileSync(formalPath, "utf8"));
 const out = {
@@ -191,6 +200,11 @@ const out = {
     success: aeToolcheck.counts ? aeToolcheck.counts.success : null,
     failed: aeToolcheck.counts ? aeToolcheck.counts.failed : null,
     unexpectedFailures: aeToolcheck.counts ? aeToolcheck.counts.unexpectedFailures : null
+  },
+  aePlaybookResumeSafe: {
+    status: aePlaybookResumeSafe.status ?? null,
+    normalized: aePlaybookResumeSafe.normalization ? aePlaybookResumeSafe.normalization.normalized : null,
+    reason: aePlaybookResumeSafe.normalization ? aePlaybookResumeSafe.normalization.reason : null
   },
   formal: {
     status: formal.status ?? "unknown",

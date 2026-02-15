@@ -15,6 +15,7 @@ const load = readJson('artifacts/summary/load-summary.json');
 const mutation = readJson('artifacts/summary/mutation-summary.json');
 const aeSpecStdio = readJson('artifacts/summary/ae-spec-stdio-summary.json');
 const aeToolcheck = readJson('artifacts/summary/ae-framework-toolcheck-summary.json');
+const aePlaybookResumeSafe = readJson('artifacts/summary/ae-playbook-resume-safe-summary.json');
 const formal = readJson('artifacts/summary/formal-summary.json');
 const traceability = readJson('artifacts/summary/traceability-summary.json');
 
@@ -34,6 +35,7 @@ const lines = [
   `- mutation: ${String(mutation.status || 'unknown').toUpperCase()}`,
   `- ae-spec-stdio: ${String(aeSpecStdio.status || 'unknown').toUpperCase()} (parity=${String(aeSpecStdio.irParity?.parity ?? 'n/a')})`,
   `- ae-toolcheck: ${String(aeToolcheck.status || 'unknown').toUpperCase()} (${aeToolcheck.counts?.success ?? 0}/${aeToolcheck.counts?.total ?? 0})`,
+  `- ae-playbook-resume-safe: ${String(aePlaybookResumeSafe.status || 'unknown').toUpperCase()} (normalized=${String(aePlaybookResumeSafe.normalization?.normalized ?? 'n/a')})`,
   `- formal: ${String(formal.status || 'unknown').toUpperCase()} (tool=${formal.tool || 'n/a'})`,
   '',
   '## Rule Status',
@@ -49,6 +51,7 @@ const lines = [
   '- artifacts/summary/mutation-summary.json',
   '- artifacts/summary/ae-spec-stdio-summary.json',
   '- artifacts/summary/ae-framework-toolcheck-summary.json',
+  '- artifacts/summary/ae-playbook-resume-safe-summary.json',
   '- artifacts/summary/formal-summary.json',
   '- artifacts/summary/traceability-summary.json',
   '- artifacts/hermetic-reports/formal/tlc.log',

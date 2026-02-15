@@ -30,9 +30,11 @@
   - 既存 context を引き継ぐ再開運用が不安定。
 - 回避策:
   - `--resume` を使わない playbook 実行を採用、または context 正規化を挟む。
-  - 本リポジトリでは `test:ae:toolcheck` で resume/no-resume を毎回観測。
+  - 本リポジトリでは `test:ae:playbook:resume-safe` で context 正規化 + resume を実行。
+  - `test:ae:toolcheck` で resume/no-resume/resume-safe を毎回観測。
 - 証跡:
   - `artifacts/codex/toolcheck/framework_ae_playbook_resume.stderr.log`
+  - `artifacts/summary/ae-playbook-resume-safe-summary.json`
   - `artifacts/summary/ae-framework-toolcheck-summary.json`
 
 ## 3. 運用方針

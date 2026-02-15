@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-02-15T23:43:39.285Z",
+  "status": "pass",
+  "frameworkRoot": "/tmp/ae-framework-20260215",
+  "playbookPath": "/tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs",
+  "resume": true,
+  "skip": "setup,qa,spec,sim,formal",
+  "normalization": {
+    "seeded": false,
+    "normalized": false,
+    "reason": "already_compatible"
+  },
+  "exitCode": 0,
+  "signal": null,
+  "artifacts": {
+    "stdout": "artifacts/codex/playbook-resume-safe/playbook.stdout.log",
+    "stderr": "artifacts/codex/playbook-resume-safe/playbook.stderr.log"
+  }
+}

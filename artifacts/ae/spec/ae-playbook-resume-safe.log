@@ -1,0 +1,6 @@
+[step] run ae-playbook resume-safe wrapper
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 test:ae:playbook:resume-safe /home/devuser/work/CodeX/ae-framework_exp07
+> node scripts/automation/run-ae-playbook-resume-safe.mjs
+
+ae-playbook-resume-safe: pass

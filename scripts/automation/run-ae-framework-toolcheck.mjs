@@ -195,6 +195,14 @@ function main() {
       expect: 'success',
       timeoutSec: 90,
     },
+    {
+      id: 'local_ae_playbook_resume_safe',
+      description: '本リポジトリの resume-safe wrapper 実行',
+      command: 'pnpm',
+      args: ['run', 'test:ae:playbook:resume-safe'],
+      expect: 'success',
+      timeoutSec: 90,
+    },
   ];
 
   const results = probes.map(runProbe);

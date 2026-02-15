@@ -71,6 +71,10 @@
 - 用途: ae-framework ツール群（bridge/cli/playbook）の健全性をマトリクス評価する。
 - 理由: 既知不整合と回避策を同一フォーマットで継続観測できる。
 
+15. `pnpm run test:ae:playbook:resume-safe`
+- 用途: `ae-playbook --resume` 実行前に context を正規化し、互換性を維持して実行する。
+- 理由: 既知課題（AE-KNOWN-002）の実運用回避策を自動化できる。
+
 ## 4. 自動化設定
 ### 4.1 基本方針
 - `--resume` を既定使用し、途中失敗後も継続可能な実行形態とする。

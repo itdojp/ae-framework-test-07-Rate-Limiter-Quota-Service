@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-02-15T23:38:48.376Z",
+  "generatedAt": "2026-02-15T23:43:38.886Z",
   "status": "warn",
   "frameworkRoot": "/tmp/ae-framework-20260215",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
   "counts": {
-    "total": 5,
-    "success": 3,
+    "total": 6,
+    "success": 4,
     "failed": 2,
     "unexpectedFailures": 0,
     "unresolvedKnownIssues": 2,
@@ -34,7 +34,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": false,
-      "elapsedMs": 46,
+      "elapsedMs": 35,
       "command": "node /tmp/ae-framework-20260215/scripts/codex/spec-stdio.mjs",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/framework_spec_stdio_direct_validate.stdout.log",
@@ -50,7 +50,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": true,
-      "elapsedMs": 521,
+      "elapsedMs": 452,
       "command": "pnpm run codex:spec:stdio",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/local_codex_spec_stdio_proxy_validate.stdout.log",
@@ -66,7 +66,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": null,
-      "elapsedMs": 84,
+      "elapsedMs": 85,
       "command": "node /tmp/ae-framework-20260215/packages/spec-compiler/dist/cli.js validate -i spec/rate-limiter-quota-service.ae-spec.md --max-errors 0 --max-warnings 200 --relaxed",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/framework_spec_compiler_cli_validate.stdout.log",
@@ -82,7 +82,7 @@
       "exitCode": 1,
       "signal": null,
       "responseOk": null,
-      "elapsedMs": 35,
+      "elapsedMs": 34,
       "command": "node /tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs --resume --skip=setup,qa,spec,sim,formal",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/framework_ae_playbook_resume.stdout.log",
@@ -98,11 +98,27 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": null,
-      "elapsedMs": 45,
+      "elapsedMs": 42,
       "command": "node /tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs --skip=setup,qa,spec,sim,formal",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/framework_ae_playbook_no_resume.stdout.log",
         "stderr": "artifacts/codex/toolcheck/framework_ae_playbook_no_resume.stderr.log"
+      }
+    },
+    {
+      "id": "local_ae_playbook_resume_safe",
+      "description": "本リポジトリの resume-safe wrapper 実行",
+      "expected": "success",
+      "success": true,
+      "expectationMatched": true,
+      "exitCode": 0,
+      "signal": null,
+      "responseOk": null,
+      "elapsedMs": 394,
+      "command": "pnpm run test:ae:playbook:resume-safe",
+      "artifacts": {
+        "stdout": "artifacts/codex/toolcheck/local_ae_playbook_resume_safe.stdout.log",
+        "stderr": "artifacts/codex/toolcheck/local_ae_playbook_resume_safe.stderr.log"
       }
     }
   ]
