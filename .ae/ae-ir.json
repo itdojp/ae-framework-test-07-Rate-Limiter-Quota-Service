@@ -2,8 +2,8 @@
   "version": "1.0.0",
   "metadata": {
     "name": "RateLimiterQuotaServiceSpec",
-    "created": "2026-02-15T12:58:38.693Z",
-    "updated": "2026-02-15T12:58:38.693Z",
+    "created": "2026-02-15T13:00:57.691Z",
+    "updated": "2026-02-15T13:00:57.691Z",
     "description": "Rate limiter and quota service specification for concurrent-safe API protection."
   },
   "glossary": [
@@ -218,7 +218,7 @@
   ],
   "invariants": [
     {
-      "id": "cf2cd146-f5f7-4cee-9f56-b06f8297dfc9",
+      "id": "fa12f4a3-d0be-4731-92b5-ec6a9a885287",
       "description": "RL-INV-001: TokenBucket の tokens は 0 <= tokens <= capacity",
       "expression": "RL-INV-001: TokenBucket の tokens は 0 <= tokens <= capacity",
       "entities": [
@@ -227,7 +227,7 @@
       "severity": "error"
     },
     {
-      "id": "21f5713e-e2ad-48d2-a644-f02cd4360799",
+      "id": "7a4ec24c-ff6f-4c6d-a619-bed8cdb8b7d2",
       "description": "RL-INV-002: FixedWindow の used は allow 時に limit を超えない",
       "expression": "RL-INV-002: FixedWindow の used は allow 時に limit を超えない",
       "entities": [
@@ -236,21 +236,21 @@
       "severity": "error"
     },
     {
-      "id": "3f938cfc-0f3b-49fd-8b91-fc02dd0b862a",
+      "id": "d77218c0-3975-42e6-bea0-1ffc951ab2d1",
       "description": "RL-INV-003: 同一 key の同時 consume でも上限超過しない",
       "expression": "RL-INV-003: 同一 key の同時 consume でも上限超過しない",
       "entities": [],
       "severity": "error"
     },
     {
-      "id": "c19bc005-0991-45eb-a11e-7abab5e54f78",
+      "id": "e0f6c4e1-b0e0-4463-8cd8-5cddb6e3f592",
       "description": "RL-INV-004: 同一 request_id の再送で二重消費しない",
       "expression": "RL-INV-004: 同一 request_id の再送で二重消費しない",
       "entities": [],
       "severity": "error"
     },
     {
-      "id": "2f016518-d262-47c9-86cf-c4d9e1730957",
+      "id": "969cc0bd-7cea-4460-8801-9fd22c15aa06",
       "description": "RL-RULE-TIME-001: now < last_refill_at の場合は last_refill_at に丸める",
       "expression": "RL-RULE-TIME-001: now < last_refill_at の場合は last_refill_at に丸める",
       "entities": [],

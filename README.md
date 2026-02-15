@@ -39,7 +39,12 @@ pnpm run test:mbt
 pnpm run formal:check
 ```
 
-6. サービス起動
+6. 受入レポート生成
+```bash
+pnpm run report:acceptance
+```
+
+7. サービス起動
 ```bash
 pnpm run dev
 ```

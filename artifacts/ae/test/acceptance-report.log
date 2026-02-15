@@ -1,0 +1,7 @@
+[step] generate acceptance report
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 report:acceptance /home/devuser/work/CodeX/ae-framework_exp07
+> node scripts/automation/generate-acceptance-report.mjs
+
+generated: /home/devuser/work/CodeX/ae-framework_exp07/reports/ACCEPTANCE-REPORT-2026-02-15.md
+generated: /home/devuser/work/CodeX/ae-framework_exp07/reports/ACCEPTANCE-REPORT-LATEST.md

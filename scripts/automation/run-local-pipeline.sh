@@ -128,4 +128,9 @@ const traceability = {
 fs.writeFileSync("artifacts/summary/traceability-summary.json", JSON.stringify(traceability, null, 2));
 '
 
+{
+  echo "[step] generate acceptance report"
+  pnpm run report:acceptance
+} | tee artifacts/ae/test/acceptance-report.log
+
 echo "pipeline completed"

@@ -83,5 +83,6 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
   - MBT: `tests/mbt.spec.ts`
   - Formal: `spec/formal/RateLimiterQuota.tla` + `scripts/automation/run-formal-check.sh`
   - 自動化: `pipeline:local` で property/mbt/formal を一括実行
-- M5: 部分完了
+- M5: 完了
   - RL-ACC-01/02/03 テストを `tests/acceptance.spec.ts` で実装し、pass を確認
+  - 受入レポートを `reports/ACCEPTANCE-REPORT-LATEST.md` と日付付きファイルへ自動生成

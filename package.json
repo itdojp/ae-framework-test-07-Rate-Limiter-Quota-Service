@@ -18,6 +18,7 @@
     "test:property": "vitest run tests/property.spec.ts --reporter=json --outputFile artifacts/summary/property-summary.json",
     "test:mbt": "vitest run tests/mbt.spec.ts --reporter=json --outputFile artifacts/summary/mbt-summary.json",
     "formal:check": "bash scripts/automation/run-formal-check.sh",
+    "report:acceptance": "node scripts/automation/generate-acceptance-report.mjs",
     "pipeline:local": "bash scripts/automation/run-local-pipeline.sh"
   },
   "dependencies": {

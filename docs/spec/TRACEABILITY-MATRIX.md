@@ -28,3 +28,4 @@
 `pipeline:local` 実行時に以下を更新する。
 - `artifacts/summary/traceability-summary.json`
 - `artifacts/ae/context.json`
+- `reports/ACCEPTANCE-REPORT-LATEST.md`

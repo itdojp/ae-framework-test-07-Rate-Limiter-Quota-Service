@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-15T12:58:45.265Z",
+  "generatedAt": "2026-02-15T13:01:03.882Z",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
   "specIr": ".ae/ae-ir.json",
   "testFiles": 5,
