@@ -38,11 +38,15 @@
 - 用途: TLA+ 形式仕様の検査（TLC未導入時は `tool_not_available` を証跡化）。
 - 理由: Formal 実行可否を含めた再現可能な証跡を残せる。
 
-7. `pnpm run pipelines:mutation:quick`
+7. `pnpm run test:persistence`
+- 用途: json-file backend で再起動後の状態保持を検証。
+- 理由: 実運用に近い構成で idempotency/state 維持を検証できる。
+
+8. `pnpm run pipelines:mutation:quick`
 - 用途: ミューテーションテストによるテスト有効性確認。
 - 理由: 不変条件テストの強度を定量評価できる。
 
-8. `pnpm run verify:formal`（必要に応じて個別 verify を併用）
+9. `pnpm run verify:formal`（必要に応じて個別 verify を併用）
 - 用途: TLA+/Alloy/SMT/CSP などの形式検証。
 - 理由: RL-INV-003/004（同時実行・冪等性）の安全性エビデンスを補強できる。
 
@@ -61,6 +65,8 @@
 - `CODEX_SKIP_QUALITY=0`
 - `FORMAL_TIMEOUT_SEC=60`
 - `TLA_TOOLS_JAR=<path/to/tla2tools.jar>`（任意）
+- `STATE_BACKEND=memory|file`
+- `STATE_FILE_PATH=artifacts/ae/runtime-state.json`（`STATE_BACKEND=file` 時）
 
 ## 5. 生成物保存仕様（GitHub保存必須）
 ### 5.1 保存対象ディレクトリ

@@ -14,16 +14,12 @@ import {
 import { IdempotencyConflictError, NotFoundError, ValidationError } from './errors.js';
 import { stableHashPayload } from './hash.js';
 import { KeyedMutex } from './mutex.js';
+import { createInMemoryEngineStorage, EngineStorage, IdempotencyEntry } from './storage.js';
 
 interface EngineOptions {
   idempotency_ttl_ms?: number;
   now?: () => Date;
-}
-
-interface IdempotencyEntry {
-  payload_hash: string;
-  decision: Decision;
-  expires_at_ms: number;
+  storage?: EngineStorage;
 }
 
 interface LimitEvaluation {
@@ -34,17 +30,24 @@ interface LimitEvaluation {
 const DEFAULT_IDEMPOTENCY_TTL_MS = 10 * 60 * 1000;
 
 export class RateLimiterEngine {
-  private readonly policies = new Map<string, Policy>();
-  private readonly bucketStates = new Map<string, BucketState>();
-  private readonly windowStates = new Map<string, WindowCounterState>();
-  private readonly idempotencyStore = new Map<string, IdempotencyEntry>();
+  private readonly policies: Map<string, Policy>;
+  private readonly bucketStates: Map<string, BucketState>;
+  private readonly windowStates: Map<string, WindowCounterState>;
+  private readonly idempotencyStore: Map<string, IdempotencyEntry>;
   private readonly mutex = new KeyedMutex();
   private readonly idempotencyTtlMs: number;
   private readonly nowFn: () => Date;
+  private readonly persistStorage: () => void;
 
   constructor(options: EngineOptions = {}) {
     this.idempotencyTtlMs = options.idempotency_ttl_ms ?? DEFAULT_IDEMPOTENCY_TTL_MS;
     this.nowFn = options.now ?? (() => new Date());
+    const storage = options.storage ?? createInMemoryEngineStorage();
+    this.policies = storage.policies;
+    this.bucketStates = storage.bucketStates;
+    this.windowStates = storage.windowStates;
+    this.idempotencyStore = storage.idempotencyStore;
+    this.persistStorage = storage.persist;
   }
 
   upsertPolicy(input: Omit<Policy, 'created_at' | 'updated_at'>): Policy {
@@ -60,6 +63,7 @@ export class RateLimiterEngine {
     };
 
     this.policies.set(next.policy_id, next);
+    this.persistStorage();
     return structuredClone(next);
   }
 
@@ -88,6 +92,7 @@ export class RateLimiterEngine {
 
     this.validatePolicy(next);
     this.policies.set(policyId, next);
+    this.persistStorage();
     return structuredClone(next);
   }
 
@@ -148,6 +153,7 @@ export class RateLimiterEngine {
             decision: structuredClone(decision),
             expires_at_ms: nowMs + this.idempotencyTtlMs,
           });
+          this.persistStorage();
         }
 
         return decision;
@@ -204,6 +210,7 @@ export class RateLimiterEngine {
           decision: structuredClone(decision),
           expires_at_ms: nowMs + this.idempotencyTtlMs,
         });
+        this.persistStorage();
       }
 
       return decision;
@@ -253,6 +260,7 @@ export class RateLimiterEngine {
             last_refill_at_ms: effectiveNowMs,
             updated_at_ms: effectiveNowMs,
           });
+          this.persistStorage();
         }
       : null;
 
@@ -295,6 +303,7 @@ export class RateLimiterEngine {
             used: usedAfterDecision,
             updated_at_ms: nowMs,
           });
+          this.persistStorage();
         }
       : null;
 
@@ -332,10 +341,15 @@ export class RateLimiterEngine {
   }
 
   private cleanupIdempotency(nowMs: number): void {
+    let mutated = false;
     for (const [key, value] of this.idempotencyStore.entries()) {
       if (value.expires_at_ms <= nowMs) {
         this.idempotencyStore.delete(key);
+        mutated = true;
       }
+    }
+    if (mutated) {
+      this.persistStorage();
     }
   }
 

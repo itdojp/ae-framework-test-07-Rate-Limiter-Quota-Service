@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-15T13:01:03.883Z",
+  "generatedAt": "2026-02-15T13:26:16.175Z",
   "items": [
     {
       "ruleId": "RL-INV-001",
@@ -19,7 +19,7 @@
     {
       "ruleId": "RL-INV-004",
       "status": "pass",
-      "evidence": "tests/mbt.spec.ts"
+      "evidence": "tests/mbt.spec.ts, tests/persistence.spec.ts"
     },
     {
       "ruleId": "RL-ACC-01",

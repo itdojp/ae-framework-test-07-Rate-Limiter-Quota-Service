@@ -59,6 +59,13 @@ cp artifacts/summary/property-summary.json artifacts/ae/test/property-summary.js
 cp artifacts/summary/mbt-summary.json artifacts/ae/test/mbt-summary.json
 
 {
+  echo "[step] run persistence tests"
+  pnpm run test:persistence
+} | tee artifacts/ae/test/persistence.log
+
+cp artifacts/summary/persistence-summary.json artifacts/ae/test/persistence-summary.json
+
+{
   echo "[step] run formal check"
   pnpm run formal:check
 } | tee artifacts/ae/formal/formal.log
@@ -77,6 +84,8 @@ const propertyPath = path.resolve("artifacts/summary/property-summary.json");
 const property = JSON.parse(fs.readFileSync(propertyPath, "utf8"));
 const mbtPath = path.resolve("artifacts/summary/mbt-summary.json");
 const mbt = JSON.parse(fs.readFileSync(mbtPath, "utf8"));
+const persistencePath = path.resolve("artifacts/summary/persistence-summary.json");
+const persistence = JSON.parse(fs.readFileSync(persistencePath, "utf8"));
 const formalPath = path.resolve("artifacts/summary/formal-summary.json");
 const formal = JSON.parse(fs.readFileSync(formalPath, "utf8"));
 const out = {
@@ -105,6 +114,12 @@ const out = {
     failed: mbt.numFailedTests ?? null,
     success: mbt.success ?? null
   },
+  persistence: {
+    suites: persistence.numTotalTestSuites ?? null,
+    passed: persistence.numPassedTests ?? null,
+    failed: persistence.numFailedTests ?? null,
+    success: persistence.success ?? null
+  },
   formal: {
     status: formal.status ?? "unknown",
     tool: formal.tool ?? null,
@@ -119,7 +134,7 @@ const traceability = {
     { ruleId: "RL-INV-001", status: property.success ? "pass" : "fail", evidence: "tests/property.spec.ts" },
     { ruleId: "RL-INV-002", status: property.success ? "pass" : "fail", evidence: "tests/property.spec.ts" },
     { ruleId: "RL-INV-003", status: mbt.success ? "pass" : "fail", evidence: "tests/mbt.spec.ts" },
-    { ruleId: "RL-INV-004", status: mbt.success ? "pass" : "fail", evidence: "tests/mbt.spec.ts" },
+    { ruleId: "RL-INV-004", status: (mbt.success && persistence.success) ? "pass" : "fail", evidence: "tests/mbt.spec.ts, tests/persistence.spec.ts" },
     { ruleId: "RL-ACC-01", status: acceptance.success ? "pass" : "fail", evidence: "tests/acceptance.spec.ts" },
     { ruleId: "RL-ACC-02", status: acceptance.success ? "pass" : "fail", evidence: "tests/acceptance.spec.ts" },
     { ruleId: "RL-ACC-03", status: acceptance.success ? "pass" : "fail", evidence: "tests/acceptance.spec.ts" }

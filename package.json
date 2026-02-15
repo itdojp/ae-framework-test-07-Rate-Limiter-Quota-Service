@@ -17,6 +17,7 @@
     "test:acceptance": "vitest run tests/acceptance.spec.ts --reporter=json --outputFile artifacts/summary/acceptance-summary.json",
     "test:property": "vitest run tests/property.spec.ts --reporter=json --outputFile artifacts/summary/property-summary.json",
     "test:mbt": "vitest run tests/mbt.spec.ts --reporter=json --outputFile artifacts/summary/mbt-summary.json",
+    "test:persistence": "vitest run tests/persistence.spec.ts --reporter=json --outputFile artifacts/summary/persistence-summary.json",
     "formal:check": "bash scripts/automation/run-formal-check.sh",
     "report:acceptance": "node scripts/automation/generate-acceptance-report.mjs",
     "pipeline:local": "bash scripts/automation/run-local-pipeline.sh"

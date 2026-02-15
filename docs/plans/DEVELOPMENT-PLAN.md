@@ -75,9 +75,10 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
   - ライブラリ: `src/domain/rate-limiter-engine.ts`
   - API: `src/server/app.ts`
   - テスト: `tests/engine.spec.ts`, `tests/api.spec.ts`
-- M3: 部分完了
+- M3: 完了
   - 同時実行制御: `KeyedMutex` による tenant 単位の直列化を実装
   - 冪等性: request_id + payload hash の再送判定を実装
+  - json-file backend を追加し、再起動時に policy/state/idempotency が保持されることを `tests/persistence.spec.ts` で検証
 - M4: 完了
   - Property: `tests/property.spec.ts`
   - MBT: `tests/mbt.spec.ts`

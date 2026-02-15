@@ -34,19 +34,33 @@ pnpm run test:property
 pnpm run test:mbt
 ```
 
-5. Formal チェック実行（TLC未導入時は report-only）
+5. 永続化テスト実行（json-file backend）
+```bash
+pnpm run test:persistence
+```
+
+6. Formal チェック実行（TLC未導入時は report-only）
 ```bash
 pnpm run formal:check
 ```
 
-6. 受入レポート生成
+7. 受入レポート生成
 ```bash
 pnpm run report:acceptance
 ```
 
-7. サービス起動
+8. サービス起動
 ```bash
 pnpm run dev
+```
+
+## 永続化バックエンド
+- 既定: `STATE_BACKEND=memory`
+- ファイル永続化: `STATE_BACKEND=file` と `STATE_FILE_PATH` を設定
+
+例:
+```bash
+STATE_BACKEND=file STATE_FILE_PATH=artifacts/ae/runtime-state.json pnpm run dev
 ```
 
 ## 生成物管理ポリシー
