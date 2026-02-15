@@ -37,11 +37,20 @@ fi
 
 cp artifacts/summary/vitest-summary.json artifacts/ae/test/vitest-summary.json
 
+{
+  echo "[step] run acceptance tests"
+  pnpm run test:acceptance
+} | tee artifacts/ae/test/acceptance.log
+
+cp artifacts/summary/acceptance-summary.json artifacts/ae/test/acceptance-summary.json
+
 node -e '
 const fs = require("fs");
 const path = require("path");
 const summaryPath = path.resolve("artifacts/summary/vitest-summary.json");
 const vitest = JSON.parse(fs.readFileSync(summaryPath, "utf8"));
+const acceptancePath = path.resolve("artifacts/summary/acceptance-summary.json");
+const acceptance = JSON.parse(fs.readFileSync(acceptancePath, "utf8"));
 const out = {
   generatedAt: new Date().toISOString(),
   specInput: "spec/rate-limiter-quota-service.ae-spec.md",
@@ -49,7 +58,13 @@ const out = {
   testFiles: vitest.testResults ? vitest.testResults.length : 0,
   numPassedTests: vitest.numPassedTests ?? null,
   numFailedTests: vitest.numFailedTests ?? null,
-  success: vitest.success ?? null
+  success: vitest.success ?? null,
+  acceptance: {
+    suites: acceptance.numTotalTestSuites ?? null,
+    passed: acceptance.numPassedTests ?? null,
+    failed: acceptance.numFailedTests ?? null,
+    success: acceptance.success ?? null
+  }
 };
 fs.writeFileSync("artifacts/ae/context.json", JSON.stringify(out, null, 2));
 '

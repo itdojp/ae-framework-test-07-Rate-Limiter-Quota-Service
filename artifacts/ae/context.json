@@ -1,9 +1,15 @@
 {
-  "generatedAt": "2026-02-15T12:43:03.341Z",
+  "generatedAt": "2026-02-15T12:44:50.743Z",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
   "specIr": ".ae/ae-ir.json",
-  "testFiles": 2,
-  "numPassedTests": 7,
+  "testFiles": 3,
+  "numPassedTests": 10,
   "numFailedTests": 0,
-  "success": true
+  "success": true,
+  "acceptance": {
+    "suites": 2,
+    "passed": 3,
+    "failed": 0,
+    "success": true
+  }
 }

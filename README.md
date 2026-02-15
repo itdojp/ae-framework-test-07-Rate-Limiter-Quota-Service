@@ -22,7 +22,12 @@ pnpm install
 pnpm run pipeline:local
 ```
 
-3. サービス起動
+3. 受入基準テストのみ実行
+```bash
+pnpm run test:acceptance
+```
+
+4. サービス起動
 ```bash
 pnpm run dev
 ```

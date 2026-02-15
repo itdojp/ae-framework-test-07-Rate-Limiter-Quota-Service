@@ -14,6 +14,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:artifacts": "vitest run --reporter=json --outputFile artifacts/summary/vitest-summary.json",
+    "test:acceptance": "vitest run tests/acceptance.spec.ts --reporter=json --outputFile artifacts/summary/acceptance-summary.json",
     "pipeline:local": "bash scripts/automation/run-local-pipeline.sh"
   },
   "dependencies": {
