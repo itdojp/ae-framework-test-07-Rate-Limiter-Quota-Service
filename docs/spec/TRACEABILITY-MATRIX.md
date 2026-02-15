@@ -12,9 +12,9 @@
 | RL-INV-001 | Invariant | Property Test | `tests/property.spec.ts` | `artifacts/summary/property-summary.json` |
 | RL-INV-002 | Invariant | Property Test | `tests/property.spec.ts` | `artifacts/summary/property-summary.json` |
 | RL-INV-003 | Invariant | MBT + Concurrency | `tests/mbt.spec.ts` | `artifacts/summary/mbt-summary.json` |
-| RL-INV-004 | Invariant | MBT + Idempotency + Persistence | `tests/mbt.spec.ts`, `tests/persistence.spec.ts` | `artifacts/summary/mbt-summary.json`, `artifacts/summary/persistence-summary.json` |
+| RL-INV-004 | Invariant | MBT + Idempotency + Persistence + E2E Restart | `tests/mbt.spec.ts`, `tests/persistence.spec.ts`, `tests/e2e-restart.spec.ts` | `artifacts/summary/mbt-summary.json`, `artifacts/summary/persistence-summary.json`, `artifacts/summary/e2e-restart-summary.json` |
 | RL-ACC-01 | Acceptance | 100並行受入テスト | `tests/acceptance.spec.ts` | `artifacts/summary/acceptance-summary.json` |
-| RL-ACC-02 | Acceptance | 冪等受入テスト | `tests/acceptance.spec.ts` | `artifacts/summary/acceptance-summary.json` |
+| RL-ACC-02 | Acceptance | 冪等受入テスト + E2E再起動検証 | `tests/acceptance.spec.ts`, `tests/e2e-restart.spec.ts` | `artifacts/summary/acceptance-summary.json`, `artifacts/summary/e2e-restart-summary.json` |
 | RL-ACC-03 | Acceptance | retry_after受入テスト | `tests/acceptance.spec.ts` | `artifacts/summary/acceptance-summary.json` |
 | RL-RULE-TIME-001 | Rule | MBTシナリオ | `tests/mbt.spec.ts` | `artifacts/summary/mbt-summary.json` |
 

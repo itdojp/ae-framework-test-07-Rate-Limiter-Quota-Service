@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-02-15T13:26:16.174Z",
+  "generatedAt": "2026-02-15T14:02:54.103Z",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
   "specIr": ".ae/ae-ir.json",
-  "testFiles": 6,
-  "numPassedTests": 17,
+  "testFiles": 7,
+  "numPassedTests": 18,
   "numFailedTests": 0,
   "success": true,
   "acceptance": {
@@ -27,6 +27,12 @@
   "persistence": {
     "suites": 2,
     "passed": 2,
+    "failed": 0,
+    "success": true
+  },
+  "e2eRestart": {
+    "suites": 2,
+    "passed": 1,
     "failed": 0,
     "success": true
   },

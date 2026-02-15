@@ -66,6 +66,13 @@ cp artifacts/summary/mbt-summary.json artifacts/ae/test/mbt-summary.json
 cp artifacts/summary/persistence-summary.json artifacts/ae/test/persistence-summary.json
 
 {
+  echo "[step] run e2e restart tests"
+  pnpm run test:e2e:restart
+} | tee artifacts/ae/test/e2e-restart.log
+
+cp artifacts/summary/e2e-restart-summary.json artifacts/ae/test/e2e-restart-summary.json
+
+{
   echo "[step] run formal check"
   pnpm run formal:check
 } | tee artifacts/ae/formal/formal.log
@@ -86,6 +93,8 @@ const mbtPath = path.resolve("artifacts/summary/mbt-summary.json");
 const mbt = JSON.parse(fs.readFileSync(mbtPath, "utf8"));
 const persistencePath = path.resolve("artifacts/summary/persistence-summary.json");
 const persistence = JSON.parse(fs.readFileSync(persistencePath, "utf8"));
+const e2eRestartPath = path.resolve("artifacts/summary/e2e-restart-summary.json");
+const e2eRestart = JSON.parse(fs.readFileSync(e2eRestartPath, "utf8"));
 const formalPath = path.resolve("artifacts/summary/formal-summary.json");
 const formal = JSON.parse(fs.readFileSync(formalPath, "utf8"));
 const out = {
@@ -120,6 +129,12 @@ const out = {
     failed: persistence.numFailedTests ?? null,
     success: persistence.success ?? null
   },
+  e2eRestart: {
+    suites: e2eRestart.numTotalTestSuites ?? null,
+    passed: e2eRestart.numPassedTests ?? null,
+    failed: e2eRestart.numFailedTests ?? null,
+    success: e2eRestart.success ?? null
+  },
   formal: {
     status: formal.status ?? "unknown",
     tool: formal.tool ?? null,
@@ -134,9 +149,9 @@ const traceability = {
     { ruleId: "RL-INV-001", status: property.success ? "pass" : "fail", evidence: "tests/property.spec.ts" },
     { ruleId: "RL-INV-002", status: property.success ? "pass" : "fail", evidence: "tests/property.spec.ts" },
     { ruleId: "RL-INV-003", status: mbt.success ? "pass" : "fail", evidence: "tests/mbt.spec.ts" },
-    { ruleId: "RL-INV-004", status: (mbt.success && persistence.success) ? "pass" : "fail", evidence: "tests/mbt.spec.ts, tests/persistence.spec.ts" },
+    { ruleId: "RL-INV-004", status: (mbt.success && persistence.success && e2eRestart.success) ? "pass" : "fail", evidence: "tests/mbt.spec.ts, tests/persistence.spec.ts, tests/e2e-restart.spec.ts" },
     { ruleId: "RL-ACC-01", status: acceptance.success ? "pass" : "fail", evidence: "tests/acceptance.spec.ts" },
-    { ruleId: "RL-ACC-02", status: acceptance.success ? "pass" : "fail", evidence: "tests/acceptance.spec.ts" },
+    { ruleId: "RL-ACC-02", status: (acceptance.success && e2eRestart.success) ? "pass" : "fail", evidence: "tests/acceptance.spec.ts, tests/e2e-restart.spec.ts" },
     { ruleId: "RL-ACC-03", status: acceptance.success ? "pass" : "fail", evidence: "tests/acceptance.spec.ts" }
   ]
 };

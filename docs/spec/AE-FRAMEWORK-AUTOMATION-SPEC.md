@@ -42,11 +42,15 @@
 - 用途: json-file backend で再起動後の状態保持を検証。
 - 理由: 実運用に近い構成で idempotency/state 維持を検証できる。
 
-8. `pnpm run pipelines:mutation:quick`
+8. `pnpm run test:e2e:restart`
+- 用途: APIプロセス再起動を伴う E2E 検証。
+- 理由: 実プロセス境界で persistence/idempotency の継続性を確認できる。
+
+9. `pnpm run pipelines:mutation:quick`
 - 用途: ミューテーションテストによるテスト有効性確認。
 - 理由: 不変条件テストの強度を定量評価できる。
 
-9. `pnpm run verify:formal`（必要に応じて個別 verify を併用）
+10. `pnpm run verify:formal`（必要に応じて個別 verify を併用）
 - 用途: TLA+/Alloy/SMT/CSP などの形式検証。
 - 理由: RL-INV-003/004（同時実行・冪等性）の安全性エビデンスを補強できる。
 

@@ -39,17 +39,22 @@ pnpm run test:mbt
 pnpm run test:persistence
 ```
 
-6. Formal チェック実行（TLC未導入時は report-only）
+6. E2E 再起動テスト実行
+```bash
+pnpm run test:e2e:restart
+```
+
+7. Formal チェック実行（TLC未導入時は report-only）
 ```bash
 pnpm run formal:check
 ```
 
-7. 受入レポート生成
+8. 受入レポート生成
 ```bash
 pnpm run report:acceptance
 ```
 
-8. サービス起動
+9. サービス起動
 ```bash
 pnpm run dev
 ```

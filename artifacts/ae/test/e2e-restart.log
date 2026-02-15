@@ -1,0 +1,6 @@
+[step] run e2e restart tests
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 test:e2e:restart /home/devuser/work/CodeX/ae-framework_exp07
+> vitest run tests/e2e-restart.spec.ts --reporter=json --outputFile artifacts/summary/e2e-restart-summary.json
+
+JSON report written to /home/devuser/work/CodeX/ae-framework_exp07/artifacts/summary/e2e-restart-summary.json
