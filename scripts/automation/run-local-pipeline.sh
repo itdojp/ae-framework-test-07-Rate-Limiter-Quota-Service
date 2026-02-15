@@ -8,7 +8,7 @@ AE_FRAMEWORK_ROOT=${AE_FRAMEWORK_ROOT:-/tmp/ae-framework-20260215}
 SPEC_INPUT=${SPEC_INPUT:-spec/rate-limiter-quota-service.ae-spec.md}
 SPEC_IR=${SPEC_IR:-.ae/ae-ir.json}
 
-mkdir -p artifacts/ae/spec artifacts/ae/test artifacts/ae/formal artifacts/summary .ae artifacts/hermetic-reports/formal
+mkdir -p artifacts/ae/spec artifacts/ae/test artifacts/ae/formal artifacts/summary artifacts/codex/spec-stdio .ae artifacts/hermetic-reports/formal
 
 if [[ ! -f "$AE_FRAMEWORK_ROOT/packages/spec-compiler/dist/cli.js" ]]; then
   pnpm --dir "$AE_FRAMEWORK_ROOT" install --filter @ae-framework/spec-compiler... --no-frozen-lockfile
@@ -29,6 +29,13 @@ fi
   echo "[step] lint IR"
   node "$AE_FRAMEWORK_ROOT/packages/spec-compiler/dist/cli.js" lint -i "$SPEC_IR" --max-errors 0 --max-warnings 200
 } | tee artifacts/ae/spec/lint.log
+
+{
+  echo "[step] run ae-framework codex:spec:stdio check"
+  pnpm run test:ae:spec:stdio
+} | tee artifacts/ae/spec/ae-spec-stdio.log
+
+cp artifacts/summary/ae-spec-stdio-summary.json artifacts/ae/spec/ae-spec-stdio-summary.json
 
 {
   echo "[step] run tests with json artifacts"
@@ -113,6 +120,8 @@ const loadPath = path.resolve("artifacts/summary/load-summary.json");
 const load = JSON.parse(fs.readFileSync(loadPath, "utf8"));
 const mutationPath = path.resolve("artifacts/summary/mutation-summary.json");
 const mutation = JSON.parse(fs.readFileSync(mutationPath, "utf8"));
+const aeSpecStdioPath = path.resolve("artifacts/summary/ae-spec-stdio-summary.json");
+const aeSpecStdio = JSON.parse(fs.readFileSync(aeSpecStdioPath, "utf8"));
 const formalPath = path.resolve("artifacts/summary/formal-summary.json");
 const formal = JSON.parse(fs.readFileSync(formalPath, "utf8"));
 const out = {
@@ -160,6 +169,12 @@ const out = {
   mutation: {
     status: mutation.status ?? null,
     score: mutation.score ?? null
+  },
+  aeSpecStdio: {
+    status: aeSpecStdio.status ?? null,
+    validatePassed: aeSpecStdio.validate ? aeSpecStdio.validate.passed : null,
+    compilePassed: aeSpecStdio.compile ? aeSpecStdio.compile.passed : null,
+    irParity: aeSpecStdio.irParity ? aeSpecStdio.irParity.parity : null
   },
   formal: {
     status: formal.status ?? "unknown",

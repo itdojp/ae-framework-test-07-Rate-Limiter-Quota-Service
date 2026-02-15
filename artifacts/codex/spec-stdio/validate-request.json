@@ -1,0 +1,8 @@
+{
+  "action": "validate",
+  "args": {
+    "inputPath": "spec/rate-limiter-quota-service.ae-spec.md",
+    "relaxed": true,
+    "maxWarnings": 200
+  }
+}

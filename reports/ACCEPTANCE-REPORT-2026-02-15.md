@@ -8,6 +8,7 @@
 - e2e-restart: PASS (1/1)
 - load: PASS (3 scenarios)
 - mutation: PASS
+- ae-spec-stdio: PASS (parity=true)
 - formal: PASS (tool=java-tlc)
 
 ## Rule Status
@@ -27,6 +28,7 @@
 - artifacts/summary/e2e-restart-summary.json
 - artifacts/summary/load-summary.json
 - artifacts/summary/mutation-summary.json
+- artifacts/summary/ae-spec-stdio-summary.json
 - artifacts/summary/formal-summary.json
 - artifacts/summary/traceability-summary.json
 - artifacts/hermetic-reports/formal/tlc.log

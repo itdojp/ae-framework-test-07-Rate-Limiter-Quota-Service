@@ -2,12 +2,9 @@
 
 📊 Lint Results for .ae/ae-ir.json:
    Errors: 0
-   Warnings: 2
+   Warnings: 0
    Info: 0
 
-⚠️ BIZ_001: Entity 'Policy' has no business rules defined [domain]
-   💡 Consider adding invariants or constraints for this entity
-⚠️ BIZ_001: Entity 'Decision' has no business rules defined [domain]
-   💡 Consider adding invariants or constraints for this entity
+✅ No issues found!
 
 ✅ All quality checks passed

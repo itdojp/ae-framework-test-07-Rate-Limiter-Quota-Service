@@ -55,6 +55,8 @@ Rate limiter and quota service specification for concurrent-safe API protection.
 - RL-INV-003: 同一 key の同時 consume でも上限超過しない
 - RL-INV-004: 同一 request_id の再送で二重消費しない
 - RL-RULE-TIME-001: now < last_refill_at の場合は last_refill_at に丸める
+- RL-BR-POLICY-001: Policy は ACTIVE 時に limits を1件以上保持する
+- RL-BR-DECISION-001: Decision が deny の場合は retry_after_ms を返す
 
 ## Use Cases
 

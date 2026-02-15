@@ -1,0 +1,9 @@
+{
+  "action": "compile",
+  "args": {
+    "inputPath": "spec/rate-limiter-quota-service.ae-spec.md",
+    "outputPath": ".ae/ae-ir-stdio.json",
+    "relaxed": true,
+    "validate": true
+  }
+}

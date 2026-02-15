@@ -1,0 +1,58 @@
+{
+  "generatedAt": "2026-02-15T21:57:16.871Z",
+  "status": "pass",
+  "tool": "codex:spec:stdio",
+  "mode": "fallback-cli",
+  "frameworkRoot": "/tmp/ae-framework-20260215",
+  "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
+  "stdioIrOutput": ".ae/ae-ir-stdio.json",
+  "install": {
+    "skipped": true,
+    "log": null
+  },
+  "validate": {
+    "exitCode": 0,
+    "passed": true,
+    "summary": null,
+    "bridgeError": "Cannot find module '/tmp/ae-framework-20260215/packages/spec-compiler/src/index.js' imported from /tmp/ae-framework-20260215/scripts/codex/spec-stdio.mjs",
+    "artifacts": {
+      "request": "artifacts/codex/spec-stdio/validate-request.json",
+      "response": "artifacts/codex/spec-stdio/validate-response.json",
+      "stdout": "artifacts/codex/spec-stdio/validate.stdout.log",
+      "stderr": "artifacts/codex/spec-stdio/validate.stderr.log"
+    },
+    "fallback": {
+      "exitCode": 0,
+      "logPath": "artifacts/codex/spec-stdio/fallback-validate.log"
+    }
+  },
+  "compile": {
+    "exitCode": 0,
+    "passed": true,
+    "summary": null,
+    "counts": null,
+    "bridgeError": "Cannot find module '/tmp/ae-framework-20260215/packages/spec-compiler/src/index.js' imported from /tmp/ae-framework-20260215/scripts/codex/spec-stdio.mjs",
+    "artifacts": {
+      "request": "artifacts/codex/spec-stdio/compile-request.json",
+      "response": "artifacts/codex/spec-stdio/compile-response.json",
+      "stdout": "artifacts/codex/spec-stdio/compile.stdout.log",
+      "stderr": "artifacts/codex/spec-stdio/compile.stderr.log"
+    },
+    "fallback": {
+      "exitCode": 0,
+      "logPath": "artifacts/codex/spec-stdio/fallback-compile.log"
+    }
+  },
+  "irParity": {
+    "comparedWith": ".ae/ae-ir.json",
+    "parity": true,
+    "rawParity": false,
+    "semanticParity": true,
+    "stdioIrSha256": "3714c8a06096ce9402e1561ac628df53b018a58fa2ab7b6d51718b044575aaee",
+    "defaultIrSha256": "3661d076e6103fc24e5dbea9369195ab26f96931ab93f440a8739862ea9f02ff",
+    "normalized": {
+      "stdioIrSha256": "15306411c1d2cf816af89a52b732e095d51276abe7ac48960b4e7ba9b9089bc2",
+      "defaultIrSha256": "15306411c1d2cf816af89a52b732e095d51276abe7ac48960b4e7ba9b9089bc2"
+    }
+  }
+}

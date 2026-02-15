@@ -15,12 +15,12 @@
 
 ## 3. 利用ツール選定
 1. `scripts/codex/ae-playbook.mjs`（`pnpm run codex:run`）
-- 用途: Setup/QA/Spec/Simulation/Formal/Coverage/Adapters の統合実行。
-- 理由: フェーズ別の成果物を `artifacts/ae/context.json` に集約できるため。
+- 用途: 本リポジトリでは `pnpm run pipeline:local` を `codex:run` として運用。
+- 理由: 仕様検証・テスト・負荷・mutation・formal・受入レポートまでを1コマンドで再現できるため。
 
 2. `pnpm run codex:spec:stdio`
-- 用途: AE-Spec の validate/compile/codegen を JSON I/O で実行。
-- 理由: エージェント連携時の機械可読性が高い。
+- 用途: `scripts/automation/ae-spec-stdio-proxy.mjs` 経由で ae-framework の stdio bridge を呼び出す。
+- 理由: エージェント連携時の機械可読性が高く、入出力をそのまま証跡化できる。
 
 3. `pnpm run verify:lite`
 - 用途: 日次の軽量品質ゲート（lint/type/unit 等）。
@@ -62,6 +62,10 @@
 12. `pnpm run verify:formal`（必要に応じて個別 verify を併用）
 - 用途: TLA+/Alloy/SMT/CSP などの形式検証。
 - 理由: RL-INV-003/004（同時実行・冪等性）の安全性エビデンスを補強できる。
+
+13. `pnpm run test:ae:spec:stdio`
+- 用途: `codex:spec:stdio` の実行可否を評価し、fallback を含む要約を生成。
+- 理由: ae-framework ツールの実効性を定量化し、再現可能な比較証跡を残せる。
 
 ## 4. 自動化設定
 ### 4.1 基本方針
@@ -122,3 +126,7 @@ pnpm run pipeline:local
 - 実行モデル（ライブラリ優先かサービス優先か）の最終順序。
 - 形式検証で採用する主ツール（TLC中心かApalache併用か）。
 上記は実装初期のベンチ結果を確認後に確定する。
+
+## 8. ツール健全性メモ（2026-02-15）
+- `codex:spec:stdio`（ae-framework本体）は `packages/spec-compiler/src/index.js` 参照で失敗する場合がある。
+- 本リポジトリでは `scripts/automation/run-ae-spec-stdio-check.mjs` が自動で fallback（`spec-compiler/dist/cli.js`）を実行し、`artifacts/summary/ae-spec-stdio-summary.json` に結果を保存する。

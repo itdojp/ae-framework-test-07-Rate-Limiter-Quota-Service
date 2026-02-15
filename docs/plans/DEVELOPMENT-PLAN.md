@@ -48,6 +48,10 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 - RL-ACC-01/02/03 を満たす。
 - Exit条件: 受入確認レポートを作成し、証跡を GitHub 保存。
 
+6. M6: ae-framework ツール健全性評価
+- `codex:spec:stdio` の実行結果を自動収集し、失敗時は fallback として `spec-compiler` CLI を実行。
+- Exit条件: `artifacts/summary/ae-spec-stdio-summary.json` が毎回更新され、`pipeline:local` に統合される。
+
 ## 6. 実行方式（自動化優先）
 - 原則: 手作業よりも ae-framework の CLI / スクリプト / CI を優先。
 - フェーズ実行の起点: `ae-playbook` 相当フローを採用。
@@ -87,3 +91,7 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 - M5: 完了
   - RL-ACC-01/02/03 テストを `tests/acceptance.spec.ts` で実装し、pass を確認
   - 受入レポートを `reports/ACCEPTANCE-REPORT-LATEST.md` と日付付きファイルへ自動生成
+- M6: 完了
+  - `test:ae:spec:stdio` を追加し、ae-framework の stdio bridge を評価
+  - bridge失敗時に `spec-compiler/dist/cli.js` へ自動fallback
+  - `pipeline:local` に統合し、`artifacts/summary/ae-spec-stdio-summary.json` を証跡化
