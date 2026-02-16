@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-02-16T08:28:44.701Z",
+  "generatedAt": "2026-02-16T11:14:02.159Z",
   "historyPath": "artifacts/history/ae-framework-readiness-history.jsonl",
-  "totalRuns": 2,
-  "windowSize": 2,
+  "totalRuns": 3,
+  "windowSize": 3,
   "latest": {
-    "generatedAt": "2026-02-16T08:28:44.701Z",
+    "generatedAt": "2026-02-16T11:14:02.159Z",
     "date": "2026-02-16",
-    "commit": "20f14e1a7469fd632376161d59d167569ab1ee79",
-    "shortCommit": "20f14e1a7469",
+    "commit": "7d62fa4814aa4460d99efc9f99f3306bbf6a4352",
+    "shortCommit": "7d62fa4814aa",
     "branch": "main",
     "executionContext": "local",
     "ci": {
@@ -34,7 +34,7 @@
     "acceptanceTotal": 3
   },
   "previous": {
-    "generatedAt": "2026-02-16T08:27:22.568Z",
+    "generatedAt": "2026-02-16T08:28:44.701Z",
     "date": "2026-02-16",
     "commit": "20f14e1a7469fd632376161d59d167569ab1ee79",
     "shortCommit": "20f14e1a7469",
@@ -65,19 +65,19 @@
   },
   "windowStats": {
     "readinessGrade": {
-      "yellow": 2
+      "yellow": 3
     },
     "readinessStatus": {
-      "CAUTION": 2
+      "CAUTION": 3
     },
     "gateStatus": {
-      "pass": 2
+      "pass": 3
     },
     "formalStatus": {
-      "pass": 2
+      "pass": 3
     },
     "executionContext": {
-      "local": 2
+      "local": 3
     }
   },
   "recentRuns": [
@@ -94,6 +94,16 @@
     {
       "generatedAt": "2026-02-16T08:28:44.701Z",
       "shortCommit": "20f14e1a7469",
+      "readinessGrade": "yellow",
+      "gateStatus": "pass",
+      "unresolvedKnownIssues": 2,
+      "unexpectedFailures": 0,
+      "formalStatus": "pass",
+      "executionContext": "local"
+    },
+    {
+      "generatedAt": "2026-02-16T11:14:02.159Z",
+      "shortCommit": "7d62fa4814aa",
       "readinessGrade": "yellow",
       "gateStatus": "pass",
       "unresolvedKnownIssues": 2,

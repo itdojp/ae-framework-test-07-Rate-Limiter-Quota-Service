@@ -4,7 +4,8 @@
 - acceptance: PASS (3/3)
 - property: PASS (3/3)
 - mbt: PASS (2/2)
-- persistence: PASS (2/2)
+- audit-log: PASS (1/1)
+- persistence: PASS (3/3)
 - e2e-restart: PASS (1/1)
 - load: PASS (3 scenarios)
 - mutation: PASS
@@ -13,14 +14,18 @@
 - ae-playbook-resume-safe: PASS (normalized=false)
 - ae-framework-readiness: YELLOW (CAUTION)
 - ae-framework-gate: PASS
-- ae-framework-trend: total_runs=2 (latest=2026-02-16T08:28:44.701Z)
+- ae-framework-trend: total_runs=3 (latest=2026-02-16T11:14:02.159Z)
 - formal: PASS (tool=java-tlc)
 
 ## Rule Status
 - RL-INV-001: PASS (tests/property.spec.ts)
 - RL-INV-002: PASS (tests/property.spec.ts)
+- RL-RULE-TIME-001: PASS (tests/mbt.spec.ts)
+- RL-CC-001: PASS (tests/mbt.spec.ts)
 - RL-INV-003: PASS (tests/mbt.spec.ts)
 - RL-INV-004: PASS (tests/mbt.spec.ts, tests/persistence.spec.ts, tests/e2e-restart.spec.ts)
+- RL-IDEMP-001: PASS (tests/mbt.spec.ts, tests/persistence.spec.ts, tests/e2e-restart.spec.ts)
+- RL-SCOPE-AUDIT-001: PASS (tests/audit.spec.ts, src/domain/rate-limiter-engine.ts, src/server/app.ts)
 - RL-ACC-01: PASS (tests/acceptance.spec.ts, artifacts/summary/load-summary.json)
 - RL-ACC-02: PASS (tests/acceptance.spec.ts, tests/e2e-restart.spec.ts)
 - RL-ACC-03: PASS (tests/acceptance.spec.ts)
@@ -29,6 +34,7 @@
 - artifacts/summary/acceptance-summary.json
 - artifacts/summary/property-summary.json
 - artifacts/summary/mbt-summary.json
+- artifacts/summary/audit-summary.json
 - artifacts/summary/persistence-summary.json
 - artifacts/summary/e2e-restart-summary.json
 - artifacts/summary/load-summary.json

@@ -111,6 +111,40 @@ describe('RateLimiterEngine', () => {
     expect(consume.results[0].remaining).toBe(8);
   });
 
+  it('records audit logs for policy changes and denied decisions', async () => {
+    const engine = createEngine();
+
+    const patched = engine.patchPolicy('P1', {
+      name: 'orders limit updated',
+    });
+    expect(patched.name).toBe('orders limit updated');
+
+    const first = await engine.consume({
+      tenant_id: 'T1',
+      request_id: 'audit-seed-1',
+      subject: { type: 'USER', id: 'U-AUDIT' },
+      resource: { type: 'ENDPOINT', name: '/api/v1/orders' },
+      cost: 10,
+      now: '2026-02-15T00:04:00.000Z',
+    });
+    expect(first.allowed).toBe(true);
+
+    const denied = await engine.consume({
+      tenant_id: 'T1',
+      request_id: 'audit-seed-2',
+      subject: { type: 'USER', id: 'U-AUDIT' },
+      resource: { type: 'ENDPOINT', name: '/api/v1/orders' },
+      cost: 1,
+      now: '2026-02-15T00:04:00.000Z',
+    });
+    expect(denied.allowed).toBe(false);
+
+    const events = engine.listAuditEvents('T1', 20);
+    expect(events.some((event) => event.type === 'POLICY_UPSERT')).toBe(true);
+    expect(events.some((event) => event.type === 'POLICY_PATCH')).toBe(true);
+    expect(events.some((event) => event.type === 'REQUEST_DENIED')).toBe(true);
+  });
+
   it('idempotency key prevents double consume', async () => {
     const engine = createEngine();
 
@@ -169,5 +203,8 @@ describe('RateLimiterEngine', () => {
         now: '2026-02-15T00:03:01.000Z',
       }),
     ).rejects.toBeInstanceOf(IdempotencyConflictError);
+
+    const events = engine.listAuditEvents('T1', 10);
+    expect(events.some((event) => event.type === 'IDEMPOTENCY_CONFLICT')).toBe(true);
   });
 });

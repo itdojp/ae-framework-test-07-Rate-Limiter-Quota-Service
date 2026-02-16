@@ -16,6 +16,7 @@ function readJson(path, fallback) {
 const acceptance = readJson('artifacts/summary/acceptance-summary.json');
 const property = readJson('artifacts/summary/property-summary.json');
 const mbt = readJson('artifacts/summary/mbt-summary.json');
+const audit = readJson('artifacts/summary/audit-summary.json');
 const persistence = readJson('artifacts/summary/persistence-summary.json');
 const e2eRestart = readJson('artifacts/summary/e2e-restart-summary.json');
 const load = readJson('artifacts/summary/load-summary.json');
@@ -44,6 +45,7 @@ const lines = [
   `- acceptance: ${acceptance.success ? 'PASS' : 'FAIL'} (${acceptance.numPassedTests}/${acceptance.numTotalTests})`,
   `- property: ${property.success ? 'PASS' : 'FAIL'} (${property.numPassedTests}/${property.numTotalTests})`,
   `- mbt: ${mbt.success ? 'PASS' : 'FAIL'} (${mbt.numPassedTests}/${mbt.numTotalTests})`,
+  `- audit-log: ${audit.success ? 'PASS' : 'FAIL'} (${audit.numPassedTests}/${audit.numTotalTests})`,
   `- persistence: ${persistence.success ? 'PASS' : 'FAIL'} (${persistence.numPassedTests}/${persistence.numTotalTests})`,
   `- e2e-restart: ${e2eRestart.success ? 'PASS' : 'FAIL'} (${e2eRestart.numPassedTests}/${e2eRestart.numTotalTests})`,
   `- load: ${String(load.status || 'unknown').toUpperCase()} (${Array.isArray(load.scenarios) ? load.scenarios.length : 0} scenarios)`,
@@ -63,6 +65,7 @@ const lines = [
   '- artifacts/summary/acceptance-summary.json',
   '- artifacts/summary/property-summary.json',
   '- artifacts/summary/mbt-summary.json',
+  '- artifacts/summary/audit-summary.json',
   '- artifacts/summary/persistence-summary.json',
   '- artifacts/summary/e2e-restart-summary.json',
   '- artifacts/summary/load-summary.json',

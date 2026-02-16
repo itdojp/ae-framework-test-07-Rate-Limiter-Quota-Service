@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { BucketState, Decision, Policy, WindowCounterState } from './models.js';
+import { AuditEvent, BucketState, Decision, Policy, WindowCounterState } from './models.js';
 
 export interface IdempotencyEntry {
   payload_hash: string;
@@ -13,6 +13,7 @@ export interface EngineStorage {
   bucketStates: Map<string, BucketState>;
   windowStates: Map<string, WindowCounterState>;
   idempotencyStore: Map<string, IdempotencyEntry>;
+  auditEvents: AuditEvent[];
   persist: () => void;
 }
 
@@ -22,6 +23,7 @@ interface SerializedState {
   bucketStates: Array<[string, BucketState]>;
   windowStates: Array<[string, WindowCounterState]>;
   idempotencyStore: Array<[string, IdempotencyEntry]>;
+  auditEvents?: AuditEvent[];
 }
 
 function toSerialized(storage: Omit<EngineStorage, 'persist'>): SerializedState {
@@ -31,6 +33,7 @@ function toSerialized(storage: Omit<EngineStorage, 'persist'>): SerializedState 
     bucketStates: Array.from(storage.bucketStates.entries()),
     windowStates: Array.from(storage.windowStates.entries()),
     idempotencyStore: Array.from(storage.idempotencyStore.entries()),
+    auditEvents: storage.auditEvents.map((event) => ({ ...event })),
   };
 }
 
@@ -40,6 +43,7 @@ function fromSerialized(raw: SerializedState): Omit<EngineStorage, 'persist'> {
     bucketStates: new Map(raw.bucketStates),
     windowStates: new Map(raw.windowStates),
     idempotencyStore: new Map(raw.idempotencyStore),
+    auditEvents: Array.isArray(raw.auditEvents) ? raw.auditEvents.map((event) => ({ ...event })) : [],
   };
 }
 
@@ -49,6 +53,7 @@ export function createInMemoryEngineStorage(): EngineStorage {
     bucketStates: new Map<string, BucketState>(),
     windowStates: new Map<string, WindowCounterState>(),
     idempotencyStore: new Map<string, IdempotencyEntry>(),
+    auditEvents: [],
     persist: () => {
       // no-op for memory backend
     },
@@ -65,6 +70,7 @@ export function createJsonFileEngineStorage(filePath: string): EngineStorage {
     bucketStates: new Map<string, BucketState>(),
     windowStates: new Map<string, WindowCounterState>(),
     idempotencyStore: new Map<string, IdempotencyEntry>(),
+    auditEvents: [],
   };
 
   const persist = () => {

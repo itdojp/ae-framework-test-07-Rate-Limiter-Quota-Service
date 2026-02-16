@@ -91,6 +91,10 @@
 - 用途: readiness/gate/toolcheck/formal の実行履歴を蓄積し、トレンドレポートを生成する。
 - 理由: ae-framework 評価結果の時系列比較を継続し、改善/劣化の変化点を追跡できる。
 
+20. `pnpm run test:audit`
+- 用途: Issue #1 スコープ内の監査ログ要件（ポリシー変更、重大イベント）を検証する。
+- 理由: `RL-SCOPE-AUDIT-001` を独立サマリで継続判定し、仕様適合を機械可読化できる。
+
 ## 4. 自動化設定
 ### 4.1 基本方針
 - `--resume` を既定使用し、途中失敗後も継続可能な実行形態とする。
@@ -128,6 +132,7 @@
 - `artifacts/history/**`
 - `artifacts/hermetic-reports/**`
 - `artifacts/summary/**`
+- `artifacts/summary/audit-summary.json`
 - `reports/**`
 - `.ae/**`（仕様中間生成物）
 - `spec/formal/**`（形式仕様）
@@ -154,9 +159,10 @@ pnpm run pipeline:local
 - Issue #1 の規則ID（`RL-INV-*`, `RL-ACC-*`）を、テスト名・レポート名・PR説明に明記する。
 - 最低限、以下を紐づける。
   - RL-INV-001/002: Property / Unit
-  - RL-INV-003: Concurrency test + Formal
-  - RL-INV-004: Idempotency test + Formal
-  - RL-ACC-01/02/03: 受入試験レポート
+- RL-INV-003: Concurrency test + Formal
+- RL-INV-004: Idempotency test + Formal
+- RL-SCOPE-AUDIT-001: Audit test（policy変更、deny、idempotency conflict）
+- RL-ACC-01/02/03: 受入試験レポート
 - 対応表は `docs/spec/TRACEABILITY-MATRIX.md` を正本とする。
 - 実行時サマリは `artifacts/summary/traceability-summary.json` に出力する。
 

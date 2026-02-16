@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-02-16T08:28:45.239Z",
+  "generatedAt": "2026-02-16T11:14:02.589Z",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
   "specIr": ".ae/ae-ir.json",
-  "testFiles": 7,
-  "numPassedTests": 18,
+  "testFiles": 8,
+  "numPassedTests": 22,
   "numFailedTests": 0,
   "success": true,
   "acceptance": {
@@ -24,9 +24,15 @@
     "failed": 0,
     "success": true
   },
+  "audit": {
+    "suites": 2,
+    "passed": 1,
+    "failed": 0,
+    "success": true
+  },
   "persistence": {
     "suites": 2,
-    "passed": 2,
+    "passed": 3,
     "failed": 0,
     "success": true
   },
@@ -73,8 +79,8 @@
     "failedChecks": []
   },
   "aeFrameworkTrend": {
-    "totalRuns": 2,
-    "latestRunAt": "2026-02-16T08:28:44.701Z",
+    "totalRuns": 3,
+    "latestRunAt": "2026-02-16T11:14:02.159Z",
     "latestGateStatus": "pass"
   },
   "formal": {

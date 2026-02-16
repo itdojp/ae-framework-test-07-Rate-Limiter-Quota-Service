@@ -22,6 +22,7 @@
     "test:acceptance": "vitest run tests/acceptance.spec.ts --reporter=json --outputFile artifacts/summary/acceptance-summary.json",
     "test:property": "vitest run tests/property.spec.ts --reporter=json --outputFile artifacts/summary/property-summary.json",
     "test:mbt": "vitest run tests/mbt.spec.ts --reporter=json --outputFile artifacts/summary/mbt-summary.json",
+    "test:audit": "vitest run tests/audit.spec.ts --reporter=json --outputFile artifacts/summary/audit-summary.json",
     "test:persistence": "vitest run tests/persistence.spec.ts --reporter=json --outputFile artifacts/summary/persistence-summary.json",
     "test:e2e:restart": "vitest run tests/e2e-restart.spec.ts --reporter=json --outputFile artifacts/summary/e2e-restart-summary.json",
     "test:ae:spec:stdio": "node scripts/automation/run-ae-spec-stdio-check.mjs",

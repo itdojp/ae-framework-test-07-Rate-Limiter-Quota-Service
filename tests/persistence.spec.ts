@@ -136,4 +136,48 @@ describe('File-backed storage', () => {
       rmSync(dir, { recursive: true, force: true });
     }
   });
+
+  it('persists audit events across engine restart', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'rl-audit-persist-'));
+    const stateFile = join(dir, 'runtime-state.json');
+
+    try {
+      const engine1 = new RateLimiterEngine({
+        storage: createJsonFileEngineStorage(stateFile),
+        now: () => new Date('2026-02-15T00:02:00.000Z'),
+      });
+      engine1.upsertPolicy(createPolicy());
+      engine1.patchPolicy('P-PERSIST', { priority: 20 });
+
+      await engine1.consume({
+        tenant_id: 'TENANT-PERSIST',
+        request_id: 'audit-persist-1',
+        subject: { type: 'USER', id: 'U-AUDIT-PERSIST' },
+        resource: { type: 'ENDPOINT', name: '/api/v1/orders' },
+        cost: 10,
+        now: '2026-02-15T00:02:00.000Z',
+      });
+      await engine1.consume({
+        tenant_id: 'TENANT-PERSIST',
+        request_id: 'audit-persist-2',
+        subject: { type: 'USER', id: 'U-AUDIT-PERSIST' },
+        resource: { type: 'ENDPOINT', name: '/api/v1/orders' },
+        cost: 1,
+        now: '2026-02-15T00:02:00.000Z',
+      });
+
+      const engine2 = new RateLimiterEngine({
+        storage: createJsonFileEngineStorage(stateFile),
+        now: () => new Date('2026-02-15T00:02:01.000Z'),
+      });
+      const events = engine2.listAuditEvents('TENANT-PERSIST', 20);
+      const types = new Set(events.map((event) => event.type));
+
+      expect(types.has('POLICY_UPSERT')).toBe(true);
+      expect(types.has('POLICY_PATCH')).toBe(true);
+      expect(types.has('REQUEST_DENIED')).toBe(true);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
 });

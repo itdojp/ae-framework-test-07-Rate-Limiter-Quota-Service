@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T08:28:45.240Z",
+  "generatedAt": "2026-02-16T11:14:02.590Z",
   "items": [
     {
       "ruleId": "RL-INV-001",
@@ -12,6 +12,16 @@
       "evidence": "tests/property.spec.ts"
     },
     {
+      "ruleId": "RL-RULE-TIME-001",
+      "status": "pass",
+      "evidence": "tests/mbt.spec.ts"
+    },
+    {
+      "ruleId": "RL-CC-001",
+      "status": "pass",
+      "evidence": "tests/mbt.spec.ts"
+    },
+    {
       "ruleId": "RL-INV-003",
       "status": "pass",
       "evidence": "tests/mbt.spec.ts"
@@ -20,6 +30,16 @@
       "ruleId": "RL-INV-004",
       "status": "pass",
       "evidence": "tests/mbt.spec.ts, tests/persistence.spec.ts, tests/e2e-restart.spec.ts"
+    },
+    {
+      "ruleId": "RL-IDEMP-001",
+      "status": "pass",
+      "evidence": "tests/mbt.spec.ts, tests/persistence.spec.ts, tests/e2e-restart.spec.ts"
+    },
+    {
+      "ruleId": "RL-SCOPE-AUDIT-001",
+      "status": "pass",
+      "evidence": "tests/audit.spec.ts, src/domain/rate-limiter-engine.ts, src/server/app.ts"
     },
     {
       "ruleId": "RL-ACC-01",

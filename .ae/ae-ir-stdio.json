@@ -2,8 +2,8 @@
   "version": "1.0.0",
   "metadata": {
     "name": "RateLimiterQuotaServiceSpec",
-    "created": "2026-02-16T08:28:26.577Z",
-    "updated": "2026-02-16T08:28:26.577Z",
+    "created": "2026-02-16T11:13:43.583Z",
+    "updated": "2026-02-16T11:13:43.583Z",
     "description": "Rate limiter and quota service specification for concurrent-safe API protection."
   },
   "glossary": [
@@ -218,7 +218,7 @@
   ],
   "invariants": [
     {
-      "id": "35357311-e571-4ab1-a8d1-eab4afc25c29",
+      "id": "f0658a3e-d115-4f61-a75d-5401fe51412a",
       "description": "RL-INV-001: TokenBucket の tokens は 0 <= tokens <= capacity",
       "expression": "RL-INV-001: TokenBucket の tokens は 0 <= tokens <= capacity",
       "entities": [
@@ -227,7 +227,7 @@
       "severity": "error"
     },
     {
-      "id": "31879a7f-30d1-4371-8a8e-ea8b18a09940",
+      "id": "f4572abb-4b67-4ff9-9da2-891a68f372a3",
       "description": "RL-INV-002: FixedWindow の used は allow 時に limit を超えない",
       "expression": "RL-INV-002: FixedWindow の used は allow 時に limit を超えない",
       "entities": [
@@ -236,28 +236,28 @@
       "severity": "error"
     },
     {
-      "id": "309b1d38-0b08-4b4a-b98a-fadaaef53ab2",
+      "id": "627b61cc-eb94-4edd-981b-6ede93f9bd42",
       "description": "RL-INV-003: 同一 key の同時 consume でも上限超過しない",
       "expression": "RL-INV-003: 同一 key の同時 consume でも上限超過しない",
       "entities": [],
       "severity": "error"
     },
     {
-      "id": "8858dd61-5146-4104-9936-d4bf1014ee55",
+      "id": "726f07c7-7f3d-4aaa-9d0e-4c8774924367",
       "description": "RL-INV-004: 同一 request_id の再送で二重消費しない",
       "expression": "RL-INV-004: 同一 request_id の再送で二重消費しない",
       "entities": [],
       "severity": "error"
     },
     {
-      "id": "3800d9c1-fc66-4cf2-9d1b-6196c361c246",
+      "id": "a0926f47-fddb-48f0-b539-e8ffd84dbddc",
       "description": "RL-RULE-TIME-001: now < last_refill_at の場合は last_refill_at に丸める",
       "expression": "RL-RULE-TIME-001: now < last_refill_at の場合は last_refill_at に丸める",
       "entities": [],
       "severity": "error"
     },
     {
-      "id": "7ca64924-b7c6-4884-9953-5e2e19195d4a",
+      "id": "0d07a034-f66b-4ef5-8deb-9179ccd6e2ba",
       "description": "RL-BR-POLICY-001: Policy は ACTIVE 時に limits を1件以上保持する",
       "expression": "RL-BR-POLICY-001: Policy は ACTIVE 時に limits を1件以上保持する",
       "entities": [
@@ -266,7 +266,7 @@
       "severity": "error"
     },
     {
-      "id": "dd1a2986-9efe-44b6-8577-a70ce5540e07",
+      "id": "3b96bdf6-2aaa-461a-866e-c91ce410bb85",
       "description": "RL-BR-DECISION-001: Decision が deny の場合は retry_after_ms を返す",
       "expression": "RL-BR-DECISION-001: Decision が deny の場合は retry_after_ms を返す",
       "entities": [

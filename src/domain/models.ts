@@ -93,3 +93,17 @@ export interface WindowCounterState {
   used: number;
   updated_at_ms: number;
 }
+
+export type AuditEventLevel = 'INFO' | 'WARN';
+export type AuditEventType = 'POLICY_UPSERT' | 'POLICY_PATCH' | 'REQUEST_DENIED' | 'IDEMPOTENCY_CONFLICT';
+
+export interface AuditEvent {
+  id: string;
+  at: string;
+  level: AuditEventLevel;
+  type: AuditEventType;
+  tenant_id: string;
+  policy_id: string | null;
+  message: string;
+  context?: Record<string, unknown>;
+}

@@ -54,6 +54,19 @@ const readinessStatus =
       ? 'CAUTION'
       : 'BLOCKED';
 
+const utilityVerdict =
+  readinessGrade === 'green'
+    ? 'effective'
+    : readinessGrade === 'yellow'
+      ? 'conditional'
+      : 'limited';
+const utilityReason =
+  readinessGrade === 'green'
+    ? '主要機能は自動化済みで、品質ゲートを安定通過している。'
+    : readinessGrade === 'yellow'
+      ? '自動化・証跡化は有効だが、既知課題の回避運用が前提となる。'
+      : '既知課題または品質不合格が解消されるまで本番適用は限定的。';
+
 const knownIssueLines = (toolcheck.knownIssueCatalog || []).map((issue) => {
   const probe = (toolcheck.probes || []).find((p) => p.id === issue.probeId);
   const probeStatus = probe ? (probe.success ? 'resolved' : 'unresolved') : 'unknown';
@@ -64,6 +77,10 @@ const summary = {
   generatedAt: now.toISOString(),
   readinessGrade,
   readinessStatus,
+  utility: {
+    verdict: utilityVerdict,
+    reason: utilityReason,
+  },
   checks: {
     specStdio: {
       status: specStdio.status ?? 'unknown',
@@ -116,6 +133,10 @@ const lines = [
   `- status: ${readinessStatus}`,
   `- unresolved_known_issues: ${unresolvedKnownIssues}`,
   `- unexpected_failures: ${unexpectedFailures}`,
+  '',
+  '## Utility Assessment',
+  `- verdict: ${utilityVerdict.toUpperCase()}`,
+  `- reason: ${utilityReason}`,
   '',
   '## Tool Results',
   `- ae-spec-stdio: ${String(specStdio.status || 'unknown').toUpperCase()} (mode=${specStdio.mode || 'n/a'}, parity=${String(specStdio.irParity?.parity ?? 'n/a')})`,

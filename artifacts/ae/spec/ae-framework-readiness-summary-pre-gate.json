@@ -1,7 +1,11 @@
 {
-  "generatedAt": "2026-02-16T08:28:43.842Z",
+  "generatedAt": "2026-02-16T11:14:01.333Z",
   "readinessGrade": "yellow",
   "readinessStatus": "CAUTION",
+  "utility": {
+    "verdict": "conditional",
+    "reason": "自動化・証跡化は有効だが、既知課題の回避運用が前提となる。"
+  },
   "checks": {
     "specStdio": {
       "status": "pass",
@@ -26,8 +30,8 @@
       "failedChecks": []
     },
     "trend": {
-      "totalRuns": 1,
-      "latestRunAt": "2026-02-16T08:27:22.568Z",
+      "totalRuns": 2,
+      "latestRunAt": "2026-02-16T08:28:44.701Z",
       "latestGateStatus": "pass"
     },
     "acceptance": {

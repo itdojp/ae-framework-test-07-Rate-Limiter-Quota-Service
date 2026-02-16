@@ -36,6 +36,14 @@ export function createApp(engine?: RateLimiterEngine): FastifyInstance {
     }
   });
 
+  app.get('/ratelimit/audit-events', async (request, reply) => {
+    const query = request.query as { tenant_id?: string; limit?: string | number };
+    const parsedLimit = query.limit !== undefined ? Number(query.limit) : undefined;
+    const limit = Number.isFinite(parsedLimit) ? parsedLimit : undefined;
+    const items = limiter.listAuditEvents(query.tenant_id, limit);
+    return reply.code(200).send({ items });
+  });
+
   app.post('/ratelimit/consume', async (request, reply) => {
     try {
       const body = request.body as {

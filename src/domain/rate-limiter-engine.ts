@@ -1,4 +1,5 @@
 import {
+  AuditEvent,
   BucketState,
   ConsumeRequest,
   Decision,
@@ -34,10 +35,12 @@ export class RateLimiterEngine {
   private readonly bucketStates: Map<string, BucketState>;
   private readonly windowStates: Map<string, WindowCounterState>;
   private readonly idempotencyStore: Map<string, IdempotencyEntry>;
+  private readonly auditEvents: AuditEvent[];
   private readonly mutex = new KeyedMutex();
   private readonly idempotencyTtlMs: number;
   private readonly nowFn: () => Date;
   private readonly persistStorage: () => void;
+  private auditEventSeq: number;
 
   constructor(options: EngineOptions = {}) {
     this.idempotencyTtlMs = options.idempotency_ttl_ms ?? DEFAULT_IDEMPOTENCY_TTL_MS;
@@ -47,7 +50,15 @@ export class RateLimiterEngine {
     this.bucketStates = storage.bucketStates;
     this.windowStates = storage.windowStates;
     this.idempotencyStore = storage.idempotencyStore;
+    this.auditEvents = storage.auditEvents;
     this.persistStorage = storage.persist;
+    this.auditEventSeq = this.auditEvents.reduce((max, event) => {
+      const match = /^audit-(\d+)$/.exec(event.id);
+      if (!match) {
+        return max;
+      }
+      return Math.max(max, Number(match[1]));
+    }, 0);
   }
 
   upsertPolicy(input: Omit<Policy, 'created_at' | 'updated_at'>): Policy {
@@ -63,6 +74,20 @@ export class RateLimiterEngine {
     };
 
     this.policies.set(next.policy_id, next);
+    this.appendAuditEvent(
+      {
+        level: 'INFO',
+        type: 'POLICY_UPSERT',
+        tenant_id: next.tenant_id,
+        policy_id: next.policy_id,
+        message: existing ? 'policy updated via upsert' : 'policy created',
+        context: {
+          status: next.status,
+          priority: next.priority,
+        },
+      },
+      false,
+    );
     this.persistStorage();
     return structuredClone(next);
   }
@@ -73,6 +98,15 @@ export class RateLimiterEngine {
       .filter((policy) => (tenantId ? policy.tenant_id === tenantId : true))
       .sort((a, b) => b.priority - a.priority || a.policy_id.localeCompare(b.policy_id))
       .map((policy) => structuredClone(policy));
+  }
+
+  listAuditEvents(tenantId?: string, limit = 100): AuditEvent[] {
+    const normalizedLimit = Number.isFinite(limit) ? Math.max(1, Math.floor(limit)) : 100;
+    const values = this.auditEvents
+      .filter((event) => (tenantId ? event.tenant_id === tenantId : true))
+      .slice(-normalizedLimit)
+      .reverse();
+    return values.map((event) => structuredClone(event));
   }
 
   patchPolicy(policyId: string, patch: Partial<Omit<Policy, 'policy_id' | 'tenant_id' | 'created_at' | 'updated_at'>>): Policy {
@@ -92,6 +126,20 @@ export class RateLimiterEngine {
 
     this.validatePolicy(next);
     this.policies.set(policyId, next);
+    this.appendAuditEvent(
+      {
+        level: 'INFO',
+        type: 'POLICY_PATCH',
+        tenant_id: next.tenant_id,
+        policy_id: next.policy_id,
+        message: 'policy patched',
+        context: {
+          status: next.status,
+          priority: next.priority,
+        },
+      },
+      false,
+    );
     this.persistStorage();
     return structuredClone(next);
   }
@@ -130,6 +178,18 @@ export class RateLimiterEngine {
         const cached = this.idempotencyStore.get(idempotencyKey);
         if (cached && cached.expires_at_ms > nowMs) {
           if (cached.payload_hash !== payloadHash) {
+            this.appendAuditEvent({
+              level: 'WARN',
+              type: 'IDEMPOTENCY_CONFLICT',
+              tenant_id: request.tenant_id,
+              policy_id: null,
+              message: 'idempotency conflict detected',
+              context: {
+                request_id: request.request_id ?? null,
+                subject: request.subject.id,
+                resource: request.resource.name,
+              },
+            });
             throw new IdempotencyConflictError('IDEMPOTENCY_KEY_REUSE: payload mismatch for request_id');
           }
           return structuredClone(cached.decision);
@@ -203,6 +263,22 @@ export class RateLimiterEngine {
         remaining,
         reset_at: resetCandidates.length > 0 ? resetCandidates[0] : null,
       };
+
+      if (!allowed) {
+        this.appendAuditEvent({
+          level: 'WARN',
+          type: 'REQUEST_DENIED',
+          tenant_id: request.tenant_id,
+          policy_id: policy.policy_id,
+          message: dryRun ? 'request denied (dry-run)' : 'request denied',
+          context: {
+            request_id: request.request_id ?? null,
+            retry_after_ms: retryAfterMs,
+            resource: request.resource.name,
+            subject: request.subject.id,
+          },
+        });
+      }
 
       if (idempotencyKey && payloadHash) {
         this.idempotencyStore.set(idempotencyKey, {
@@ -460,5 +536,27 @@ export class RateLimiterEngine {
     };
 
     return Object.entries(filter).every(([key, value]) => context[key] === value);
+  }
+
+  private appendAuditEvent(
+    input: Omit<AuditEvent, 'id' | 'at'>,
+    persist = true,
+  ): void {
+    this.auditEventSeq += 1;
+    const next: AuditEvent = {
+      id: `audit-${this.auditEventSeq}`,
+      at: this.nowFn().toISOString(),
+      ...input,
+    };
+
+    this.auditEvents.push(next);
+    const maxEvents = 5000;
+    if (this.auditEvents.length > maxEvents) {
+      this.auditEvents.splice(0, this.auditEvents.length - maxEvents);
+    }
+
+    if (persist) {
+      this.persistStorage();
+    }
   }
 }

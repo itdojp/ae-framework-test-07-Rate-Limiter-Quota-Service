@@ -108,6 +108,13 @@ cp artifacts/summary/property-summary.json artifacts/ae/test/property-summary.js
 cp artifacts/summary/mbt-summary.json artifacts/ae/test/mbt-summary.json
 
 {
+  echo "[step] run audit tests"
+  pnpm run test:audit
+} | tee artifacts/ae/test/audit.log
+
+cp artifacts/summary/audit-summary.json artifacts/ae/test/audit-summary.json
+
+{
   echo "[step] run persistence tests"
   pnpm run test:persistence
 } | tee artifacts/ae/test/persistence.log
@@ -182,6 +189,8 @@ const propertyPath = path.resolve("artifacts/summary/property-summary.json");
 const property = JSON.parse(fs.readFileSync(propertyPath, "utf8"));
 const mbtPath = path.resolve("artifacts/summary/mbt-summary.json");
 const mbt = JSON.parse(fs.readFileSync(mbtPath, "utf8"));
+const auditPath = path.resolve("artifacts/summary/audit-summary.json");
+const audit = JSON.parse(fs.readFileSync(auditPath, "utf8"));
 const persistencePath = path.resolve("artifacts/summary/persistence-summary.json");
 const persistence = JSON.parse(fs.readFileSync(persistencePath, "utf8"));
 const e2eRestartPath = path.resolve("artifacts/summary/e2e-restart-summary.json");
@@ -229,6 +238,12 @@ const out = {
     passed: mbt.numPassedTests ?? null,
     failed: mbt.numFailedTests ?? null,
     success: mbt.success ?? null
+  },
+  audit: {
+    suites: audit.numTotalTestSuites ?? null,
+    passed: audit.numPassedTests ?? null,
+    failed: audit.numFailedTests ?? null,
+    success: audit.success ?? null
   },
   persistence: {
     suites: persistence.numTotalTestSuites ?? null,
@@ -296,8 +311,12 @@ const traceability = {
   items: [
     { ruleId: "RL-INV-001", status: property.success ? "pass" : "fail", evidence: "tests/property.spec.ts" },
     { ruleId: "RL-INV-002", status: property.success ? "pass" : "fail", evidence: "tests/property.spec.ts" },
+    { ruleId: "RL-RULE-TIME-001", status: mbt.success ? "pass" : "fail", evidence: "tests/mbt.spec.ts" },
+    { ruleId: "RL-CC-001", status: mbt.success ? "pass" : "fail", evidence: "tests/mbt.spec.ts" },
     { ruleId: "RL-INV-003", status: mbt.success ? "pass" : "fail", evidence: "tests/mbt.spec.ts" },
     { ruleId: "RL-INV-004", status: (mbt.success && persistence.success && e2eRestart.success) ? "pass" : "fail", evidence: "tests/mbt.spec.ts, tests/persistence.spec.ts, tests/e2e-restart.spec.ts" },
+    { ruleId: "RL-IDEMP-001", status: (mbt.success && persistence.success && e2eRestart.success) ? "pass" : "fail", evidence: "tests/mbt.spec.ts, tests/persistence.spec.ts, tests/e2e-restart.spec.ts" },
+    { ruleId: "RL-SCOPE-AUDIT-001", status: audit.success ? "pass" : "fail", evidence: "tests/audit.spec.ts, src/domain/rate-limiter-engine.ts, src/server/app.ts" },
     { ruleId: "RL-ACC-01", status: (acceptance.success && load.status === "pass") ? "pass" : "fail", evidence: "tests/acceptance.spec.ts, artifacts/summary/load-summary.json" },
     { ruleId: "RL-ACC-02", status: (acceptance.success && e2eRestart.success) ? "pass" : "fail", evidence: "tests/acceptance.spec.ts, tests/e2e-restart.spec.ts" },
     { ruleId: "RL-ACC-03", status: acceptance.success ? "pass" : "fail", evidence: "tests/acceptance.spec.ts" }
