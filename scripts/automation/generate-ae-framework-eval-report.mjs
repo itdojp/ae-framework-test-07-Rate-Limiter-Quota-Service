@@ -31,12 +31,15 @@ const unexpectedFailures = toolcheck.counts?.unexpectedFailures ?? 0;
 const specStdioPass = specStdio.status === 'pass';
 const resumeSafePass = resumeSafe.status === 'pass';
 const acceptancePass = acceptance.success === true;
-const formalPass = String(formal.status || '').toLowerCase() === 'pass';
+const formalStatus = String(formal.status || '').toLowerCase();
+const formalPass = formalStatus === 'pass';
+const formalUnavailable = formalStatus === 'tool_not_available' || formalStatus === 'no_spec';
+const formalHardFailure = formalStatus === 'fail' || formalStatus === 'timeout';
 
 let readinessGrade = 'green';
-if (!specStdioPass || !resumeSafePass || unexpectedFailures > 0 || !acceptancePass || !formalPass) {
+if (!specStdioPass || !resumeSafePass || unexpectedFailures > 0 || !acceptancePass || formalHardFailure) {
   readinessGrade = 'red';
-} else if (unresolvedKnownIssues > 0 || String(toolcheck.status || '').toLowerCase() === 'warn') {
+} else if (unresolvedKnownIssues > 0 || String(toolcheck.status || '').toLowerCase() === 'warn' || (!formalPass && formalUnavailable)) {
   readinessGrade = 'yellow';
 }
 

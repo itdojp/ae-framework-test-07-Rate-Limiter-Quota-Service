@@ -166,6 +166,7 @@ pnpm run pipeline:local
 - `scripts/codex/ae-playbook.mjs --resume` は context 形式差異により失敗する場合がある。
 - 本リポジトリでは `scripts/automation/run-ae-framework-toolcheck.mjs` が `resume` / `no_resume` の両モードを監視し、`artifacts/summary/ae-framework-toolcheck-summary.json` に結果を保存する。
 - `scripts/automation/generate-ae-framework-eval-report.mjs` が readiness（green/yellow/red）を算出し、`artifacts/summary/ae-framework-readiness-summary.json` と `reports/AE-FRAMEWORK-EVAL-LATEST.md` を生成する。
+- readiness 判定では `formal.status` が `tool_not_available` / `no_spec` の場合を `yellow`（CAUTION）として扱い、`fail` / `timeout` を `red`（BLOCKED）とする。
 - `scripts/automation/check-ae-framework-readiness-gate.mjs` が readiness/known issues を閾値判定し、`artifacts/summary/ae-framework-readiness-gate-summary.json` を生成する。
 
 ## 9. 既知課題トラッキング
