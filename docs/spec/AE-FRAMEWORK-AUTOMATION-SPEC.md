@@ -87,6 +87,10 @@
 - 用途: `quality` と `pipeline` を並行実行し、評価フローを定期・PR・main push で自動化する。
 - 理由: 手動実行依存を下げ、ae-framework 評価の継続観測を標準化できる。
 
+19. `pnpm run report:ae:trend`
+- 用途: readiness/gate/toolcheck/formal の実行履歴を蓄積し、トレンドレポートを生成する。
+- 理由: ae-framework 評価結果の時系列比較を継続し、改善/劣化の変化点を追跡できる。
+
 ## 4. 自動化設定
 ### 4.1 基本方針
 - `--resume` を既定使用し、途中失敗後も継続可能な実行形態とする。
@@ -121,6 +125,7 @@
 ### 5.1 保存対象ディレクトリ
 - `artifacts/ae/**`
 - `artifacts/codex/**`
+- `artifacts/history/**`
 - `artifacts/hermetic-reports/**`
 - `artifacts/summary/**`
 - `reports/**`
@@ -168,6 +173,7 @@ pnpm run pipeline:local
 - `scripts/automation/generate-ae-framework-eval-report.mjs` が readiness（green/yellow/red）を算出し、`artifacts/summary/ae-framework-readiness-summary.json` と `reports/AE-FRAMEWORK-EVAL-LATEST.md` を生成する。
 - readiness 判定では `formal.status` が `tool_not_available` / `no_spec` の場合を `yellow`（CAUTION）として扱い、`fail` / `timeout` を `red`（BLOCKED）とする。
 - `scripts/automation/check-ae-framework-readiness-gate.mjs` が readiness/known issues を閾値判定し、`artifacts/summary/ae-framework-readiness-gate-summary.json` を生成する。
+- `scripts/automation/generate-ae-framework-trend-report.mjs` が `artifacts/history/ae-framework-readiness-history.jsonl` と `artifacts/summary/ae-framework-trend-summary.json`、`reports/AE-FRAMEWORK-TREND-LATEST.md` を更新する。
 
 ## 9. 既知課題トラッキング
 - 既知課題の正本は `docs/spec/AE-FRAMEWORK-KNOWN-ISSUES.md` とする。

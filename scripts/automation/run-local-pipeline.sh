@@ -11,7 +11,7 @@ AE_FRAMEWORK_FALLBACK_REF=${AE_FRAMEWORK_FALLBACK_REF:-main}
 SPEC_INPUT=${SPEC_INPUT:-spec/rate-limiter-quota-service.ae-spec.md}
 SPEC_IR=${SPEC_IR:-.ae/ae-ir.json}
 
-mkdir -p artifacts/ae/spec artifacts/ae/test artifacts/ae/formal artifacts/summary artifacts/codex/spec-stdio artifacts/codex/toolcheck artifacts/codex/playbook-resume-safe .ae artifacts/hermetic-reports/formal
+mkdir -p artifacts/ae/spec artifacts/ae/test artifacts/ae/formal artifacts/summary artifacts/history artifacts/codex/spec-stdio artifacts/codex/toolcheck artifacts/codex/playbook-resume-safe .ae artifacts/hermetic-reports/formal
 
 checkout_ae_framework_ref() {
   local ref="$1"
@@ -148,7 +148,7 @@ cp artifacts/hermetic-reports/formal/formal-summary.json artifacts/summary/forma
   pnpm run report:ae:framework
 } | tee artifacts/ae/spec/ae-framework-eval-report-pre-gate.log
 
-cp artifacts/summary/ae-framework-readiness-summary.json artifacts/ae/spec/ae-framework-readiness-summary.json
+cp artifacts/summary/ae-framework-readiness-summary.json artifacts/ae/spec/ae-framework-readiness-summary-pre-gate.json
 
 {
   echo "[step] run ae-framework readiness gate"
@@ -158,9 +158,18 @@ cp artifacts/summary/ae-framework-readiness-summary.json artifacts/ae/spec/ae-fr
 cp artifacts/summary/ae-framework-readiness-gate-summary.json artifacts/ae/spec/ae-framework-readiness-gate-summary.json
 
 {
-  echo "[step] refresh ae-framework evaluation report (with gate)"
+  echo "[step] generate ae-framework trend report"
+  pnpm run report:ae:trend
+} | tee artifacts/ae/spec/ae-framework-trend-report.log
+
+cp artifacts/summary/ae-framework-trend-summary.json artifacts/ae/spec/ae-framework-trend-summary.json
+
+{
+  echo "[step] refresh ae-framework evaluation report (with gate + trend)"
   pnpm run report:ae:framework
 } | tee artifacts/ae/spec/ae-framework-eval-report.log
+
+cp artifacts/summary/ae-framework-readiness-summary.json artifacts/ae/spec/ae-framework-readiness-summary.json
 
 node -e '
 const fs = require("fs");
@@ -191,6 +200,8 @@ const aeFrameworkReadinessPath = path.resolve("artifacts/summary/ae-framework-re
 const aeFrameworkReadiness = JSON.parse(fs.readFileSync(aeFrameworkReadinessPath, "utf8"));
 const aeFrameworkGatePath = path.resolve("artifacts/summary/ae-framework-readiness-gate-summary.json");
 const aeFrameworkGate = JSON.parse(fs.readFileSync(aeFrameworkGatePath, "utf8"));
+const aeFrameworkTrendPath = path.resolve("artifacts/summary/ae-framework-trend-summary.json");
+const aeFrameworkTrend = JSON.parse(fs.readFileSync(aeFrameworkTrendPath, "utf8"));
 const formalPath = path.resolve("artifacts/summary/formal-summary.json");
 const formal = JSON.parse(fs.readFileSync(formalPath, "utf8"));
 const out = {
@@ -266,6 +277,11 @@ const out = {
   aeFrameworkReadinessGate: {
     status: aeFrameworkGate.status ?? null,
     failedChecks: Array.isArray(aeFrameworkGate.checks) ? aeFrameworkGate.checks.filter((item) => !item.pass).map((item) => item.id) : []
+  },
+  aeFrameworkTrend: {
+    totalRuns: aeFrameworkTrend.totalRuns ?? null,
+    latestRunAt: aeFrameworkTrend.latest ? aeFrameworkTrend.latest.generatedAt : null,
+    latestGateStatus: aeFrameworkTrend.latest ? aeFrameworkTrend.latest.gateStatus : null
   },
   formal: {
     status: formal.status ?? "unknown",

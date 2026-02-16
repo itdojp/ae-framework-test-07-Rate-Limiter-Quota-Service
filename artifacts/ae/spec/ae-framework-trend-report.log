@@ -1,0 +1,7 @@
+[step] generate ae-framework trend report
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 report:ae:trend /home/devuser/work/CodeX/ae-framework_exp07
+> node scripts/automation/generate-ae-framework-trend-report.mjs
+
+generated: /home/devuser/work/CodeX/ae-framework_exp07/reports/AE-FRAMEWORK-TREND-2026-02-16.md
+generated: /home/devuser/work/CodeX/ae-framework_exp07/reports/AE-FRAMEWORK-TREND-LATEST.md

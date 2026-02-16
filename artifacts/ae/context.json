@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T06:43:43.777Z",
+  "generatedAt": "2026-02-16T08:28:45.239Z",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
   "specIr": ".ae/ae-ir.json",
   "testFiles": 7,
@@ -71,6 +71,11 @@
   "aeFrameworkReadinessGate": {
     "status": "pass",
     "failedChecks": []
+  },
+  "aeFrameworkTrend": {
+    "totalRuns": 2,
+    "latestRunAt": "2026-02-16T08:28:44.701Z",
+    "latestGateStatus": "pass"
   },
   "formal": {
     "status": "pass",

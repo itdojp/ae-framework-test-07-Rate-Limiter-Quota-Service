@@ -34,3 +34,5 @@
 - `artifacts/summary/ae-playbook-resume-safe-summary.json`
 - `artifacts/summary/ae-framework-readiness-summary.json`
 - `artifacts/summary/ae-framework-readiness-gate-summary.json`
+- `artifacts/summary/ae-framework-trend-summary.json`
+- `artifacts/history/ae-framework-readiness-history.jsonl`

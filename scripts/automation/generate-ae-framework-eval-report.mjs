@@ -20,6 +20,10 @@ const gate = readJson('artifacts/summary/ae-framework-readiness-gate-summary.jso
   status: 'unknown',
   checks: [],
 });
+const trend = readJson('artifacts/summary/ae-framework-trend-summary.json', {
+  totalRuns: null,
+  latest: null,
+});
 const acceptance = readJson('artifacts/summary/acceptance-summary.json');
 const formal = readJson('artifacts/summary/formal-summary.json');
 
@@ -83,6 +87,11 @@ const summary = {
       status: gate.status ?? 'unknown',
       failedChecks: Array.isArray(gate.checks) ? gate.checks.filter((item) => !item.pass).map((item) => item.id) : [],
     },
+    trend: {
+      totalRuns: trend.totalRuns ?? null,
+      latestRunAt: trend.latest?.generatedAt ?? null,
+      latestGateStatus: trend.latest?.gateStatus ?? null,
+    },
     acceptance: {
       status: acceptancePass ? 'pass' : 'fail',
       passed: acceptance.numPassedTests ?? null,
@@ -113,6 +122,7 @@ const lines = [
   `- ae-toolcheck: ${String(toolcheck.status || 'unknown').toUpperCase()} (${toolcheck.counts?.success ?? 0}/${toolcheck.counts?.total ?? 0})`,
   `- ae-playbook-resume-safe: ${String(resumeSafe.status || 'unknown').toUpperCase()} (normalized=${String(resumeSafe.normalization?.normalized ?? 'n/a')}, reason=${resumeSafe.normalization?.reason || 'n/a'})`,
   `- ae-readiness-gate: ${String(gate.status || 'unknown').toUpperCase()}`,
+  `- ae-trend: total_runs=${trend.totalRuns ?? 'n/a'} (latest=${trend.latest?.generatedAt ?? 'n/a'})`,
   `- acceptance: ${acceptancePass ? 'PASS' : 'FAIL'} (${acceptance.numPassedTests}/${acceptance.numTotalTests})`,
   `- formal: ${String(formal.status || 'unknown').toUpperCase()} (tool=${formal.tool || 'n/a'})`,
   '',
@@ -125,6 +135,8 @@ const lines = [
   '- artifacts/summary/ae-spec-stdio-summary.json',
   '- artifacts/summary/ae-playbook-resume-safe-summary.json',
   '- artifacts/summary/ae-framework-readiness-gate-summary.json',
+  '- artifacts/summary/ae-framework-trend-summary.json',
+  '- artifacts/history/ae-framework-readiness-history.jsonl',
   '- artifacts/codex/toolcheck/*',
   '- artifacts/codex/playbook-resume-safe/*',
   '',

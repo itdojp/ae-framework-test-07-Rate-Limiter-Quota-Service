@@ -95,7 +95,12 @@ pnpm run report:ae:framework
 pnpm run gate:ae:framework
 ```
 
-17. サービス起動
+17. ae-framework トレンドレポート生成
+```bash
+pnpm run report:ae:trend
+```
+
+18. サービス起動
 ```bash
 pnpm run dev
 ```

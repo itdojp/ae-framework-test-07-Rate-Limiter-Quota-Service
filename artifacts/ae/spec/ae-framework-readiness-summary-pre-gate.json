@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T08:28:45.161Z",
+  "generatedAt": "2026-02-16T08:28:43.842Z",
   "readinessGrade": "yellow",
   "readinessStatus": "CAUTION",
   "checks": {
@@ -26,8 +26,8 @@
       "failedChecks": []
     },
     "trend": {
-      "totalRuns": 2,
-      "latestRunAt": "2026-02-16T08:28:44.701Z",
+      "totalRuns": 1,
+      "latestRunAt": "2026-02-16T08:27:22.568Z",
       "latestGateStatus": "pass"
     },
     "acceptance": {

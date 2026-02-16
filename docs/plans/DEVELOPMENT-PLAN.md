@@ -68,6 +68,10 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 - GitHub Actions で quality/pipeline を並行実行し、ae-framework 評価フローを継続実行する。
 - Exit条件: `.github/workflows/ae-framework-automation.yml` が `push/pull_request/schedule` で動作し、`.ae/**`, `artifacts/**`, `reports/**` を artifact 保存できる。
 
+11. M11: ae-framework 評価トレンド蓄積
+- readiness/gate/toolcheck/formal の結果を履歴化し、時系列レポートを自動更新する。
+- Exit条件: `artifacts/history/ae-framework-readiness-history.jsonl` と `artifacts/summary/ae-framework-trend-summary.json`、`reports/AE-FRAMEWORK-TREND-LATEST.md` が毎回更新される。
+
 ## 6. 実行方式（自動化優先）
 - 原則: 手作業よりも ae-framework の CLI / スクリプト / CI を優先。
 - フェーズ実行の起点: `ae-playbook` 相当フローを採用。
@@ -127,3 +131,7 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
   - `run-local-pipeline.sh` に ae-framework 自動clone/checkoutを追加（CI前提の非対話実行）
   - GitHub Actions ワークフロー `ae-framework-automation.yml` を追加し、quality/pipeline を並行実行
   - pipeline 実行成果物（`.ae/**`, `artifacts/**`, `reports/**`）を Actions artifact として保存
+- M11: 完了
+  - `report:ae:trend` を追加し、評価履歴（jsonl）とトレンドサマリを自動生成
+  - `pipeline:local` と既存レポートへ trend 情報を統合
+  - トレンドレポート `reports/AE-FRAMEWORK-TREND-LATEST.md` を継続更新

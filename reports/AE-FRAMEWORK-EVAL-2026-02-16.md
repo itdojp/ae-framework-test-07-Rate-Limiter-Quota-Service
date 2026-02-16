@@ -11,6 +11,7 @@
 - ae-toolcheck: WARN (4/6)
 - ae-playbook-resume-safe: PASS (normalized=false, reason=already_compatible)
 - ae-readiness-gate: PASS
+- ae-trend: total_runs=2 (latest=2026-02-16T08:28:44.701Z)
 - acceptance: PASS (3/3)
 - formal: PASS (tool=java-tlc)
 
@@ -24,6 +25,8 @@
 - artifacts/summary/ae-spec-stdio-summary.json
 - artifacts/summary/ae-playbook-resume-safe-summary.json
 - artifacts/summary/ae-framework-readiness-gate-summary.json
+- artifacts/summary/ae-framework-trend-summary.json
+- artifacts/history/ae-framework-readiness-history.jsonl
 - artifacts/codex/toolcheck/*
 - artifacts/codex/playbook-resume-safe/*
 

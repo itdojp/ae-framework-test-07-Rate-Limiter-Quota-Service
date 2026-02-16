@@ -27,6 +27,10 @@ const aeFrameworkReadiness = readJson('artifacts/summary/ae-framework-readiness-
 const aeFrameworkGate = readJson('artifacts/summary/ae-framework-readiness-gate-summary.json', {
   status: 'unknown',
 });
+const aeFrameworkTrend = readJson('artifacts/summary/ae-framework-trend-summary.json', {
+  totalRuns: null,
+  latest: null,
+});
 const formal = readJson('artifacts/summary/formal-summary.json');
 const traceability = readJson('artifacts/summary/traceability-summary.json');
 
@@ -49,6 +53,7 @@ const lines = [
   `- ae-playbook-resume-safe: ${String(aePlaybookResumeSafe.status || 'unknown').toUpperCase()} (normalized=${String(aePlaybookResumeSafe.normalization?.normalized ?? 'n/a')})`,
   `- ae-framework-readiness: ${String(aeFrameworkReadiness.readinessGrade || 'unknown').toUpperCase()} (${String(aeFrameworkReadiness.readinessStatus || 'n/a')})`,
   `- ae-framework-gate: ${String(aeFrameworkGate.status || 'unknown').toUpperCase()}`,
+  `- ae-framework-trend: total_runs=${aeFrameworkTrend.totalRuns ?? 'n/a'} (latest=${aeFrameworkTrend.latest?.generatedAt ?? 'n/a'})`,
   `- formal: ${String(formal.status || 'unknown').toUpperCase()} (tool=${formal.tool || 'n/a'})`,
   '',
   '## Rule Status',
@@ -67,6 +72,8 @@ const lines = [
   '- artifacts/summary/ae-playbook-resume-safe-summary.json',
   '- artifacts/summary/ae-framework-readiness-summary.json',
   '- artifacts/summary/ae-framework-readiness-gate-summary.json',
+  '- artifacts/summary/ae-framework-trend-summary.json',
+  '- artifacts/history/ae-framework-readiness-history.jsonl',
   '- artifacts/summary/formal-summary.json',
   '- artifacts/summary/traceability-summary.json',
   '- artifacts/hermetic-reports/formal/tlc.log',

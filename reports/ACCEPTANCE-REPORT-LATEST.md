@@ -13,6 +13,7 @@
 - ae-playbook-resume-safe: PASS (normalized=false)
 - ae-framework-readiness: YELLOW (CAUTION)
 - ae-framework-gate: PASS
+- ae-framework-trend: total_runs=2 (latest=2026-02-16T08:28:44.701Z)
 - formal: PASS (tool=java-tlc)
 
 ## Rule Status
@@ -37,6 +38,8 @@
 - artifacts/summary/ae-playbook-resume-safe-summary.json
 - artifacts/summary/ae-framework-readiness-summary.json
 - artifacts/summary/ae-framework-readiness-gate-summary.json
+- artifacts/summary/ae-framework-trend-summary.json
+- artifacts/history/ae-framework-readiness-history.jsonl
 - artifacts/summary/formal-summary.json
 - artifacts/summary/traceability-summary.json
 - artifacts/hermetic-reports/formal/tlc.log

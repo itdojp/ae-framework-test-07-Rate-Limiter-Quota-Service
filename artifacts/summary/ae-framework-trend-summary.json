@@ -1,0 +1,105 @@
+{
+  "generatedAt": "2026-02-16T08:28:44.701Z",
+  "historyPath": "artifacts/history/ae-framework-readiness-history.jsonl",
+  "totalRuns": 2,
+  "windowSize": 2,
+  "latest": {
+    "generatedAt": "2026-02-16T08:28:44.701Z",
+    "date": "2026-02-16",
+    "commit": "20f14e1a7469fd632376161d59d167569ab1ee79",
+    "shortCommit": "20f14e1a7469",
+    "branch": "main",
+    "executionContext": "local",
+    "ci": {
+      "runId": null,
+      "runAttempt": null,
+      "workflow": null,
+      "eventName": null
+    },
+    "readinessGrade": "yellow",
+    "readinessStatus": "CAUTION",
+    "gateStatus": "pass",
+    "gateFailedChecks": [],
+    "unresolvedKnownIssues": 2,
+    "unexpectedFailures": 0,
+    "toolcheckStatus": "warn",
+    "toolcheckSuccess": 4,
+    "toolcheckTotal": 6,
+    "specStdioStatus": "pass",
+    "specStdioMode": "fallback-cli",
+    "resumeSafeStatus": "pass",
+    "formalStatus": "pass",
+    "acceptanceStatus": "pass",
+    "acceptancePassed": 3,
+    "acceptanceTotal": 3
+  },
+  "previous": {
+    "generatedAt": "2026-02-16T08:27:22.568Z",
+    "date": "2026-02-16",
+    "commit": "20f14e1a7469fd632376161d59d167569ab1ee79",
+    "shortCommit": "20f14e1a7469",
+    "branch": "main",
+    "executionContext": "local",
+    "ci": {
+      "runId": null,
+      "runAttempt": null,
+      "workflow": null,
+      "eventName": null
+    },
+    "readinessGrade": "yellow",
+    "readinessStatus": "CAUTION",
+    "gateStatus": "pass",
+    "gateFailedChecks": [],
+    "unresolvedKnownIssues": 2,
+    "unexpectedFailures": 0,
+    "toolcheckStatus": "warn",
+    "toolcheckSuccess": 4,
+    "toolcheckTotal": 6,
+    "specStdioStatus": "pass",
+    "specStdioMode": "fallback-cli",
+    "resumeSafeStatus": "pass",
+    "formalStatus": "pass",
+    "acceptanceStatus": "pass",
+    "acceptancePassed": 3,
+    "acceptanceTotal": 3
+  },
+  "windowStats": {
+    "readinessGrade": {
+      "yellow": 2
+    },
+    "readinessStatus": {
+      "CAUTION": 2
+    },
+    "gateStatus": {
+      "pass": 2
+    },
+    "formalStatus": {
+      "pass": 2
+    },
+    "executionContext": {
+      "local": 2
+    }
+  },
+  "recentRuns": [
+    {
+      "generatedAt": "2026-02-16T08:27:22.568Z",
+      "shortCommit": "20f14e1a7469",
+      "readinessGrade": "yellow",
+      "gateStatus": "pass",
+      "unresolvedKnownIssues": 2,
+      "unexpectedFailures": 0,
+      "formalStatus": "pass",
+      "executionContext": "local"
+    },
+    {
+      "generatedAt": "2026-02-16T08:28:44.701Z",
+      "shortCommit": "20f14e1a7469",
+      "readinessGrade": "yellow",
+      "gateStatus": "pass",
+      "unresolvedKnownIssues": 2,
+      "unexpectedFailures": 0,
+      "formalStatus": "pass",
+      "executionContext": "local"
+    }
+  ]
+}

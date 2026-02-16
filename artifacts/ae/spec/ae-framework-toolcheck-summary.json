@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T06:43:28.806Z",
+  "generatedAt": "2026-02-16T08:28:28.418Z",
   "status": "warn",
   "frameworkRoot": "/tmp/ae-framework-20260215",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
@@ -34,7 +34,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": false,
-      "elapsedMs": 57,
+      "elapsedMs": 39,
       "command": "node /tmp/ae-framework-20260215/scripts/codex/spec-stdio.mjs",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/framework_spec_stdio_direct_validate.stdout.log",
@@ -50,7 +50,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": true,
-      "elapsedMs": 581,
+      "elapsedMs": 607,
       "command": "pnpm run codex:spec:stdio",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/local_codex_spec_stdio_proxy_validate.stdout.log",
@@ -66,7 +66,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": null,
-      "elapsedMs": 106,
+      "elapsedMs": 121,
       "command": "node /tmp/ae-framework-20260215/packages/spec-compiler/dist/cli.js validate -i spec/rate-limiter-quota-service.ae-spec.md --max-errors 0 --max-warnings 200 --relaxed",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/framework_spec_compiler_cli_validate.stdout.log",
@@ -82,7 +82,7 @@
       "exitCode": 1,
       "signal": null,
       "responseOk": null,
-      "elapsedMs": 44,
+      "elapsedMs": 45,
       "command": "node /tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs --resume --skip=setup,qa,spec,sim,formal",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/framework_ae_playbook_resume.stdout.log",
@@ -98,7 +98,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": null,
-      "elapsedMs": 52,
+      "elapsedMs": 56,
       "command": "node /tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs --skip=setup,qa,spec,sim,formal",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/framework_ae_playbook_no_resume.stdout.log",
@@ -114,7 +114,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": null,
-      "elapsedMs": 418,
+      "elapsedMs": 471,
       "command": "pnpm run test:ae:playbook:resume-safe",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/local_ae_playbook_resume_safe.stdout.log",
