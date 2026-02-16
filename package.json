@@ -32,6 +32,7 @@
     "mutation": "node scripts/automation/run-mutation-synthetic.mjs",
     "formal:check": "bash scripts/automation/run-formal-check.sh",
     "report:acceptance": "node scripts/automation/generate-acceptance-report.mjs",
+    "report:ae:framework": "node scripts/automation/generate-ae-framework-eval-report.mjs",
     "pipeline:local": "bash scripts/automation/run-local-pipeline.sh"
   },
   "dependencies": {

@@ -1,0 +1,46 @@
+{
+  "generatedAt": "2026-02-16T02:18:47.439Z",
+  "readinessGrade": "yellow",
+  "readinessStatus": "CAUTION",
+  "checks": {
+    "specStdio": {
+      "status": "pass",
+      "mode": "fallback-cli",
+      "parity": true
+    },
+    "toolcheck": {
+      "status": "warn",
+      "total": 6,
+      "success": 4,
+      "failed": 2,
+      "unresolvedKnownIssues": 2,
+      "unexpectedFailures": 0
+    },
+    "playbookResumeSafe": {
+      "status": "pass",
+      "normalized": false,
+      "reason": "already_compatible"
+    },
+    "acceptance": {
+      "status": "pass",
+      "passed": 3,
+      "failed": 0
+    },
+    "formal": {
+      "status": "pass",
+      "tool": "java-tlc"
+    }
+  },
+  "knownIssues": [
+    {
+      "probeId": "framework_spec_stdio_direct_validate",
+      "expected": "failure",
+      "reason": "spec-stdio が packages/spec-compiler/src/index.js を参照し、現行配布構成と不整合"
+    },
+    {
+      "probeId": "framework_ae_playbook_resume",
+      "expected": "failure",
+      "reason": "既存 context.json 形式に phases が無い場合、resume で TypeError が発生"
+    }
+  ]
+}

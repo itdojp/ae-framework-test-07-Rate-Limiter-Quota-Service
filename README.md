@@ -85,7 +85,12 @@ pnpm run formal:check
 pnpm run report:acceptance
 ```
 
-15. サービス起動
+15. ae-framework 評価レポート生成
+```bash
+pnpm run report:ae:framework
+```
+
+16. サービス起動
 ```bash
 pnpm run dev
 ```

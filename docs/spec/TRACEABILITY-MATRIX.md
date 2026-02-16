@@ -32,3 +32,4 @@
 - `artifacts/summary/ae-spec-stdio-summary.json`
 - `artifacts/summary/ae-framework-toolcheck-summary.json`
 - `artifacts/summary/ae-playbook-resume-safe-summary.json`
+- `artifacts/summary/ae-framework-readiness-summary.json`

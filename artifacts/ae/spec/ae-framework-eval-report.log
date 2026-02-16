@@ -1,0 +1,7 @@
+[step] generate ae-framework evaluation report
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 report:ae:framework /home/devuser/work/CodeX/ae-framework_exp07
+> node scripts/automation/generate-ae-framework-eval-report.mjs
+
+generated: /home/devuser/work/CodeX/ae-framework_exp07/reports/AE-FRAMEWORK-EVAL-2026-02-16.md
+generated: /home/devuser/work/CodeX/ae-framework_exp07/reports/AE-FRAMEWORK-EVAL-LATEST.md

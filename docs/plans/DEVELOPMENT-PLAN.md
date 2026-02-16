@@ -56,6 +56,10 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 - bridge/cli/playbook を同一ジョブで評価し、既知不整合と回避結果を継続観測する。
 - Exit条件: `artifacts/summary/ae-framework-toolcheck-summary.json` が毎回更新され、受入レポートに統合される。
 
+8. M8: ae-framework 評価レポート統合
+- 複数サマリ（spec-stdio/toolcheck/resume-safe/formal/acceptance）を統合し readiness を算出する。
+- Exit条件: `artifacts/summary/ae-framework-readiness-summary.json` と `reports/AE-FRAMEWORK-EVAL-LATEST.md` が毎回更新される。
+
 ## 6. 実行方式（自動化優先）
 - 原則: 手作業よりも ae-framework の CLI / スクリプト / CI を優先。
 - フェーズ実行の起点: `ae-playbook` 相当フローを採用。
@@ -105,3 +109,6 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
   - `test:ae:playbook:resume-safe` を追加し、context 正規化付き resume 実行を自動化
   - 受入レポートと context に toolcheck 結果を統合
   - 既知課題ドキュメント `docs/spec/AE-FRAMEWORK-KNOWN-ISSUES.md` を追加
+- M8: 完了
+  - `report:ae:framework` を追加し、readiness 判定（green/yellow/red）を自動出力
+  - `pipeline:local` に統合し、context へ readiness サマリを連携

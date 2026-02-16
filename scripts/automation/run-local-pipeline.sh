@@ -115,6 +115,13 @@ cp artifacts/summary/mutation-summary.json artifacts/ae/test/mutation-summary.js
 cp artifacts/hermetic-reports/formal/formal-summary.json artifacts/ae/formal/formal-summary.json
 cp artifacts/hermetic-reports/formal/formal-summary.json artifacts/summary/formal-summary.json
 
+{
+  echo "[step] generate ae-framework evaluation report"
+  pnpm run report:ae:framework
+} | tee artifacts/ae/spec/ae-framework-eval-report.log
+
+cp artifacts/summary/ae-framework-readiness-summary.json artifacts/ae/spec/ae-framework-readiness-summary.json
+
 node -e '
 const fs = require("fs");
 const path = require("path");
@@ -140,6 +147,8 @@ const aeToolcheckPath = path.resolve("artifacts/summary/ae-framework-toolcheck-s
 const aeToolcheck = JSON.parse(fs.readFileSync(aeToolcheckPath, "utf8"));
 const aePlaybookResumeSafePath = path.resolve("artifacts/summary/ae-playbook-resume-safe-summary.json");
 const aePlaybookResumeSafe = JSON.parse(fs.readFileSync(aePlaybookResumeSafePath, "utf8"));
+const aeFrameworkReadinessPath = path.resolve("artifacts/summary/ae-framework-readiness-summary.json");
+const aeFrameworkReadiness = JSON.parse(fs.readFileSync(aeFrameworkReadinessPath, "utf8"));
 const formalPath = path.resolve("artifacts/summary/formal-summary.json");
 const formal = JSON.parse(fs.readFileSync(formalPath, "utf8"));
 const out = {
@@ -205,6 +214,12 @@ const out = {
     status: aePlaybookResumeSafe.status ?? null,
     normalized: aePlaybookResumeSafe.normalization ? aePlaybookResumeSafe.normalization.normalized : null,
     reason: aePlaybookResumeSafe.normalization ? aePlaybookResumeSafe.normalization.reason : null
+  },
+  aeFrameworkReadiness: {
+    grade: aeFrameworkReadiness.readinessGrade ?? null,
+    status: aeFrameworkReadiness.readinessStatus ?? null,
+    unresolvedKnownIssues: aeFrameworkReadiness.checks && aeFrameworkReadiness.checks.toolcheck ? aeFrameworkReadiness.checks.toolcheck.unresolvedKnownIssues : null,
+    unexpectedFailures: aeFrameworkReadiness.checks && aeFrameworkReadiness.checks.toolcheck ? aeFrameworkReadiness.checks.toolcheck.unexpectedFailures : null
   },
   formal: {
     status: formal.status ?? "unknown",

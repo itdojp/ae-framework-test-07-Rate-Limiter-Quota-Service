@@ -75,6 +75,10 @@
 - 用途: `ae-playbook --resume` 実行前に context を正規化し、互換性を維持して実行する。
 - 理由: 既知課題（AE-KNOWN-002）の実運用回避策を自動化できる。
 
+16. `pnpm run report:ae:framework`
+- 用途: ae-framework 由来の評価結果を統合し、readiness 判定を出力する。
+- 理由: 継続評価の比較軸を1ファイルに固定し、改善判定を容易にする。
+
 ## 4. 自動化設定
 ### 4.1 基本方針
 - `--resume` を既定使用し、途中失敗後も継続可能な実行形態とする。
@@ -140,6 +144,7 @@ pnpm run pipeline:local
 - 本リポジトリでは `scripts/automation/run-ae-spec-stdio-check.mjs` が自動で fallback（`spec-compiler/dist/cli.js`）を実行し、`artifacts/summary/ae-spec-stdio-summary.json` に結果を保存する。
 - `scripts/codex/ae-playbook.mjs --resume` は context 形式差異により失敗する場合がある。
 - 本リポジトリでは `scripts/automation/run-ae-framework-toolcheck.mjs` が `resume` / `no_resume` の両モードを監視し、`artifacts/summary/ae-framework-toolcheck-summary.json` に結果を保存する。
+- `scripts/automation/generate-ae-framework-eval-report.mjs` が readiness（green/yellow/red）を算出し、`artifacts/summary/ae-framework-readiness-summary.json` と `reports/AE-FRAMEWORK-EVAL-LATEST.md` を生成する。
 
 ## 9. 既知課題トラッキング
 - 既知課題の正本は `docs/spec/AE-FRAMEWORK-KNOWN-ISSUES.md` とする。
