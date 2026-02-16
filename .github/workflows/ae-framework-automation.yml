@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
-      AE_FRAMEWORK_ROOT: ${{ runner.temp }}/ae-framework
+      AE_FRAMEWORK_ROOT: ${{ github.workspace }}/.cache/ae-framework
       AE_FRAMEWORK_REPO_URL: https://github.com/itdojp/ae-framework.git
       AE_FRAMEWORK_REF: 546b9d21daeda171f47924f02195d9e4bd81a3c8
       AE_FRAMEWORK_FALLBACK_REF: main
