@@ -75,6 +75,11 @@ cp artifacts/summary/ae-framework-toolcheck-summary.json artifacts/ae/spec/ae-fr
 cp artifacts/summary/ae-playbook-resume-safe-summary.json artifacts/ae/spec/ae-playbook-resume-safe-summary.json
 
 {
+  echo "[step] build service"
+  pnpm run build
+} | tee artifacts/ae/spec/build.log
+
+{
   echo "[step] run tests with json artifacts"
   pnpm run test:artifacts
 } | tee artifacts/ae/test/vitest.log

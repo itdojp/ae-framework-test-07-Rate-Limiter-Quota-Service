@@ -1,0 +1,5 @@
+[step] build service
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 build /home/devuser/work/CodeX/ae-framework_exp07
+> tsc -p tsconfig.json
+

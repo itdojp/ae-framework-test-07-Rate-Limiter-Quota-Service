@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T06:38:35.515Z",
+  "generatedAt": "2026-02-16T06:40:55.108Z",
   "status": "pass",
   "tool": "codex:spec:stdio",
   "mode": "fallback-cli",
@@ -48,8 +48,8 @@
     "parity": true,
     "rawParity": false,
     "semanticParity": true,
-    "stdioIrSha256": "e7440b2cad11ef9295921046d11c3c9200d96c99ae5387c50958846998b29d14",
-    "defaultIrSha256": "bdacef35e0a0169316be97d0339f01aeab777903a1d0631b17d141d36a574981",
+    "stdioIrSha256": "70bde357fe7de261c399b96b157aad15b27c1d8393f1c365cdc067f72d4e228a",
+    "defaultIrSha256": "9d65f09cede2266fcf66781596cf9fe1649be0dd571af2e92f13dcedcf8407e7",
     "normalized": {
       "stdioIrSha256": "15306411c1d2cf816af89a52b732e095d51276abe7ac48960b4e7ba9b9089bc2",
       "defaultIrSha256": "15306411c1d2cf816af89a52b732e095d51276abe7ac48960b4e7ba9b9089bc2"

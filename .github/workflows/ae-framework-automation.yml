@@ -31,12 +31,12 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Unit tests
-        run: pnpm test
       - name: Type check
         run: pnpm run typecheck
       - name: Build
         run: pnpm run build
+      - name: Unit tests
+        run: pnpm test
 
   pipeline:
     runs-on: ubuntu-latest
