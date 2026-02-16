@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T03:00:20.232Z",
+  "generatedAt": "2026-02-16T06:33:21.405Z",
   "status": "pass",
   "scenarios": [
     {
@@ -8,7 +8,7 @@
       "allowed": 10,
       "total": 100,
       "expectedUpperBound": 10,
-      "elapsedMs": 26
+      "elapsedMs": 38
     },
     {
       "name": "sustained-30s-300req",
@@ -16,7 +16,7 @@
       "allowed": 20,
       "total": 300,
       "expectedUpperBound": 20,
-      "elapsedMs": 40,
+      "elapsedMs": 50,
       "detail": "window limit(20/min) is dominant for 30s period"
     },
     {
@@ -25,7 +25,7 @@
       "allowed": 30,
       "total": 120,
       "expectedUpperBound": 30,
-      "elapsedMs": 25
+      "elapsedMs": 39
     }
   ]
 }

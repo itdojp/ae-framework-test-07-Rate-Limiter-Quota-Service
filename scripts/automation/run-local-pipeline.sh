@@ -5,10 +5,33 @@ ROOT_DIR=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$ROOT_DIR"
 
 AE_FRAMEWORK_ROOT=${AE_FRAMEWORK_ROOT:-/tmp/ae-framework-20260215}
+AE_FRAMEWORK_REPO_URL=${AE_FRAMEWORK_REPO_URL:-https://github.com/itdojp/ae-framework.git}
+AE_FRAMEWORK_REF=${AE_FRAMEWORK_REF:-546b9d21daeda171f47924f02195d9e4bd81a3c8}
+AE_FRAMEWORK_FALLBACK_REF=${AE_FRAMEWORK_FALLBACK_REF:-main}
 SPEC_INPUT=${SPEC_INPUT:-spec/rate-limiter-quota-service.ae-spec.md}
 SPEC_IR=${SPEC_IR:-.ae/ae-ir.json}
 
 mkdir -p artifacts/ae/spec artifacts/ae/test artifacts/ae/formal artifacts/summary artifacts/codex/spec-stdio artifacts/codex/toolcheck artifacts/codex/playbook-resume-safe .ae artifacts/hermetic-reports/formal
+
+checkout_ae_framework_ref() {
+  local ref="$1"
+  if ! git -C "$AE_FRAMEWORK_ROOT" rev-parse --verify --quiet "${ref}^{commit}" >/dev/null; then
+    git -C "$AE_FRAMEWORK_ROOT" fetch --depth 1 origin "$ref" >/dev/null 2>&1 || git -C "$AE_FRAMEWORK_ROOT" fetch origin "$ref" >/dev/null 2>&1
+  fi
+  git -C "$AE_FRAMEWORK_ROOT" checkout --detach "$ref" >/dev/null 2>&1 || git -C "$AE_FRAMEWORK_ROOT" checkout "$ref" >/dev/null 2>&1
+}
+
+if [[ ! -d "$AE_FRAMEWORK_ROOT/.git" ]]; then
+  echo "[setup] clone ae-framework repository"
+  mkdir -p "$(dirname "$AE_FRAMEWORK_ROOT")"
+  rm -rf "$AE_FRAMEWORK_ROOT"
+  git clone --filter=blob:none "$AE_FRAMEWORK_REPO_URL" "$AE_FRAMEWORK_ROOT"
+fi
+
+if ! checkout_ae_framework_ref "$AE_FRAMEWORK_REF"; then
+  echo "[warn] failed to checkout AE_FRAMEWORK_REF=$AE_FRAMEWORK_REF, fallback to $AE_FRAMEWORK_FALLBACK_REF"
+  checkout_ae_framework_ref "$AE_FRAMEWORK_FALLBACK_REF"
+fi
 
 if [[ ! -f "$AE_FRAMEWORK_ROOT/packages/spec-compiler/dist/cli.js" ]]; then
   pnpm --dir "$AE_FRAMEWORK_ROOT" install --filter @ae-framework/spec-compiler... --no-frozen-lockfile

@@ -100,6 +100,21 @@ pnpm run gate:ae:framework
 pnpm run dev
 ```
 
+## CI自動実行
+- Workflow: `.github/workflows/ae-framework-automation.yml`
+- trigger: `push(main)`, `pull_request`, `schedule`, `workflow_dispatch`
+- 並行ジョブ:
+  - `quality`: `pnpm test` / `pnpm run typecheck` / `pnpm run build`
+  - `pipeline`: `pnpm run pipeline:local`
+- `pipeline` ジョブは `.ae/**`, `artifacts/**`, `reports/**` を GitHub Actions artifact に保存する。
+
+## ae-framework 参照設定
+`pnpm run pipeline:local` は `ae-framework` を自動取得できる。必要に応じて以下を上書きする。
+- `AE_FRAMEWORK_ROOT`（取得先ディレクトリ）
+- `AE_FRAMEWORK_REPO_URL`
+- `AE_FRAMEWORK_REF`
+- `AE_FRAMEWORK_FALLBACK_REF`
+
 ## 永続化バックエンド
 - 既定: `STATE_BACKEND=memory`
 - ファイル永続化: `STATE_BACKEND=file` と `STATE_FILE_PATH` を設定

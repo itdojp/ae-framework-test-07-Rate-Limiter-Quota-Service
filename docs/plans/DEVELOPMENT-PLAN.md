@@ -64,6 +64,10 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 - readiness と known issues を閾値で pass/fail 判定するゲートを自動実行する。
 - Exit条件: `artifacts/summary/ae-framework-readiness-gate-summary.json` が毎回更新される。
 
+10. M10: CI 並行実行と成果物アーカイブ
+- GitHub Actions で quality/pipeline を並行実行し、ae-framework 評価フローを継続実行する。
+- Exit条件: `.github/workflows/ae-framework-automation.yml` が `push/pull_request/schedule` で動作し、`.ae/**`, `artifacts/**`, `reports/**` を artifact 保存できる。
+
 ## 6. 実行方式（自動化優先）
 - 原則: 手作業よりも ae-framework の CLI / スクリプト / CI を優先。
 - フェーズ実行の起点: `ae-playbook` 相当フローを採用。
@@ -119,3 +123,7 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 - M9: 完了
   - `gate:ae:framework` を追加し、閾値ベースの pass/fail 判定を自動化
   - `pipeline:local` と各レポートに gate 結果を統合
+- M10: 完了
+  - `run-local-pipeline.sh` に ae-framework 自動clone/checkoutを追加（CI前提の非対話実行）
+  - GitHub Actions ワークフロー `ae-framework-automation.yml` を追加し、quality/pipeline を並行実行
+  - pipeline 実行成果物（`.ae/**`, `artifacts/**`, `reports/**`）を Actions artifact として保存

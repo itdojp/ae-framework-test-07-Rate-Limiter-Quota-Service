@@ -1,0 +1,75 @@
+name: ae-framework automation
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 3 * * *'
+
+concurrency:
+  group: ae-framework-automation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Unit tests
+        run: pnpm test
+      - name: Type check
+        run: pnpm run typecheck
+      - name: Build
+        run: pnpm run build
+
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      AE_FRAMEWORK_ROOT: ${{ runner.temp }}/ae-framework
+      AE_FRAMEWORK_REPO_URL: https://github.com/itdojp/ae-framework.git
+      AE_FRAMEWORK_REF: 546b9d21daeda171f47924f02195d9e4bd81a3c8
+      AE_FRAMEWORK_FALLBACK_REF: main
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run local pipeline
+        run: pnpm run pipeline:local
+      - name: Upload pipeline artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ae-framework-pipeline-artifacts-${{ github.run_id }}
+          path: |
+            .ae/**
+            artifacts/**
+            reports/**
+          if-no-files-found: error
+          retention-days: 30

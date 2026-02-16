@@ -2,7 +2,7 @@
 
 ## 1. 文書メタ
 - 文書ID: `RL-AE-SPEC-001`
-- 版: `v0.1`
+- 版: `v0.2`
 - 作成日: `2026-02-15`
 - 対象リポジトリ: `itdojp/ae-framework-test-07-Rate-Limiter-Quota-Service`
 - 参照 ae-framework: `546b9d21daeda171f47924f02195d9e4bd81a3c8`（2026-02-15時点）
@@ -83,6 +83,10 @@
 - 用途: readiness 判定を閾値ベースで pass/fail 判定する。
 - 理由: CI/運用ゲートへ直接接続できる評価結果を自動生成できる。
 
+18. `.github/workflows/ae-framework-automation.yml`
+- 用途: `quality` と `pipeline` を並行実行し、評価フローを定期・PR・main push で自動化する。
+- 理由: 手動実行依存を下げ、ae-framework 評価の継続観測を標準化できる。
+
 ## 4. 自動化設定
 ### 4.1 基本方針
 - `--resume` を既定使用し、途中失敗後も継続可能な実行形態とする。
@@ -100,6 +104,18 @@
 - `TLA_TOOLS_JAR=<path/to/tla2tools.jar>`（任意）
 - `STATE_BACKEND=memory|file`
 - `STATE_FILE_PATH=artifacts/ae/runtime-state.json`（`STATE_BACKEND=file` 時）
+- `AE_FRAMEWORK_ROOT=/tmp/ae-framework-20260215`（ローカル既定）
+- `AE_FRAMEWORK_REPO_URL=https://github.com/itdojp/ae-framework.git`
+- `AE_FRAMEWORK_REF=546b9d21daeda171f47924f02195d9e4bd81a3c8`
+- `AE_FRAMEWORK_FALLBACK_REF=main`
+
+### 4.3 CI 自動実行
+- Workflow: `.github/workflows/ae-framework-automation.yml`
+- trigger: `push(main)`, `pull_request`, `schedule(daily)`, `workflow_dispatch`
+- 並行ジョブ:
+  - `quality`: `test` / `typecheck` / `build`
+  - `pipeline`: `pnpm run pipeline:local`
+- 保存: `pipeline` ジョブで `.ae/**`, `artifacts/**`, `reports/**` を GitHub Actions artifact として保存。
 
 ## 5. 生成物保存仕様（GitHub保存必須）
 ### 5.1 保存対象ディレクトリ
@@ -115,6 +131,7 @@
 1. ae-framework 実行後、上記パスの差分は全てコミット対象とする。
 2. 生成物のみ更新のコミットを許容し、履歴の欠落を防止する。
 3. 中間生成物の削除は、再現性を損なう場合は実施しない。
+4. CI 実行時は GitHub Actions artifact にも成果物を保存し、実行履歴と証跡を追跡可能にする。
 
 ### 5.3 実行・保存の標準手順
 1. ae-framework の対象コマンドを実行。
