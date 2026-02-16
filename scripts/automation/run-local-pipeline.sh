@@ -118,9 +118,21 @@ cp artifacts/hermetic-reports/formal/formal-summary.json artifacts/summary/forma
 {
   echo "[step] generate ae-framework evaluation report"
   pnpm run report:ae:framework
-} | tee artifacts/ae/spec/ae-framework-eval-report.log
+} | tee artifacts/ae/spec/ae-framework-eval-report-pre-gate.log
 
 cp artifacts/summary/ae-framework-readiness-summary.json artifacts/ae/spec/ae-framework-readiness-summary.json
+
+{
+  echo "[step] run ae-framework readiness gate"
+  pnpm run gate:ae:framework
+} | tee artifacts/ae/spec/ae-framework-readiness-gate.log
+
+cp artifacts/summary/ae-framework-readiness-gate-summary.json artifacts/ae/spec/ae-framework-readiness-gate-summary.json
+
+{
+  echo "[step] refresh ae-framework evaluation report (with gate)"
+  pnpm run report:ae:framework
+} | tee artifacts/ae/spec/ae-framework-eval-report.log
 
 node -e '
 const fs = require("fs");
@@ -149,6 +161,8 @@ const aePlaybookResumeSafePath = path.resolve("artifacts/summary/ae-playbook-res
 const aePlaybookResumeSafe = JSON.parse(fs.readFileSync(aePlaybookResumeSafePath, "utf8"));
 const aeFrameworkReadinessPath = path.resolve("artifacts/summary/ae-framework-readiness-summary.json");
 const aeFrameworkReadiness = JSON.parse(fs.readFileSync(aeFrameworkReadinessPath, "utf8"));
+const aeFrameworkGatePath = path.resolve("artifacts/summary/ae-framework-readiness-gate-summary.json");
+const aeFrameworkGate = JSON.parse(fs.readFileSync(aeFrameworkGatePath, "utf8"));
 const formalPath = path.resolve("artifacts/summary/formal-summary.json");
 const formal = JSON.parse(fs.readFileSync(formalPath, "utf8"));
 const out = {
@@ -220,6 +234,10 @@ const out = {
     status: aeFrameworkReadiness.readinessStatus ?? null,
     unresolvedKnownIssues: aeFrameworkReadiness.checks && aeFrameworkReadiness.checks.toolcheck ? aeFrameworkReadiness.checks.toolcheck.unresolvedKnownIssues : null,
     unexpectedFailures: aeFrameworkReadiness.checks && aeFrameworkReadiness.checks.toolcheck ? aeFrameworkReadiness.checks.toolcheck.unexpectedFailures : null
+  },
+  aeFrameworkReadinessGate: {
+    status: aeFrameworkGate.status ?? null,
+    failedChecks: Array.isArray(aeFrameworkGate.checks) ? aeFrameworkGate.checks.filter((item) => !item.pass).map((item) => item.id) : []
   },
   formal: {
     status: formal.status ?? "unknown",

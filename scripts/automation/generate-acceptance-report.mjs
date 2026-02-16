@@ -2,8 +2,15 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-function readJson(path) {
-  return JSON.parse(readFileSync(resolve(path), 'utf8'));
+function readJson(path, fallback) {
+  try {
+    return JSON.parse(readFileSync(resolve(path), 'utf8'));
+  } catch (error) {
+    if (error && typeof error === 'object' && error.code === 'ENOENT' && fallback !== undefined) {
+      return fallback;
+    }
+    throw error;
+  }
 }
 
 const acceptance = readJson('artifacts/summary/acceptance-summary.json');
@@ -17,6 +24,9 @@ const aeSpecStdio = readJson('artifacts/summary/ae-spec-stdio-summary.json');
 const aeToolcheck = readJson('artifacts/summary/ae-framework-toolcheck-summary.json');
 const aePlaybookResumeSafe = readJson('artifacts/summary/ae-playbook-resume-safe-summary.json');
 const aeFrameworkReadiness = readJson('artifacts/summary/ae-framework-readiness-summary.json');
+const aeFrameworkGate = readJson('artifacts/summary/ae-framework-readiness-gate-summary.json', {
+  status: 'unknown',
+});
 const formal = readJson('artifacts/summary/formal-summary.json');
 const traceability = readJson('artifacts/summary/traceability-summary.json');
 
@@ -38,6 +48,7 @@ const lines = [
   `- ae-toolcheck: ${String(aeToolcheck.status || 'unknown').toUpperCase()} (${aeToolcheck.counts?.success ?? 0}/${aeToolcheck.counts?.total ?? 0})`,
   `- ae-playbook-resume-safe: ${String(aePlaybookResumeSafe.status || 'unknown').toUpperCase()} (normalized=${String(aePlaybookResumeSafe.normalization?.normalized ?? 'n/a')})`,
   `- ae-framework-readiness: ${String(aeFrameworkReadiness.readinessGrade || 'unknown').toUpperCase()} (${String(aeFrameworkReadiness.readinessStatus || 'n/a')})`,
+  `- ae-framework-gate: ${String(aeFrameworkGate.status || 'unknown').toUpperCase()}`,
   `- formal: ${String(formal.status || 'unknown').toUpperCase()} (tool=${formal.tool || 'n/a'})`,
   '',
   '## Rule Status',
@@ -55,6 +66,7 @@ const lines = [
   '- artifacts/summary/ae-framework-toolcheck-summary.json',
   '- artifacts/summary/ae-playbook-resume-safe-summary.json',
   '- artifacts/summary/ae-framework-readiness-summary.json',
+  '- artifacts/summary/ae-framework-readiness-gate-summary.json',
   '- artifacts/summary/formal-summary.json',
   '- artifacts/summary/traceability-summary.json',
   '- artifacts/hermetic-reports/formal/tlc.log',

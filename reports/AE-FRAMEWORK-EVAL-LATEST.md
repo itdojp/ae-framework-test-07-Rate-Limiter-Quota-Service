@@ -10,6 +10,7 @@
 - ae-spec-stdio: PASS (mode=fallback-cli, parity=true)
 - ae-toolcheck: WARN (4/6)
 - ae-playbook-resume-safe: PASS (normalized=false, reason=already_compatible)
+- ae-readiness-gate: PASS
 - acceptance: PASS (3/3)
 - formal: PASS (tool=java-tlc)
 
@@ -22,6 +23,7 @@
 - artifacts/summary/ae-framework-toolcheck-summary.json
 - artifacts/summary/ae-spec-stdio-summary.json
 - artifacts/summary/ae-playbook-resume-safe-summary.json
+- artifacts/summary/ae-framework-readiness-gate-summary.json
 - artifacts/codex/toolcheck/*
 - artifacts/codex/playbook-resume-safe/*
 

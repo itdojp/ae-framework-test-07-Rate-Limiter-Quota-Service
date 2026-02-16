@@ -33,6 +33,7 @@
     "formal:check": "bash scripts/automation/run-formal-check.sh",
     "report:acceptance": "node scripts/automation/generate-acceptance-report.mjs",
     "report:ae:framework": "node scripts/automation/generate-ae-framework-eval-report.mjs",
+    "gate:ae:framework": "node scripts/automation/check-ae-framework-readiness-gate.mjs",
     "pipeline:local": "bash scripts/automation/run-local-pipeline.sh"
   },
   "dependencies": {

@@ -1,0 +1,6 @@
+[step] run ae-framework readiness gate
+
+> ae-framework-test-07-rate-limiter-quota-service@0.1.0 gate:ae:framework /home/devuser/work/CodeX/ae-framework_exp07
+> node scripts/automation/check-ae-framework-readiness-gate.mjs
+
+ae-framework-readiness-gate: pass

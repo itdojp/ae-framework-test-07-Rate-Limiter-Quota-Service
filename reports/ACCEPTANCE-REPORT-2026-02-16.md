@@ -12,6 +12,7 @@
 - ae-toolcheck: WARN (4/6)
 - ae-playbook-resume-safe: PASS (normalized=false)
 - ae-framework-readiness: YELLOW (CAUTION)
+- ae-framework-gate: PASS
 - formal: PASS (tool=java-tlc)
 
 ## Rule Status
@@ -35,6 +36,7 @@
 - artifacts/summary/ae-framework-toolcheck-summary.json
 - artifacts/summary/ae-playbook-resume-safe-summary.json
 - artifacts/summary/ae-framework-readiness-summary.json
+- artifacts/summary/ae-framework-readiness-gate-summary.json
 - artifacts/summary/formal-summary.json
 - artifacts/summary/traceability-summary.json
 - artifacts/hermetic-reports/formal/tlc.log

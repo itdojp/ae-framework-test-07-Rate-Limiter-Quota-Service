@@ -2,13 +2,24 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-function readJson(path) {
-  return JSON.parse(readFileSync(resolve(path), 'utf8'));
+function readJson(path, fallback) {
+  try {
+    return JSON.parse(readFileSync(resolve(path), 'utf8'));
+  } catch (error) {
+    if (error && typeof error === 'object' && error.code === 'ENOENT' && fallback !== undefined) {
+      return fallback;
+    }
+    throw error;
+  }
 }
 
 const specStdio = readJson('artifacts/summary/ae-spec-stdio-summary.json');
 const toolcheck = readJson('artifacts/summary/ae-framework-toolcheck-summary.json');
 const resumeSafe = readJson('artifacts/summary/ae-playbook-resume-safe-summary.json');
+const gate = readJson('artifacts/summary/ae-framework-readiness-gate-summary.json', {
+  status: 'unknown',
+  checks: [],
+});
 const acceptance = readJson('artifacts/summary/acceptance-summary.json');
 const formal = readJson('artifacts/summary/formal-summary.json');
 
@@ -65,6 +76,10 @@ const summary = {
       normalized: resumeSafe.normalization?.normalized ?? null,
       reason: resumeSafe.normalization?.reason ?? null,
     },
+    readinessGate: {
+      status: gate.status ?? 'unknown',
+      failedChecks: Array.isArray(gate.checks) ? gate.checks.filter((item) => !item.pass).map((item) => item.id) : [],
+    },
     acceptance: {
       status: acceptancePass ? 'pass' : 'fail',
       passed: acceptance.numPassedTests ?? null,
@@ -94,6 +109,7 @@ const lines = [
   `- ae-spec-stdio: ${String(specStdio.status || 'unknown').toUpperCase()} (mode=${specStdio.mode || 'n/a'}, parity=${String(specStdio.irParity?.parity ?? 'n/a')})`,
   `- ae-toolcheck: ${String(toolcheck.status || 'unknown').toUpperCase()} (${toolcheck.counts?.success ?? 0}/${toolcheck.counts?.total ?? 0})`,
   `- ae-playbook-resume-safe: ${String(resumeSafe.status || 'unknown').toUpperCase()} (normalized=${String(resumeSafe.normalization?.normalized ?? 'n/a')}, reason=${resumeSafe.normalization?.reason || 'n/a'})`,
+  `- ae-readiness-gate: ${String(gate.status || 'unknown').toUpperCase()}`,
   `- acceptance: ${acceptancePass ? 'PASS' : 'FAIL'} (${acceptance.numPassedTests}/${acceptance.numTotalTests})`,
   `- formal: ${String(formal.status || 'unknown').toUpperCase()} (tool=${formal.tool || 'n/a'})`,
   '',
@@ -105,6 +121,7 @@ const lines = [
   '- artifacts/summary/ae-framework-toolcheck-summary.json',
   '- artifacts/summary/ae-spec-stdio-summary.json',
   '- artifacts/summary/ae-playbook-resume-safe-summary.json',
+  '- artifacts/summary/ae-framework-readiness-gate-summary.json',
   '- artifacts/codex/toolcheck/*',
   '- artifacts/codex/playbook-resume-safe/*',
   '',

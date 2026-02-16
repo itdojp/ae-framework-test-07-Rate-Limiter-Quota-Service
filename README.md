@@ -90,7 +90,12 @@ pnpm run report:acceptance
 pnpm run report:ae:framework
 ```
 
-16. サービス起動
+16. ae-framework readiness ゲート実行
+```bash
+pnpm run gate:ae:framework
+```
+
+17. サービス起動
 ```bash
 pnpm run dev
 ```

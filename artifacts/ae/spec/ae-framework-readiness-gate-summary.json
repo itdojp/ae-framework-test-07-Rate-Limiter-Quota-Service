@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-02-16T03:00:23.632Z",
+  "status": "pass",
+  "config": {
+    "maxUnresolvedKnownIssues": 2,
+    "maxUnexpectedFailures": 0,
+    "allowedGrades": [
+      "green",
+      "yellow"
+    ]
+  },
+  "metrics": {
+    "grade": "yellow",
+    "unresolvedKnownIssues": 2,
+    "unexpectedFailures": 0,
+    "toolcheckStatus": "warn"
+  },
+  "checks": [
+    {
+      "id": "grade_allowed",
+      "pass": true,
+      "detail": "grade=yellow, allowed=[green,yellow]"
+    },
+    {
+      "id": "unresolved_known_issues",
+      "pass": true,
+      "detail": "unresolvedKnownIssues=2, max=2"
+    },
+    {
+      "id": "unexpected_failures",
+      "pass": true,
+      "detail": "unexpectedFailures=0, max=0"
+    },
+    {
+      "id": "toolcheck_status_not_fail",
+      "pass": true,
+      "detail": "toolcheckStatus=warn"
+    }
+  ]
+}

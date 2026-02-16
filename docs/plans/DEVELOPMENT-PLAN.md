@@ -60,6 +60,10 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 - 複数サマリ（spec-stdio/toolcheck/resume-safe/formal/acceptance）を統合し readiness を算出する。
 - Exit条件: `artifacts/summary/ae-framework-readiness-summary.json` と `reports/AE-FRAMEWORK-EVAL-LATEST.md` が毎回更新される。
 
+9. M9: ae-framework readiness ゲート化
+- readiness と known issues を閾値で pass/fail 判定するゲートを自動実行する。
+- Exit条件: `artifacts/summary/ae-framework-readiness-gate-summary.json` が毎回更新される。
+
 ## 6. 実行方式（自動化優先）
 - 原則: 手作業よりも ae-framework の CLI / スクリプト / CI を優先。
 - フェーズ実行の起点: `ae-playbook` 相当フローを採用。
@@ -112,3 +116,6 @@ Issue #1 の仕様を満たす Rate Limiter / Quota Service を、ae-framework �
 - M8: 完了
   - `report:ae:framework` を追加し、readiness 判定（green/yellow/red）を自動出力
   - `pipeline:local` に統合し、context へ readiness サマリを連携
+- M9: 完了
+  - `gate:ae:framework` を追加し、閾値ベースの pass/fail 判定を自動化
+  - `pipeline:local` と各レポートに gate 結果を統合

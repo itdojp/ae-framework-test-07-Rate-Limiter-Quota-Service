@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T02:18:47.439Z",
+  "generatedAt": "2026-02-16T03:00:23.298Z",
   "readinessGrade": "yellow",
   "readinessStatus": "CAUTION",
   "checks": {
@@ -20,6 +20,10 @@
       "status": "pass",
       "normalized": false,
       "reason": "already_compatible"
+    },
+    "readinessGate": {
+      "status": "unknown",
+      "failedChecks": []
     },
     "acceptance": {
       "status": "pass",
