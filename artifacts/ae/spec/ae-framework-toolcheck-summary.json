@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T06:33:10.140Z",
+  "generatedAt": "2026-02-16T06:38:36.939Z",
   "status": "warn",
   "frameworkRoot": "/tmp/ae-framework-20260215",
   "specInput": "spec/rate-limiter-quota-service.ae-spec.md",
@@ -50,7 +50,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": true,
-      "elapsedMs": 562,
+      "elapsedMs": 495,
       "command": "pnpm run codex:spec:stdio",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/local_codex_spec_stdio_proxy_validate.stdout.log",
@@ -82,7 +82,7 @@
       "exitCode": 1,
       "signal": null,
       "responseOk": null,
-      "elapsedMs": 36,
+      "elapsedMs": 37,
       "command": "node /tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs --resume --skip=setup,qa,spec,sim,formal",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/framework_ae_playbook_resume.stdout.log",
@@ -98,7 +98,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": null,
-      "elapsedMs": 52,
+      "elapsedMs": 46,
       "command": "node /tmp/ae-framework-20260215/scripts/codex/ae-playbook.mjs --skip=setup,qa,spec,sim,formal",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/framework_ae_playbook_no_resume.stdout.log",
@@ -114,7 +114,7 @@
       "exitCode": 0,
       "signal": null,
       "responseOk": null,
-      "elapsedMs": 417,
+      "elapsedMs": 379,
       "command": "pnpm run test:ae:playbook:resume-safe",
       "artifacts": {
         "stdout": "artifacts/codex/toolcheck/local_ae_playbook_resume_safe.stdout.log",

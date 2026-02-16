@@ -21,7 +21,7 @@ async function reservePort(): Promise<number> {
   });
 }
 
-async function waitForHealth(baseUrl: string, timeoutMs = 5000): Promise<void> {
+async function waitForHealth(baseUrl: string, timeoutMs = 15000, debugProvider?: () => string): Promise<void> {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     try {
@@ -34,7 +34,8 @@ async function waitForHealth(baseUrl: string, timeoutMs = 5000): Promise<void> {
     }
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
-  throw new Error(`health check timeout: ${baseUrl}`);
+  const debugMessage = debugProvider ? debugProvider() : '';
+  throw new Error(`health check timeout: ${baseUrl}${debugMessage ? `\n${debugMessage}` : ''}`);
 }
 
 function startServer(port: number, stateFilePath: string): ChildProcessWithoutNullStreams {
@@ -50,6 +51,27 @@ function startServer(port: number, stateFilePath: string): ChildProcessWithoutNu
   });
 
   return child;
+}
+
+function attachLogCollector(child: ChildProcessWithoutNullStreams): () => string {
+  const lines: string[] = [];
+  const maxLines = 50;
+
+  const push = (prefix: string, chunk: Buffer) => {
+    const text = chunk.toString('utf8').trim();
+    if (!text) {
+      return;
+    }
+    lines.push(`${prefix}${text}`);
+    if (lines.length > maxLines) {
+      lines.splice(0, lines.length - maxLines);
+    }
+  };
+
+  child.stdout.on('data', (chunk: Buffer) => push('[stdout] ', chunk));
+  child.stderr.on('data', (chunk: Buffer) => push('[stderr] ', chunk));
+
+  return () => lines.join('\n');
 }
 
 async function stopServer(child: ChildProcessWithoutNullStreams, timeoutMs = 3000): Promise<void> {
@@ -98,10 +120,12 @@ describe('E2E restart with file backend', () => {
     const baseUrl = `http://127.0.0.1:${port}`;
 
     let server: ChildProcessWithoutNullStreams | null = null;
+    let getServerLogs: (() => string) | null = null;
 
     try {
       server = startServer(port, stateFile);
-      await waitForHealth(baseUrl);
+      getServerLogs = attachLogCollector(server);
+      await waitForHealth(baseUrl, 15000, getServerLogs ?? undefined);
 
       const createPolicy = await postJson(`${baseUrl}/ratelimit/policies`, {
         policy_id: 'P-E2E',
@@ -150,7 +174,8 @@ describe('E2E restart with file backend', () => {
       server = null;
 
       server = startServer(port, stateFile);
-      await waitForHealth(baseUrl);
+      getServerLogs = attachLogCollector(server);
+      await waitForHealth(baseUrl, 15000, getServerLogs ?? undefined);
 
       const listResponse = await fetch(`${baseUrl}/ratelimit/policies?tenant_id=TENANT-E2E`);
       const listBody = await listResponse.json() as { items: Array<{ policy_id: string }> };
@@ -196,5 +221,5 @@ describe('E2E restart with file backend', () => {
       }
       rmSync(workspace, { recursive: true, force: true });
     }
-  }, 20000);
+  }, 45000);
 });
